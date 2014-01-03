@@ -1,0 +1,34 @@
+{
+  "@context": {
+    "spec": "http://schema.standardanalytics.io/spec/",
+    "schema": "http://schema.org/",
+    "nfo": "http://www.semanticdesktop.org/ontologies/nfo/#",
+    "@base": "http://registry.standardanalytics.io/",
+
+    "url": { "@id": "schema:url", "@type": "@id" },
+    "contentUrl": { "@id": "schema:contentUrl", "@type": "@id" },
+    "contentSize": "schema:contentSize",
+    "encodingFormat": "schema:encodingFormat",
+    "name": "schema:name",
+    "version": "schema:version",
+    "description": "schema:description",
+    "keywords": { "@id": "schema:keywords", "@container": "@list" },
+    "author": "schema:author",
+    "email": { "@id": "http://xmlns.com/foaf/0.1/mbox", "@type": "@id" },    
+    "dataDependencies": { "@id": "spec:dataDependencies", "@type": "@id", "@container": "@set" },
+    "data": "spec:data",
+    "resources": { "@id": "spec:resources", "@container": "@set" },
+    "DataCatalog": { "@id": "schema:DataCatalog", "@type": "@id" },
+    "DataDownload": { "@id": "schema:DataDownload", "@type": "@id" },
+    "DataSet": { "@id": "schema:DataSet", "@type": "@id" },
+    "catalog": "schema:catalog",
+    "distribution": "schema:distribution",
+    "hashAlgorithm": "nfo:hashAlgorithm",
+    "hashValue": "nfo:hashValue",
+    "code": {"@id": "spec:code", "@container": "@list"},
+    "Code": { "@id": "schema:Code", "@type": "@id" },
+    "codeRepository": { "@id": "schema:codeRepository", "@type": "@id" },
+    "runtime": "schema:runtime",
+    "programmingLanguage": "schema:programmingLanguage"
+  }
+}
