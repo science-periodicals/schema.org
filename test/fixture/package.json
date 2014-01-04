@@ -1,9 +1,4 @@
 {
-  "@context": "http://schema.standardanalytics.io/spec/datapackage.jsonld",
-
-  "@id": "mydpkg/0.0.0",
-  "@type": "DataCatalog",
-  
   "name": "mydpkg",
   "version": "0.0.0",
   "description": "a description",
@@ -16,8 +11,6 @@
 
   "code": [
     {
-      "@id": "mydpkg/0.0.0/code",
-      "@type": "Code",
       "codeRepository": "git://github.com/standard-analytics/data-analysis.git",
       "programmingLanguage": {"name": "R"},
       "runtime": "R"
@@ -26,49 +19,37 @@
 
   "resources": [
     {
-      "@id": "mydpkg/0.0.0/resource0",
-      "@type": "DataSet",
       "name": "myurl",
       "url": "http://data.com",
       "distribution": {
-        "@type" :"DataDownload",
         "contentUrl" :"/mydpkg/0.0.0/resource0/myurl",
         "contentSize" : 1024,
         "encodingFormat": "txt",
         "hashAlgorithm": "md5",
-        "hashValue": "d131dd02c5e6eec4"
-      },
-      "catalog": { "name": "mydpkg", "version": "0.0.0", "url": "mydpkg/0.0.0" }
+        "hashValue": "d131dd02c5e6eec4"        
+      }
     },
     {
-      "@id": "mydpkg/0.0.0/resource1",
-      "@type": "DataSet",
       "name": "mycsv",
       "path": "data/data.csv",
       "distribution": {
-        "@type" :"DataDownload",
         "contentUrl" :"/mydpkg/0.0.0/resource0/mycsv",
         "contentSize" : 1024,
         "encodingFormat": "csv",
         "hashAlgorithm": "md5",
         "hashValue": "d131dd02c5e6eec4"
-      },
-      "catalog": { "name": "mydpkg", "version": "0.0.0", "url": "mydpkg/0.0.0" }
+      }
     },
     {
-      "@id": "mydpkg/0.0.0/resource2",
-      "@type": "DataSet",
       "name": "mydata",
       "data": { "inline": "data" },
       "distribution": {
-        "@type" :"DataDownload",
         "contentUrl" :"/mydpkg/0.0.0/resource0/mydata",
         "contentSize" : 1024,
         "encodingFormat": "json",
         "hashAlgorithm": "md5",
         "hashValue": "d131dd02c5e6eec4"
-      },
-      "catalog": { "name": "mydpkg", "version": "0.0.0", "url": "mydpkg/0.0.0" }
+      }
     }
   ]
 }

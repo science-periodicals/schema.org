@@ -1,0 +1,32 @@
+{
+  "name": "datapackage-jsonld",
+  "version": "0.0.0",
+  "description": "Give data packages some context because web and linked data",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/standard-analytics/datapackage-jsonld.git"
+  },
+  "keywords": [
+    "hyperdata",
+    "linked-data",
+    "jsonld",
+    "datapackage"
+  ],
+  "author": "Sebastien Ballesteros",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/standard-analytics/datapackage-jsonld/issues"
+  },
+  "homepage": "https://github.com/standard-analytics/datapackage-jsonld",
+  "devDependencies": {
+    "mocha": "~1.15.1",
+    "clone": "~0.1.11"
+  }
+}
