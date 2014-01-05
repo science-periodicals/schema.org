@@ -15,7 +15,7 @@ describe('datapacakge-jsonld', function(){
     
     var ldpkg = ldjson.ify(clone(dpkg));
 
-    assert.equal(ldpkg['@context'], 'http://schema.standardanalytics.io/spec/datapackage.jsonld');
+    assert.equal(ldpkg['@context'], ldjson.contextUrl);
     assert.equal(ldpkg['@id'], 'mydpkg/0.0.0');
     assert.equal(ldpkg['@type'], 'DataCatalog');
     assert.equal(ldpkg.author['@type'], 'Person');
