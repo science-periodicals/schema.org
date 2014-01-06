@@ -17,7 +17,7 @@
     }
   ],
 
-  "resources": [
+  "dataset": [
     {
       "name": "myurl",
       "url": "http://data.com",

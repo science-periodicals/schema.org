@@ -1,44 +1,44 @@
 exports.context = {
   "@context": {
     "spec": "http://schema.standardanalytics.io/spec/",
-    "schema": "http://schema.org/",
+    "sch": "http://schema.org/",
     "nfo": "http://www.semanticdesktop.org/ontologies/nfo/#",
     "@base": "http://registry.standardanalytics.io/",
 
-    "url": { "@id": "schema:url", "@type": "@id" },
-    "contentUrl": { "@id": "schema:contentUrl", "@type": "@id" },
-    "contentSize": "schema:contentSize",
-    "encodingFormat": "schema:encodingFormat",
-    "name": "schema:name",
-    "version": "schema:version",
+    "url": { "@id": "sch:url", "@type": "@id" },
+    "contentUrl": { "@id": "sch:contentUrl", "@type": "@id" },
+    "contentSize": "sch:contentSize",
+    "encodingFormat": "sch:encodingFormat",
+    "name": "sch:name",
+    "version": "sch:version",
     "license": "spec:license",
-    "description": "schema:description",
-    "keywords": { "@id": "schema:keywords", "@container": "@list" },
-    "author": "schema:author",
-    "contributor": "schema:contributor",
+    "description": "sch:description",
+    "keywords": { "@id": "sch:keywords", "@container": "@list" },
+    "author": "sch:author",
+    "contributor": "sch:contributor",
     "email": { "@id": "http://xmlns.com/foaf/0.1/mbox", "@type": "@id" },    
     "dataDependencies": { "@id": "spec:dataDependencies", "@type": "@id", "@container": "@set" },
     //"data": "spec:data", commented out on purpose: we don't want the data object from a semantic perspective'
-    "resources": { "@id": "spec:resources", "@container": "@set" },
-    "Person": { "@id": "schema:Person", "@type": "@id" },
-    "DataCatalog": { "@id": "schema:DataCatalog", "@type": "@id" },
-    "DataDownload": { "@id": "schema:DataDownload", "@type": "@id" },
-    "DataSet": { "@id": "schema:DataSet", "@type": "@id" },
-    "isBasedOnUrl": "schema:isBasedOnUrl",
-    "catalog": "schema:catalog",
-    "distribution": "schema:distribution",
-    "encoding": "schema:encoding",
+    "Person": { "@id": "sch:Person", "@type": "@id" },
+    "DataCatalog": { "@id": "sch:DataCatalog", "@type": "@id" },
+    "DataDownload": { "@id": "sch:DataDownload", "@type": "@id" },
+    "DataSet": { "@id": "sch:DataSet", "@type": "@id" },
+    "isBasedOnUrl": "sch:isBasedOnUrl",
+    "dataset": "sch:dataset",
+    "catalog": "sch:catalog",
+    "distribution": "sch:distribution",
+    "encoding": "sch:encoding",
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
-    "code": {"@id": "spec:code", "@container": "@list"},
-    "Code": { "@id": "schema:Code", "@type": "@id" },
-    "codeRepository": { "@id": "schema:codeRepository", "@type": "@id" },
-    "runtime": "schema:runtime",
-    "programmingLanguage": "schema:programmingLanguage"
+    "code": {"@id": "spec:code", "@container": "@list"}, //TODO change to repository
+    "Code": { "@id": "sch:Code", "@type": "@id" },
+    "codeRepository": { "@id": "sch:codeRepository", "@type": "@id" },
+    "runtime": "sch:runtime",
+    "programmingLanguage": "sch:programmingLanguage"
   }
 };
 
-var URL = 'http://standardanalytics.io/contexts/datapackage.jsonld';
+var URL = 'http://127.0.0.1:3000/contexts/datapackage.jsonld';
 
 exports.contextUrl = URL;
 exports.link = '<' + URL + '>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
@@ -71,8 +71,8 @@ exports.ify = function(dpkg, options){
     });
   }
 
-  if('resources' in dpkg){
-    dpkg.resources.forEach(function(r){
+  if('dataset' in dpkg){
+    dpkg.dataset.forEach(function(r){
       if('name' in r){
         r['@id'] = dpkg['@id'] + '/' + r.name;
       }
@@ -96,6 +96,8 @@ exports.ify = function(dpkg, options){
       r.catalog = { name: dpkg.name, version: dpkg.version, url: dpkg['@id'] }
     });
   }
+
+  dpkg.catalog = { name: dpkg.name, url: dpkg.name };
 
   return dpkg;
 };
