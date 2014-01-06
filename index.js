@@ -38,7 +38,7 @@ exports.context = {
   }
 };
 
-var URL = 'http://127.0.0.1:3000/contexts/datapackage.jsonld';
+var URL = 'http://registry.standardanalytics.io/contexts/datapackage.jsonld';
 
 exports.contextUrl = URL;
 exports.link = '<' + URL + '>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
