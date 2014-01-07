@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "a description",
   "keywords": ["hyperdata", "json-ld", "test"],
-  "dataDependencies": ["dpkg1/0.0.1", "dpkg2/0.2.1", "http://data.com/"],
+  "isBasedOnUrl": ["../../dpkg1/0.0.1", "../../dpkg2/0.2.1", "http://data.com/"],
   "author": {
     "name": "Sebastien Ballesteros",
     "email": "sebastien@standardanalytics.io"
@@ -22,7 +22,7 @@
       "name": "myurl",
       "url": "http://data.com",
       "distribution": {
-        "contentUrl" :"/mydpkg/0.0.0/resource0/myurl",
+        "contentUrl" :"mydpkg/0.0.0/resource0/myurl",
         "contentSize" : 1024,
         "encodingFormat": "txt",
         "hashAlgorithm": "md5",
@@ -33,7 +33,7 @@
       "name": "mycsv",
       "path": "data/data.csv",
       "distribution": {
-        "contentUrl" :"/mydpkg/0.0.0/resource0/mycsv",
+        "contentUrl" :"mydpkg/0.0.0/resource0/mycsv",
         "contentSize" : 1024,
         "encodingFormat": "csv",
         "hashAlgorithm": "md5",
@@ -44,7 +44,7 @@
       "name": "mydata",
       "data": { "inline": "data" },
       "distribution": {
-        "contentUrl" :"/mydpkg/0.0.0/resource0/mydata",
+        "contentUrl" :"mydpkg/0.0.0/resource0/mydata",
         "contentSize" : 1024,
         "encodingFormat": "json",
         "hashAlgorithm": "md5",

@@ -5,7 +5,7 @@ exports.context = {
     "spec": "http://schema.standardanalytics.io/spec/",
     "sch":  "http://schema.org/",
     "nfo":  "http://www.semanticdesktop.org/ontologies/nfo/#",
-    "dc":   "http://purl.org/dc/terms/"
+    "dc":   "http://purl.org/dc/terms/",
 
     "repository": { "@id": "spec:code",                      "@container": "@set" },
     "analytics":  { "@id": "spec:analytics",                 "@container": "@list" },
@@ -24,8 +24,8 @@ exports.context = {
     "keywords":       { "@id": "sch:keywords",                       "@container": "@list" },
     "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@container": "@list" }, //dataDependencies
     "citation":       { "@id": "sch:citation",       "@type": "@id", "@container": "@list" },
-    "contributor":    { "sch:contributor",                           "@container": "@list" },
-    "dataset":        { "sch:dataset",                               "@container": "@list" },
+    "contributor":    { "@id": "sch:contributor",                    "@container": "@list" },
+    "dataset":        { "@id": "sch:dataset",                        "@container": "@list" },
     "codeRepository": { "@id": "sch:codeRepository", "@type": "@id" },
     "targetProduct":  { "@id": "sch:targetProduct",  "@type": "@id" },
     "url":            { "@id": "sch:url",            "@type": "@id" },
@@ -45,7 +45,7 @@ exports.context = {
     "encodingFormat":      "sch:encodingFormat",
     "catalog":             "sch:catalog",
 
-    "MediaObject"          { "@id": "sch:MediaObject",         "@type": "@id" },
+    "MediaObject":         { "@id": "sch:MediaObject",         "@type": "@id" },
     "Person":              { "@id": "sch:Person",              "@type": "@id" },
     "Organization":        { "@id": "sch:Person",              "@type": "@id" },
     "DataCatalog":         { "@id": "sch:DataCatalog",         "@type": "@id" },
@@ -60,7 +60,6 @@ var URL = 'https://registry.standardanalytics.io/contexts/datapackage.jsonld';
 
 exports.contextUrl = URL;
 exports.link = '<' + URL + '>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
-
 
 /**
  * modifies dpkg in place to add @id, @type and optionaly @context
@@ -79,13 +78,30 @@ exports.ify = function(dpkg, options){
   dpkg['@id'] = dpkg.name + '/' + dpkg.version;
   dpkg['@type'] = 'DataCatalog';
 
-  if('author' in dpkg){
-    dpkg.author['@type'] = 'Person';
+  if( 'author' in dpkg && !('@type' in dpkg.author) ){ //pre-existing type might be Organization
+    dpkg.author['@type'] = 'Person'; 
   }
 
   if('repository' in dpkg){
     dpkg.repository.forEach(function(c){
       c['@type'] = 'Code';
+    });
+  }
+
+  if('contributor' in dpkg){
+    dpkg.contributor.forEach(function(c){
+      if ( !('@type' in c) ) { //pre-existing type might be Organization
+        c['@type'] = 'Person';
+      }
+    });
+  }
+
+  if('analytics' in dpkg){
+    dpkg.analytics.forEach(function(r){
+      r['@type'] = 'Code';
+      if('programmingLanguage' in r){
+        r.programmingLanguage['@type'] = 'SoftwareApplication'
+      }
     });
   }
 
