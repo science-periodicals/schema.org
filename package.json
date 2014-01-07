@@ -1,6 +1,6 @@
 {
   "name": "datapackage-jsonld",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Give data packages some context because web and linked data",
   "main": "index.js",
   "directories": {
@@ -28,5 +28,9 @@
   "devDependencies": {
     "mocha": "~1.15.1",
     "clone": "~0.1.11"
+  },
+  "dependencies": {
+    "is-url": "~0.1.0",
+    "semver": "~2.2.1"
   }
 }
