@@ -59,7 +59,9 @@ describe('datapacakge-jsonld', function(){
         url.resolve(base, 'dpkg2/0.0.0'),
         url.resolve(base, 'dpkg3/0.0.1'),
         url.resolve(base, 'dpkg4/latest'),
-        url.resolve(base, 'dpkg5/latest?range=' + encodeURIComponent('>2.0.0'))
+        url.resolve(base, 'dpkg5/latest?range=' + encodeURIComponent('>2.0.0')),
+        'http://example.com/a/b',
+        'https://example.com/a/b/c/'
       ];
       var dataDependencies = dpkgJsonLd.dataDependencies(isBasedOnUrl);
       var expected = { dpkg0: '0.0.0', dpkg1: '*', dpkg2: '0.0.0', dpkg3: '0.0.1', dpkg4: '*', dpkg5: '>2.0.0' };
