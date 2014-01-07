@@ -19,7 +19,7 @@ describe('datapacakge-jsonld', function(){
     assert.equal(ldpkg['@id'], 'mydpkg/0.0.0');
     assert.equal(ldpkg['@type'], 'DataCatalog');
     assert.equal(ldpkg.author['@type'], 'Person');
-    assert.equal(ldpkg.code[0]['@type'], 'Code');
+    assert.equal(ldpkg.repository[0]['@type'], 'Code');
     assert.deepEqual(ldpkg.catalog, { name: 'mydpkg', url: 'mydpkg' } );
     ldpkg.dataset.forEach(function(r){
       assert.equal(r['@type'], 'DataSet');

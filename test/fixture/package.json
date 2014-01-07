@@ -9,7 +9,7 @@
     "email": "sebastien@standardanalytics.io"
   },
 
-  "code": [
+  "repository": [
     {
       "codeRepository": "git://github.com/standard-analytics/data-analysis.git",
       "programmingLanguage": {"name": "R"},
