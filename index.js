@@ -14,17 +14,17 @@ exports.context = {
   "@context": {
     "@base": BASE,
 
-    "spec": "http://standardanalytics.io/ontologies/datapackage/",
+    "dpkg": "http://standardanalytics.io/datapackage/",
     "sch":  "http://schema.org/",
     "nfo":  "http://www.semanticdesktop.org/ontologies/nfo/#",
     "dc":   "http://purl.org/dc/terms/",
 
-    "repository": { "@id": "spec:code",                      "@container": "@set" },
-    "analytics":  { "@id": "spec:analytics",                 "@container": "@list" },
-    "input":      { "@id": "spec:input",     "@type": "@id", "@container": "@list" },
-    "output":     { "@id": "spec:output",    "@type": "@id", "@container": "@list" },
-    "path": "spec:path",
-    //"data": "spec:data", commented out on purpose: we don't want the data object from a semantic perspective'
+    "repository": { "@id": "dpkg:code",                      "@container": "@set" },
+    "analytics":  { "@id": "dpkg:analytics",                 "@container": "@list" },
+    "input":      { "@id": "dpkg:input",     "@type": "@id", "@container": "@list" },
+    "output":     { "@id": "dpkg:output",    "@type": "@id", "@container": "@list" },
+    "path": "dpkg:path",
+    //"data": "dpkg:data", commented out on purpose: we don't want the data object from a semantic perspective'
 
     "license": "dc:license",
 
