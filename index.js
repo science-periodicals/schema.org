@@ -14,7 +14,7 @@ exports.context = {
   "@context": {
     "@base": BASE,
 
-    "spec": "http://schema.standardanalytics.io/spec/",
+    "spec": "http://standardanalytics.io/ontologies/datapackage/",
     "sch":  "http://schema.org/",
     "nfo":  "http://www.semanticdesktop.org/ontologies/nfo/#",
     "dc":   "http://purl.org/dc/terms/",
@@ -62,7 +62,7 @@ exports.context = {
     "Organization":        { "@id": "sch:Person",              "@type": "@id" },
     "DataCatalog":         { "@id": "sch:DataCatalog",         "@type": "@id" },
     "DataDownload":        { "@id": "sch:DataDownload",        "@type": "@id" },
-    "DataSet":             { "@id": "sch:DataSet",             "@type": "@id" },
+    "Dataset":             { "@id": "sch:Dataset",             "@type": "@id" },
     "Code":                { "@id": "sch:Code",                "@type": "@id" },
     "SoftwareApplication": { "@id": "sch:SoftwareApplication", "@type": "@id" }
   }
@@ -161,7 +161,7 @@ function _addType(x, type){
 /**
  * modifies dpkg in place to add @id, @type and optionaly @context
  */
-exports.ify = function(dpkg, options){  
+exports.linkDpkg = function(dpkg, options){  
   options = options || {addCtx: true};
   if(! ('addCtx' in options)){
     options.addCtx = true;
@@ -202,15 +202,7 @@ exports.ify = function(dpkg, options){
 
   if('dataset' in dpkg){
     dpkg.dataset.forEach(function(r){
-      if('name' in r){
-        r['@id'] = dpkg['@id'] + '/' + r.name;
-      }
-
-      _addType(r, 'DataSet');
-      _addType(r.encoding, 'DataDownload');
-      _addType(r.distribution, 'DataDownload');
-
-      r.catalog = { name: dpkg.name, version: dpkg.version, url: dpkg['@id'] };
+      linkDataset(r, dpkg.name, dpkg.version);
     });
   }
 
@@ -219,6 +211,23 @@ exports.ify = function(dpkg, options){
   return dpkg;
 };
 
+/**
+ * modifies dataset in place to add @id, @type
+ */
+function linkDataset(dataset, name, version){
+  if('name' in dataset){
+    dataset['@id'] = name + '/' + version + '/' + dataset.name;
+  }
+
+  _addType(dataset, 'Dataset');
+  _addType(dataset.encoding, 'DataDownload');
+  _addType(dataset.distribution, 'DataDownload');
+
+  dataset.catalog = { name: name, version: version, url: name + '/' + version };  
+
+  return dataset;
+};
+exports.linkDataset = linkDataset;
 
 /**
  * validate isBasedOnUrl and returns a dataDependencies hash
