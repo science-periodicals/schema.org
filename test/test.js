@@ -9,7 +9,7 @@ var fs = require('fs')
 var root = path.dirname(__filename);
 var base = dpkgJsonLd.context['@context']['@base'];
 
-var dpkg = require(path.join(root, 'fixture', 'package.json'));
+var dpkg = require(path.join(root, 'fixture', 'datapackage.json'));
 
 describe('datapacakge-jsonld', function(){
 

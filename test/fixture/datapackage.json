@@ -11,9 +11,7 @@
 
   "repository": [
     {
-      "codeRepository": "git://github.com/standard-analytics/data-analysis.git",
-      "programmingLanguage": {"name": "R"},
-      "runtime": "R"
+      "codeRepository": "git://github.com/standard-analytics/data-analysis.git"
     }
   ],
 

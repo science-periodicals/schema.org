@@ -44,6 +44,7 @@ exports.context = {
     "contentUrl":     { "@id": "sch:contentUrl",     "@type": "@id" },
 
     "name":                "sch:name",
+    "about":               "sch:about",
     "version":             "sch:version",
     "description":         "sch:description",
     "distribution":        "sch:distribution",
@@ -224,7 +225,7 @@ function linkDataset(dataset, name, version){
   _addType(dataset.distribution, 'DataDownload');
 
   dataset.catalog = { name: name, version: version, url: name + '/' + version };  
-
+  
   return dataset;
 };
 exports.linkDataset = linkDataset;
