@@ -24,7 +24,8 @@ exports.context = {
     "input":      { "@id": "dpkg:input",     "@type": "@id", "@container": "@list" },
     "output":     { "@id": "dpkg:output",    "@type": "@id", "@container": "@list" },
     "path": "dpkg:path",
-    //"data": "dpkg:data", commented out on purpose: we don't want the data object from a semantic perspective'
+    "contentPath": "dpkg:contentPath",
+    "contentData": "dpkg:contentData",
 
     "license": "dc:license",
 
@@ -69,16 +70,48 @@ exports.context = {
   }
 };
 
-//!! only check stuff that will be accessed within the registry.
 exports.schema = {
   $schema: 'http://json-schema.org/draft-04/schema#',
   type: 'object', 
   properties: {
+
     name: { type: 'string' },
     version: { type: 'string' },
+    license: { type: 'string' },
     description: { type: 'string' },
+    about: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        url: { type: 'string' }
+      }
+    },
     keywords: { type: 'array', items: { type: 'string' } },
     isBasedOnUrl: { type: 'array', items: { type: 'string' } },
+    repository: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          codeRepository: { type: 'string' },
+          path: { type: 'string' }
+        }
+      }
+    },
+    encoding: { //dist_.tar.gz
+      type: 'object',
+      properties: {
+        contentUrl: { type: 'string' },
+        contentSize: { type: 'integer' },
+        encodingFormat: { type: 'string' },
+        hashAlgorithm: { type: 'string' },
+        hashValue: { type: 'string' },
+        uploadDate: { type: 'string' }
+      },
+      required: ['contentUrl']
+    },
+    datePublished: { type: 'string' },
+
     dataset: {
       type: 'array',
       items: {
@@ -86,19 +119,40 @@ exports.schema = {
         properties: {
           name: { type: 'string'},
           description: { type: 'string'},
-          url:  { type: 'string' }, 
-          path: { type: 'string'},
-          encoding: {
+          isBasedOnUrl: { type: 'array', items: { type: 'string' } },
+          distribution: {
+            type: 'object',
+            properties: {              
+              '@context': { type: 'object' },
+              contentUrl: { type: 'string' },
+              contentPath: { type: 'string' },
+              contentData: { type: 'string' },
+              contentSize: { type: 'integer' },           
+              encodingFormat: { type: 'string' },
+              hashAlgorithm: { type: 'string' },
+              hashValue: { type: 'string' },
+              uploadDate: { type: 'string' },
+              encoding: { //in case resource can be further compressed
+                type: 'object',
+                properties: {
+                  contentSize: { type: 'integer' },
+                  encodingFormat: { type: 'string' },
+                }
+              }
+            }
+          },
+          catalog: {
             type: 'object',
             properties: {
-              encodingFormat: { type: 'string' },
-              contentSize: { type: 'integer' }
+              name: { type: 'string' },
+              url: { type: 'string' }
             }
           }
         },
         required: [ 'name' ]
       }
     },
+
     analytics: {
       type: 'array',
       items: {
@@ -124,11 +178,21 @@ exports.schema = {
           sampleType: { type: 'string'},
           codeRepository: { type: 'string'},
           input:  { type: 'array', items: { type: 'string'} },
-          output: { type: 'array', items: { type: 'string'} }
-        }
+          output: { type: 'array', items: { type: 'string'} },
+          isBasedOnUrl: { type: 'array', items: { type: 'string' } },
+          catalog: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              url: { type: 'string' }
+            }
+          }
+        },
+        required: [ 'name' ]
       }
     }
   },
+
   required: ['name', 'version']
 };
 
