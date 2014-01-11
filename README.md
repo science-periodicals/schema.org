@@ -1,7 +1,9 @@
 datapackage-jsonld
 ==================
 
-Give data packages some context because web and linked data.
+[datapackage](http://dataprotocols.org/data-packages/)
+[schema.org/DataCatalog](http://schema.org/DataCatalog) style because
+semantic web and linked data.
 
 [![NPM](https://nodei.co/npm/datapackage-jsonld.png)](https://nodei.co/npm/datapackage-jsonld/)
 
