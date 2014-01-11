@@ -9,45 +9,27 @@
     "email": "sebastien@standardanalytics.io"
   },
 
-  "repository": [
-    {
-      "codeRepository": "git://github.com/standard-analytics/data-analysis.git"
-    }
-  ],
+  "repository": [ { "codeRepository": "git://github.com/standard-analytics/data-analysis.git" } ],
 
   "dataset": [
     {
       "name": "myurl",
-      "url": "http://data.com",
-      "distribution": {
-        "contentUrl" :"mydpkg/0.0.0/resource0/myurl",
-        "contentSize" : 1024,
-        "encodingFormat": "txt",
-        "hashAlgorithm": "md5",
-        "hashValue": "d131dd02c5e6eec4"        
-      }
+      "distribution": { "contentUrl" :"http://data.com" }
     },
     {
       "name": "mycsv",
-      "path": "data/data.csv",
-      "distribution": {
-        "contentUrl" :"mydpkg/0.0.0/resource0/mycsv",
-        "contentSize" : 1024,
-        "encodingFormat": "csv",
-        "hashAlgorithm": "md5",
-        "hashValue": "d131dd02c5e6eec4"
-      }
+      "distribution": { "contentPath" :"data/data.csv" }
     },
     {
-      "name": "mydata",
-      "data": { "inline": "data" },
-      "distribution": {
-        "contentUrl" :"mydpkg/0.0.0/resource0/mydata",
-        "contentSize" : 1024,
-        "encodingFormat": "json",
-        "hashAlgorithm": "md5",
-        "hashValue": "d131dd02c5e6eec4"
-      }
+      "name": "mydata",      
+      "distribution": { "contentData": { "inline": "data" } }
+    }
+  ],
+
+  "analytics": [
+    {
+      "name": "myanalytics",
+      "targetProduct": { "operatingSystem": "Unix" }
     }
   ]
 }

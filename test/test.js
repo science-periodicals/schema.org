@@ -27,9 +27,15 @@ describe('datapacakge-jsonld', function(){
       assert.deepEqual(ldpkg.catalog, { name: 'mydpkg', url: 'mydpkg' } );
       ldpkg.dataset.forEach(function(r){
         assert.equal(r['@type'], 'Dataset');
-        assert.equal(r['@id'], 'mydpkg/0.0.0/' + r.name);
+        assert.equal(r['@id'], 'mydpkg/0.0.0/dataset/' + r.name);
         assert.deepEqual(r.catalog, { name: 'mydpkg', version: '0.0.0', url: 'mydpkg/0.0.0' } );
         assert.equal(r.distribution['@type'], 'DataDownload');
+      });
+      ldpkg.analytics.forEach(function(r){
+        assert.equal(r['@type'], 'Code');
+        assert.equal(r['@id'], 'mydpkg/0.0.0/analytics/' + r.name);
+        assert.deepEqual(r.catalog, { name: 'mydpkg', version: '0.0.0', url: 'mydpkg/0.0.0' } );
+        assert.equal(r.targetProduct['@type'], 'SoftwareApplication');
       });
 
     });

@@ -21,8 +21,8 @@ exports.context = {
 
     "repository": { "@id": "dpkg:code",                      "@container": "@set" },
     "analytics":  { "@id": "dpkg:analytics",                 "@container": "@list" },
-    "input":      { "@id": "dpkg:input",     "@type": "@id", "@container": "@list" },
-    "output":     { "@id": "dpkg:output",    "@type": "@id", "@container": "@list" },
+    "input":      { "@id": "dpkg:input",     "@type": "@id", "@container": "@set" },
+    "output":     { "@id": "dpkg:output",    "@type": "@id", "@container": "@set" },
     "path": "dpkg:path",
     "contentPath": "dpkg:contentPath",
     "contentData": "dpkg:contentData",
@@ -129,6 +129,15 @@ exports.schema = {
       },
       required: ['contentUrl']
     },
+
+    catalog: { //if a catalog is part of a larger catalog (i.e a registry)
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        url: { type: 'string' }
+      }
+    },
+
     datePublished: { type: 'string' },
 
     dataset: {
@@ -164,6 +173,7 @@ exports.schema = {
             type: 'object',
             properties: {
               name: { type: 'string' },
+              version: { type: 'string' },
               url: { type: 'string' }
             }
           }
@@ -203,10 +213,11 @@ exports.schema = {
             type: 'object',
             properties: {
               name: { type: 'string' },
+              version: { type: 'string' },
               url: { type: 'string' }
             }
           }
-        }
+        },
         required: [ 'name' ]
       }
     }
@@ -250,7 +261,7 @@ exports.linkDpkg = function(dpkg, options){
   if(! ('addCtx' in options)){
     options.addCtx = true;
   }
-
+  
   if(options.addCtx){
     var ctx = options.ctx || URL;
     dpkg["@context"] = ctx;
@@ -277,16 +288,15 @@ exports.linkDpkg = function(dpkg, options){
     });
   }
 
-  if('analytics' in dpkg){
-    dpkg.analytics.forEach(function(r){
-      _addType(r, 'Code');
-      _addType(r.programmingLanguage, 'SoftwareApplication');
-    });
-  }
-
   if('dataset' in dpkg){
     dpkg.dataset.forEach(function(r){
       linkDataset(r, dpkg.name, dpkg.version);
+    });
+  }
+
+  if('analytics' in dpkg){
+    dpkg.analytics.forEach(function(r){
+      linkAnalytics(r, dpkg.name, dpkg.version);
     });
   }
 
@@ -300,11 +310,10 @@ exports.linkDpkg = function(dpkg, options){
  */
 function linkDataset(dataset, name, version){
   if('name' in dataset){
-    dataset['@id'] = name + '/' + version + '/' + dataset.name;
+    dataset['@id'] = name + '/' + version + '/dataset/' + dataset.name;
   }
 
   _addType(dataset, 'Dataset');
-  _addType(dataset.encoding, 'DataDownload');
   _addType(dataset.distribution, 'DataDownload');
 
   dataset.catalog = { name: name, version: version, url: name + '/' + version };  
@@ -312,6 +321,30 @@ function linkDataset(dataset, name, version){
   return dataset;
 };
 exports.linkDataset = linkDataset;
+
+
+
+/**
+ * modifies dataset in place to add @id, @type
+ */
+function linkAnalytics(analytics, name, version){
+  if('name' in analytics){
+    analytics['@id'] = name + '/' + version + '/analytics/' + analytics.name;
+  }
+
+  _addType(analytics, 'Code');
+  _addType(analytics.targetProduct, 'SoftwareApplication');
+
+  analytics.catalog = { name: name, version: version, url: name + '/' + version };  
+  
+  return analytics;
+};
+exports.linkAnalytics = linkAnalytics;
+
+
+
+
+
 
 /**
  * validate isBasedOnUrl and returns a dataDependencies hash
@@ -399,8 +432,8 @@ exports.validateRequire = function(dpkg, dataDependencies){
 
   var dataset = dpkg.dataset || [];
   dataset.forEach(function(r){
-    if('url' in r) {
-      validateRequiredUri(r.url, dpkg.name, dpkg.version, dataDependencies);
+    if('distribution' in r && r.distribution.contentUrl) {
+      validateRequiredUri(r.distribution.contentUrl, dpkg.name, dpkg.version, dataDependencies);
     }
   });
 
