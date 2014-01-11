@@ -86,6 +86,25 @@ exports.schema = {
         url: { type: 'string' }
       }
     },
+    author: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        email: { type: 'string' }
+      },
+      required: ['name']
+    },
+    contributor: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+          email: { type: 'string' }
+        },
+        required: ['name']
+      }
+    },
     keywords: { type: 'array', items: { type: 'string' } },
     isBasedOnUrl: { type: 'array', items: { type: 'string' } },
     repository: {
@@ -149,7 +168,7 @@ exports.schema = {
             }
           }
         },
-        required: [ 'name' ]
+        required: [ 'name' ],
       }
     },
 
@@ -187,12 +206,12 @@ exports.schema = {
               url: { type: 'string' }
             }
           }
-        },
+        }
         required: [ 'name' ]
       }
     }
-  },
 
+  },
   required: ['name', 'version']
 };
 
