@@ -148,13 +148,14 @@ exports.schema = {
           name: { type: 'string'},
           description: { type: 'string'},
           isBasedOnUrl: { type: 'array', items: { type: 'string' } },
+          '@context': { type: 'object' },
+          about: { type: 'object' },
           distribution: {
             type: 'object',
             properties: {              
-              '@context': { type: 'object' },
               contentUrl: { type: 'string' },
               contentPath: { type: 'string' },
-              contentData: { type: 'string' },
+              contentData: { type: ['string', 'object', 'array', 'number', 'boolean'] },
               contentSize: { type: 'integer' },           
               encodingFormat: { type: 'string' },
               hashAlgorithm: { type: 'string' },
@@ -434,6 +435,11 @@ exports.validateRequire = function(dpkg, dataDependencies){
   dataset.forEach(function(r){
     if('distribution' in r && r.distribution.contentUrl) {
       validateRequiredUri(r.distribution.contentUrl, dpkg.name, dpkg.version, dataDependencies);
+    }
+    if('isBasedOnUrl' in r){
+      r.isBasedOnUrl.forEach(function(uri){
+        validateRequiredUri(uri, dpkg.name, dpkg.version, dataDependencies);
+      });
     }
   });
 

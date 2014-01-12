@@ -1,7 +1,7 @@
 {
   "name": "datapackage-jsonld",
   "version": "0.4.0",
-  "description": "Give data packages some context because web and linked data",
+  "description": "datapackage in JSON-LD and schema.org/DataCatalog style because semantic web, linked data and hypermedia.",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -17,7 +17,11 @@
     "hyperdata",
     "linked-data",
     "jsonld",
-    "datapackage"
+    "datapackage",
+    "hypermedia",
+    "schema.org",
+    "data",
+    "DataCatalog"
   ],
   "author": "Sebastien Ballesteros",
   "license": "MIT",

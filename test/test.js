@@ -5,11 +5,10 @@ var fs = require('fs')
   , dpkgJsonLd = require('..')
   , path = require('path');
 
-
 var root = path.dirname(__filename);
 var base = dpkgJsonLd.context['@context']['@base'];
 
-var dpkg = require(path.join(root, 'fixture', 'datapackage.json'));
+var dpkg = JSON.parse(fs.readFileSync(path.join(root, 'fixture', 'datapackage.jsonld')));
 
 describe('datapacakge-jsonld', function(){
 
@@ -123,16 +122,25 @@ describe('datapacakge-jsonld', function(){
 
   });
 
-
   describe('validate require', function(){
     it('should validate when a package has valid require link', function(){
+      var mydpkg = clone(dpkg);
+      mydpkg.dataset[1].isBasedOnUrl = [ 'mydpkg/0.0.0/analytics/myanalytics' ];
       assert(!dpkgJsonLd.validateRequire(dpkg));
     });
 
-    it('should throw an error when a package has invalid require links', function(){
+    it('should throw an error when an analytics has invalid require links', function(){
       assert.throws( function(){ 
         var mydpkg = clone(dpkg);
         mydpkg.analytics = [ { input: ['dpkg5/0.0.0'] } ];
+        dpkgJsonLd.validateRequire(mydpkg)
+      }, Error);
+    });
+
+    it('should throw an error when a dataset point to an invalid require links', function(){
+      assert.throws( function(){ 
+        var mydpkg = clone(dpkg);
+        mydpkg.dataset[1].isBasedOnUrl = [ 'mydpkg/0.0.1/analytics/myanalytics' ];
         dpkgJsonLd.validateRequire(mydpkg)
       }, Error);
     });
