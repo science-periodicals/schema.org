@@ -36,7 +36,7 @@ exports.context = {
 
     "keywords":       { "@id": "sch:keywords",                       "@container": "@list" },
     "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@container": "@list" }, //dataDependencies
-    "citation":       { "@id": "sch:citation",       "@type": "@id", "@container": "@list" },
+    "citation":       { "@id": "sch:citation",                       "@container": "@list" },
     "contributor":    { "@id": "sch:contributor",                    "@container": "@list" },
     "dataset":        { "@id": "sch:dataset",                        "@container": "@list" },
     "codeRepository": { "@id": "sch:codeRepository", "@type": "@id" },
@@ -79,6 +79,15 @@ exports.schema = {
     version: { type: 'string' },
     license: { type: 'string' },
     description: { type: 'string' },
+    citation: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          url: { type: 'string' }
+        }
+      }
+    },
     about: {
       type: 'object',
       properties: {

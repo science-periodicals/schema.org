@@ -1,6 +1,6 @@
 {
   "name": "datapackage-jsonld",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "datapackage in JSON-LD and schema.org/DataCatalog style because semantic web, linked data and hypermedia.",
   "main": "index.js",
   "directories": {
