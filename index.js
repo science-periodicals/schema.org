@@ -40,6 +40,7 @@ exports.context = {
     "contributor":    { "@id": "sch:contributor",                    "@container": "@list" },
     "dataset":        { "@id": "sch:dataset",                        "@container": "@list" },
     "codeRepository": { "@id": "sch:codeRepository", "@type": "@id" },
+    "discussionUrl":  { "@id": "sch:discussionUrl", "@type": "@id" },
     "targetProduct":  { "@id": "sch:targetProduct",  "@type": "@id" },
     "url":            { "@id": "sch:url",            "@type": "@id" },
     "contentUrl":     { "@id": "sch:contentUrl",     "@type": "@id" },
@@ -126,6 +127,7 @@ exports.schema = {
         }
       }
     },
+    discussionUrl: { type: 'string' },
     encoding: { //dist_.tar.gz
       type: 'object',
       properties: {
@@ -157,6 +159,7 @@ exports.schema = {
           name: { type: 'string'},
           description: { type: 'string'},
           isBasedOnUrl: { type: 'array', items: { type: 'string' } },
+          discussionUrl: { type: 'string' },
           '@context': { type: 'object' },
           about: { type: 'object' },
           distribution: {
@@ -216,6 +219,7 @@ exports.schema = {
           },
           sampleType: { type: 'string'},
           codeRepository: { type: 'string'},
+          discussionUrl: { type: 'string' },
           input:  { type: 'array', items: { type: 'string'} },
           output: { type: 'array', items: { type: 'string'} },
           isBasedOnUrl: { type: 'array', items: { type: 'string' } },
