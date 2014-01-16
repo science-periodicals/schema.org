@@ -5,7 +5,7 @@ var isUrl = require('is-url')
   , url = require('url');
 
 var BASE = "https://registry.standardanalytics.io/";
-var URL = 'https://registry.standardanalytics.io/contexts/datapackage.jsonld';
+var URL = 'https://registry.standardanalytics.io/datapackage.jsonld';
 
 exports.contextUrl = URL;
 exports.link = '<' + URL + '>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
