@@ -21,7 +21,8 @@
       "distribution": { "contentPath" :"data/data.csv" }
     },
     {
-      "name": "mydata",      
+      "name": "mydata",
+      "isBasedOnUrl": [ "mydpkg/0.0.0/analytics/myanalytics" ],
       "distribution": { "contentData": { "inline": "data" } }
     }
   ],
@@ -29,7 +30,11 @@
   "analytics": [
     {
       "name": "myanalytics",
-      "targetProduct": { "operatingSystem": "Unix" }
+      "targetProduct": { 
+        "operatingSystem": "Unix",
+        "input": [ "mydpkg/0.0.0/dataset/mycsv" ],
+        "output": [ "mydpkg/0.0.0/dataset/mydata" ]
+      }
     }
   ]
 }

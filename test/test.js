@@ -132,7 +132,7 @@ describe('datapacakge-jsonld', function(){
     it('should throw an error when an analytics has invalid require links', function(){
       assert.throws( function(){ 
         var mydpkg = clone(dpkg);
-        mydpkg.analytics = [ { input: ['dpkg5/0.0.0'] } ];
+        mydpkg.analytics = [ { targetProduct: { input: ['dpkg5/0.0.0'] } } ];
         dpkgJsonLd.validateRequire(mydpkg)
       }, Error);
     });
@@ -141,6 +141,38 @@ describe('datapacakge-jsonld', function(){
       assert.throws( function(){ 
         var mydpkg = clone(dpkg);
         mydpkg.dataset[1].isBasedOnUrl = [ 'mydpkg/0.0.1/analytics/myanalytics' ];
+        dpkgJsonLd.validateRequire(mydpkg)
+      }, Error);
+    });
+
+    it('should throw an error when an analytics list as input a local dataset that does not exists', function(){
+      assert.throws( function(){ 
+        var mydpkg = clone(dpkg);
+        mydpkg.analytics[0].targetProduct.input = [ 'mydpkg/0.0.0/dataset/donotexists' ];
+        dpkgJsonLd.validateRequire(mydpkg)
+      }, Error);
+    });
+
+    it('should throw an error when an analytics list as output a local dataset that does not exists', function(){
+      assert.throws( function(){ 
+        var mydpkg = clone(dpkg);
+        mydpkg.analytics[0].targetProduct.output = [ 'mydpkg/0.0.0/dataset/donotexists' ];
+        dpkgJsonLd.validateRequire(mydpkg)
+      }, Error);
+    });
+
+    it('should throw an error when an analytics list as output a local dataset that does not list this analytics as isBasedOnUrl (no isBasedOnUrl at all)', function(){
+      assert.throws( function(){ 
+        var mydpkg = clone(dpkg);
+        delete mydpkg.dataset[2].isBasedOnUrl;
+        dpkgJsonLd.validateRequire(mydpkg)
+      }, Error);
+    });
+
+    it('should throw an error when an analytics list as output a local dataset that does not list this analytics as isBasedOnUrl', function(){
+      assert.throws( function(){ 
+        var mydpkg = clone(dpkg);
+        mydpkg.dataset[2].isBasedOnUrl = ['http://ex.com/smtgelse'];
         dpkgJsonLd.validateRequire(mydpkg)
       }, Error);
     });

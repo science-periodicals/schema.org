@@ -29,8 +29,6 @@ exports.context = {
 
     "license": "dc:license",
 
-    "email": { "@id": "http://xmlns.com/foaf/0.1/mbox", "@type": "@id" },
-
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
 
@@ -40,12 +38,13 @@ exports.context = {
     "contributor":    { "@id": "sch:contributor",                    "@container": "@list" },
     "dataset":        { "@id": "sch:dataset",                        "@container": "@list" },
     "codeRepository": { "@id": "sch:codeRepository", "@type": "@id" },
-    "discussionUrl":  { "@id": "sch:discussionUrl", "@type": "@id" },
+    "discussionUrl":  { "@id": "sch:discussionUrl",  "@type": "@id" },
     "targetProduct":  { "@id": "sch:targetProduct",  "@type": "@id" },
     "url":            { "@id": "sch:url",            "@type": "@id" },
     "contentUrl":     { "@id": "sch:contentUrl",     "@type": "@id" },
 
     "name":                "sch:name",
+    "email":               "sch:email",
     "about":               "sch:about",
     "version":             "sch:version",
     "description":         "sch:description",
@@ -59,6 +58,8 @@ exports.context = {
     "contentSize":         "sch:contentSize",
     "encodingFormat":      "sch:encodingFormat",
     "catalog":             "sch:catalog",
+    "datePublished":       "sch:datePublished",
+    "uploadDate":          "sch:uploadDate",
 
     "MediaObject":         { "@id": "sch:MediaObject",         "@type": "@id" },
     "Person":              { "@id": "sch:Person",              "@type": "@id" },
@@ -213,22 +214,22 @@ exports.schema = {
           targetProduct: { 
             type: 'object',
             properties: {
-              operatingSystem: { type: 'string' }
+              operatingSystem: { type: 'string' },
+              input:  { type: 'array', items: { type: 'string'} },
+              output: { type: 'array', items: { type: 'string'} },
             },
             required: [ 'operatingSystem' ]
           },
           sampleType: { type: 'string'},
           codeRepository: { type: 'string'},
-          discussionUrl: { type: 'string' },
-          input:  { type: 'array', items: { type: 'string'} },
-          output: { type: 'array', items: { type: 'string'} },
-          isBasedOnUrl: { type: 'array', items: { type: 'string' } },
+          discussionUrl:  { type: 'string' },
+          isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
           catalog: {
             type: 'object',
             properties: {
-              name: { type: 'string' },
+              name:    { type: 'string' },
               version: { type: 'string' },
-              url: { type: 'string' }
+              url:     { type: 'string' }
             }
           }
         },
@@ -357,7 +358,31 @@ exports.linkAnalytics = linkAnalytics;
 
 
 
+/**
+ * return parsed URL if the uri if from this registry
+ */
+function _parseUrl(uri){
 
+  var absUrl = (isUrl(uri)) ? uri : url.resolve(BASE, uri);
+  var urlObj = url.parse(absUrl, true);
+
+  if(urlObj.hostname === url.parse(BASE).hostname){ //it's a dpkg of this registry
+    var pathname = urlObj.pathname.replace(/^\//, '');
+    var splt = pathname.split('/'); //name, version, ...
+
+    if(splt.length < 2){
+      throw new Error('invalid URI: '+ uri);
+    }
+
+    return {
+      urlObj: urlObj,
+      splt: splt,
+      pathname: pathname
+    };
+
+  }
+
+};
 
 
 /**
@@ -370,31 +395,24 @@ exports.dataDependencies = function(isBasedOnUrl){
   var dataDependencies = {};
 
   isBasedOnUrl.forEach(function(uri){
-    var absUrl = (isUrl(uri)) ? uri : url.resolve(BASE, uri);
-    var urlObj = url.parse(absUrl, true);
+    var parsed = _parseUrl(uri);
+    if(!parsed) return;
 
-    if(urlObj.hostname === url.parse(BASE).hostname){ //it's a dpkg of this registry
-      var pathname = urlObj.pathname.replace(/^\//, '');
-      var splt = pathname.split('/'); //name, version, ...
-      if(splt.length < 2){
-        throw new Error('invalid URI: '+ uri);
-      }
-
-      var name = splt[0];
-      var version = splt[1];
-      if(version === 'latest'){
-        version = (urlObj.query && urlObj.query.range) || '*';
-      }
-
-      if(!semver.validRange(version)){
-        throw new Error('invalid version/range '+ version);        
-      }
-
-      if(name in dataDependencies){
-        throw new Error(name + ' is already listed as dependencies');
-      }
-      dataDependencies[name] = version;
+    var name = parsed.splt[0];
+    var version = parsed.splt[1];
+    if(version === 'latest'){
+      version = (parsed.urlObj.query && parsed.urlObj.query.range) || '*';
     }
+
+    if(!semver.validRange(version)){
+      throw new Error('invalid version/range '+ version);        
+    }
+
+    if(name in dataDependencies){
+      throw new Error(name + ' is already listed as dependencies');
+    }
+    dataDependencies[name] = version;
+
   });
 
   return dataDependencies;
@@ -403,42 +421,75 @@ exports.dataDependencies = function(isBasedOnUrl){
 /**
  * make sure that link to dpkg hosted on the registry respect the
  * versioning scheme used
+ *
+ * return parsed uri if within dpkg link
  */
 function validateRequiredUri(uri, name, version, dataDependencies){
 
   var dataDependencies = dataDependencies || {};
 
-  var absUrl = (isUrl(uri)) ? uri : url.resolve(BASE, uri);
-  var urlObj = url.parse(absUrl);
+  var parsed = _parseUrl(uri);
+  if(!parsed) return;
 
-  if(urlObj.hostname === url.parse(BASE).hostname){ //it's a dpkg of this registry
-    var pathname = urlObj.pathname.replace(/^\//, '');
-    var splt = pathname.split('/'); //name, version, ...
+  if (parsed.splt[0] === name){ //whithin dpkg link
+    if (parsed.splt[1] !== version){
+      throw new Error('version mismatch for :' + uri);
+    } else {
+      return parsed;
+    };
+  } else { //link to another dpkg on this registry: does it satisfies the data dependencies constraints ?
 
-    if(splt.length < 2){
-      throw new Error('invalid URI: '+ uri);
-    }
-    
-    if (splt[0] === name){ //whithin dpkg link
-      if (splt[1] !== version){
-        throw new Error('version mismatch for :' + uri);
-      } else {
-        return;
+    if(!(parsed.splt[0] in dataDependencies)){
+      throw new Error( parsed.splt[0] + '/' + parsed.splt[1] + ' is not listed in isBasedOnUrl (required in ' + uri  + ')');
+    } else {        
+      //check version match
+      if(!semver.satisfies(parsed.splt[1], dataDependencies[parsed.splt[0]])){
+        throw new Error( uri + ' does not respect semver requirement of isBasedOnUrl (' + dataDependencies[parsed.splt[0]] + ')');
       };
-    } else { //link to another dpkg on this registry: does it satisfies the data dependencies constraints ?
-
-      if(!(splt[0] in dataDependencies)){
-        throw new Error( splt[0] + '/' + splt[1] + ' is not listed in isBasedOnUrl (required in ' + uri  + ')');
-      } else {        
-        //check version match
-        if(!semver.satisfies(splt[1], dataDependencies[splt[0]])){
-          throw new Error( uri + ' does not respect semver requirement of isBasedOnUrl (' + dataDependencies[splt[0]] + ')');
-        };
-      }      
     }
+
   }
 };
+
+/**
+ * suppose that dpkg schema has been validated
+ */
 exports.validateRequiredUri = validateRequiredUri;
+
+
+/**
+ * validate uri and in case it's an uri pointing to the current doc,
+ * check that the resource pointed to exists.
+ */
+function _validateLink(uri, dpkg, dataDependencies){
+
+  var parsed = validateRequiredUri(uri, dpkg.name, dpkg.version, dataDependencies);
+  if(parsed){ //uri from this doc, validate that there is a matching dataset
+    var type = parsed.splt[2];
+    var array;
+    if(type === 'analytics'){
+      array = dpkg.analytics || [];
+    } else if (type === 'dataset'){
+      array = dpkg.dataset || [];      
+    } else {
+      throw new Error(  uri + ' should have contain dataset or analytics');
+    }
+
+    var name = parsed.splt[3];
+    var matched;
+    if(name){
+      matched = array.filter(function(x){return x.name === name;})[0];              
+    }
+    
+    if(matched){
+      return matched;
+    } else {
+      throw new Error( 'input: ' + uri + ' does not have a matching dataset within this datapackage');
+    }
+  }
+  
+};
+
 
 exports.validateRequire = function(dpkg, dataDependencies){
 
@@ -447,24 +498,44 @@ exports.validateRequire = function(dpkg, dataDependencies){
   var dataset = dpkg.dataset || [];
   dataset.forEach(function(r){
     if('distribution' in r && r.distribution.contentUrl) {
-      validateRequiredUri(r.distribution.contentUrl, dpkg.name, dpkg.version, dataDependencies);
+      _validateLink(r.distribution.contentUrl, dpkg, dataDependencies);
     }
     if('isBasedOnUrl' in r){
       r.isBasedOnUrl.forEach(function(uri){
-        validateRequiredUri(uri, dpkg.name, dpkg.version, dataDependencies);
+        _validateLink(uri, dpkg, dataDependencies);
       });
     }
   });
 
   var analytics = dpkg.analytics || [];
   analytics.forEach(function(r){
-    ['input', 'output'].forEach(function(prop){
-      if (prop in r) {
-        r[prop].forEach(function(uri){
-          validateRequiredUri(uri, dpkg.name, dpkg.version, dataDependencies);
+    if ('targetProduct' in r) {
+
+      if('input' in r.targetProduct){
+        r.targetProduct.input.forEach(function(uri){
+          _validateLink(uri, dpkg, dataDependencies);
         });
       }
-    });
-  });
 
+      if('output' in r.targetProduct){
+        r.targetProduct.output.forEach(function(uri){
+          var matched = _validateLink(uri, dpkg, dataDependencies);
+          if(matched){ //check that isBasedOnUrl points to the analytics
+            var isBasedOnUrl = matched.isBasedOnUrl || [];
+            isBasedOnUrl = isBasedOnUrl
+              .map(_parseUrl)
+              .filter(function(x){return x;})
+              .map(function(x) {return x.pathname;});
+
+            if(isBasedOnUrl.indexOf( [dpkg.name, dpkg.version, 'analytics', r.name].join('/') ) === -1){
+              throw new Error( 'dataset: ' + uri + ' should list ' + [dpkg.name, dpkg.version, 'analytics', r.name ].join('/') + ' in isBasedOnUrl');
+            }
+          } else {
+            throw new Error( 'output: ' + uri + ' does not have a matching dataset within this datapackage');
+          }
+        });
+      }
+    }
+  }); 
+  
 };
