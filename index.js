@@ -109,6 +109,16 @@ exports.terms = {
       "seeAlso": "http://schema.org/SoftwareApplication"
     },
     {
+      "@id": "dpkg:filePath",
+      "@type": "rdf:Property",
+      "comment":"Unix-style ('/') path to a runnable file (typically a script) or binary. The path must be relative to the directory in which the DataCatalog containing this resource resides.",
+      "label": "file path",
+      "range": "xsd:string",
+      "domain": "schema:SoftwareApplication",
+      "status": "testing",
+      "seeAlso": "http://dataprotocols.org/data-packages/#resource-information"
+    },
+    {
       "@id": "dpkg:contentData",
       "@type": "rdf:Property",
       "comment":"Inline data content of a datapackage Dataset.",
@@ -153,6 +163,7 @@ exports.context = {
     "path": "dpkg:path",
     "contentPath": "dpkg:contentPath",
     "contentData": "dpkg:contentData",
+    "filePath":    "dpkg:filePath",
 
     "license": "dc:license",
 
@@ -160,6 +171,7 @@ exports.context = {
     "hashValue": "nfo:hashValue",
 
     "keywords":       { "@id": "sch:keywords",                       "@container": "@list" },
+    "requirements":   { "@id": "sch:requirements",                   "@container": "@list" },
     "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@container": "@list" }, //dataDependencies
     "citation":       { "@id": "sch:citation",                       "@container": "@list" },
     "contributor":    { "@id": "sch:contributor",                    "@container": "@list" },
@@ -169,6 +181,7 @@ exports.context = {
     "targetProduct":  { "@id": "sch:targetProduct",  "@type": "@id" },
     "url":            { "@id": "sch:url",            "@type": "@id" },
     "contentUrl":     { "@id": "sch:contentUrl",     "@type": "@id" },
+    "downloadUrl":    { "@id": "sch:downloadUrl",    "@type": "@id" },
 
     "name":                "sch:name",
     "email":               "sch:email",
@@ -192,6 +205,8 @@ exports.context = {
     "exifData":            "sch:exifData",
     "height":              "sch:height",
     "width":               "sch:width",
+    "fileFormat":          "sch:fileFormat",
+    "fileSize":            "sch:fileSize",
 
     "MediaObject":         { "@id": "sch:MediaObject",         "@type": "@id" },
     "ImageObject":         { "@id": "sch:ImageObject",         "@type": "@id" },
@@ -348,6 +363,10 @@ exports.schema = {
             type: 'object',
             properties: {
               operatingSystem: { type: 'string' },
+              filePath: { type: 'string' },
+              downloadUrl: { type: 'string' },
+              fileSize: { type: 'integer' },
+              fileFormat: { type: 'string' },
               input:  { type: 'array', items: { type: 'string'} },
               output: { type: 'array', items: { type: 'string'} },
             },
