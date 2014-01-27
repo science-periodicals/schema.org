@@ -30,9 +30,9 @@ describe('datapacakge-jsonld', function(){
         assert.deepEqual(r.catalog, { name: 'mydpkg', version: '0.0.0', url: 'mydpkg/0.0.0' } );
         assert.equal(r.distribution['@type'], 'DataDownload');
       });
-      ldpkg.analytics.forEach(function(r){
+      ldpkg.code.forEach(function(r){
         assert.equal(r['@type'], 'Code');
-        assert.equal(r['@id'], 'mydpkg/0.0.0/analytics/' + r.name);
+        assert.equal(r['@id'], 'mydpkg/0.0.0/code/' + r.name);
         assert.deepEqual(r.catalog, { name: 'mydpkg', version: '0.0.0', url: 'mydpkg/0.0.0' } );
         assert.equal(r.targetProduct['@type'], 'SoftwareApplication');
       });
@@ -125,14 +125,14 @@ describe('datapacakge-jsonld', function(){
   describe('validate require', function(){
     it('should validate when a package has valid require link', function(){
       var mydpkg = clone(dpkg);
-      mydpkg.dataset[1].isBasedOnUrl = [ 'mydpkg/0.0.0/analytics/myanalytics' ];
+      mydpkg.dataset[1].isBasedOnUrl = [ 'mydpkg/0.0.0/code/myanalytics' ];
       assert(!dpkgJsonLd.validateRequire(dpkg));
     });
 
-    it('should throw an error when an analytics has invalid require links', function(){
+    it('should throw an error when a code has invalid require links', function(){
       assert.throws( function(){ 
         var mydpkg = clone(dpkg);
-        mydpkg.analytics = [ { targetProduct: { input: ['dpkg5/0.0.0'] } } ];
+        mydpkg.code = [ { targetProduct: { input: ['dpkg5/0.0.0'] } } ];
         dpkgJsonLd.validateRequire(mydpkg)
       }, Error);
     });
@@ -140,28 +140,28 @@ describe('datapacakge-jsonld', function(){
     it('should throw an error when a dataset point to an invalid require links', function(){
       assert.throws( function(){ 
         var mydpkg = clone(dpkg);
-        mydpkg.dataset[1].isBasedOnUrl = [ 'mydpkg/0.0.1/analytics/myanalytics' ];
+        mydpkg.dataset[1].isBasedOnUrl = [ 'mydpkg/0.0.1/code/myanalytics' ];
         dpkgJsonLd.validateRequire(mydpkg)
       }, Error);
     });
 
-    it('should throw an error when an analytics list as input a local dataset that does not exists', function(){
+    it('should throw an error when a code list as input a local dataset that does not exists', function(){
       assert.throws( function(){ 
         var mydpkg = clone(dpkg);
-        mydpkg.analytics[0].targetProduct.input = [ 'mydpkg/0.0.0/dataset/donotexists' ];
+        mydpkg.code[0].targetProduct.input = [ 'mydpkg/0.0.0/dataset/donotexists' ];
         dpkgJsonLd.validateRequire(mydpkg)
       }, Error);
     });
 
-    it('should throw an error when an analytics list as output a local dataset that does not exists', function(){
+    it('should throw an error when a code list as output a local dataset that does not exists', function(){
       assert.throws( function(){ 
         var mydpkg = clone(dpkg);
-        mydpkg.analytics[0].targetProduct.output = [ 'mydpkg/0.0.0/dataset/donotexists' ];
+        mydpkg.code[0].targetProduct.output = [ 'mydpkg/0.0.0/dataset/donotexists' ];
         dpkgJsonLd.validateRequire(mydpkg)
       }, Error);
     });
 
-    it('should throw an error when an analytics list as output a local dataset that does not list this analytics as isBasedOnUrl (no isBasedOnUrl at all)', function(){
+    it('should throw an error when a code list as output a local dataset that does not list this code as isBasedOnUrl (no isBasedOnUrl at all)', function(){
       assert.throws( function(){ 
         var mydpkg = clone(dpkg);
         delete mydpkg.dataset[2].isBasedOnUrl;
@@ -169,7 +169,7 @@ describe('datapacakge-jsonld', function(){
       }, Error);
     });
 
-    it('should throw an error when an analytics list as output a local dataset that does not list this analytics as isBasedOnUrl', function(){
+    it('should throw an error when a code list as output a local dataset that does not list this code as isBasedOnUrl', function(){
       assert.throws( function(){ 
         var mydpkg = clone(dpkg);
         mydpkg.dataset[2].isBasedOnUrl = ['http://ex.com/smtgelse'];

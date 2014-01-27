@@ -22,12 +22,12 @@
     },
     {
       "name": "mydata",
-      "isBasedOnUrl": [ "mydpkg/0.0.0/analytics/myanalytics" ],
+      "isBasedOnUrl": [ "mydpkg/0.0.0/code/myanalytics" ],
       "distribution": { "contentData": { "inline": "data" } }
     }
   ],
 
-  "analytics": [
+  "code": [
     {
       "name": "myanalytics",
       "targetProduct": { 

@@ -10,6 +10,132 @@ var URL = 'https://registry.standardanalytics.io/datapackage.jsonld';
 exports.contextUrl = URL;
 exports.link = '<' + URL + '>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
+exports.terms = {
+  "@context": {
+    "dpkg": "http://standardanalytics.io/datapackage/",
+    "schema": "http://schema.org/",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "vs": "http://www.w3.org/2003/06/sw-vocab-status/ns#",
+    "defines": {
+      "@reverse": "rdfs:isDefinedBy"
+    },
+    "comment": "rdfs:comment",
+    "label": "rdfs:label",
+    "domain": {
+      "@id": "rdfs:domain",
+      "@type": "@id"
+    },
+    "range": {
+      "@id": "rdfs:range",
+      "@type": "@id"
+    },
+    "subClassOf": {
+      "@id": "rdfs:subClassOf",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "subPropertyOf": {
+      "@id": "rdfs:subPropertyOf",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "seeAlso": {
+      "@id": "rdfs:seeAlso",
+      "@type": "@id"
+    },
+    "status": "vs:term_status"
+  },
+  "@id": "http://standardanalytics.io/datapackage",
+  "defines": [
+    {
+      "@id": "dpkg:repository",
+      "@type": "rdf:Property",
+      "label": "repository",
+      "comment":"Array of repositories where the package can be located. For a github repository, for example, it is common practice to indicate the codeRepository link to the repo, and the relative path of the folder.",
+      "range": "schema:Code",
+      "domain": "schema:DataCatalog",
+      "status": "testing",
+      "seeAlso": "http://schema.org/Code"
+    },
+    {
+      "@id": "dpkg:path",
+      "@type": "rdf:Property",
+      "label": "path",
+      "comment":"Absolute or relative path.",
+      "range": "xsd:string",
+      "domain": "schema:Code",
+      "status": "testing",
+      "seeAlso": "http://wiki.commonjs.org/wiki/Packages/1.1"
+    },
+    {
+      "@id": "dpkg:code",
+      "@type": "rdf:Property",
+      "label": "code",
+      "comment":"List of code resources used for analytics or views",
+      "range": "schema:Code",
+      "domain": "schema:DataCatalog",
+      "status": "testing",
+      "seeAlso": "http://schema.org/Code"
+    },
+    {
+      "@id": "dpkg:figure",
+      "@type": "rdf:Property",
+      "label": "figure",
+      "comment":"List of figures",
+      "range": "schema:ImageObject",
+      "domain": "schema:DataCatalog",
+      "status": "testing",
+      "seeAlso": "http://schema.org/ImageObject"
+    },
+    {
+      "@id": "dpkg:input",
+      "@type": "rdf:Property",
+      "label": "input",
+      "comment":"List of absolute or relative URLs of data resources used in a given analysis.",
+      "range": "xsd:string",
+      "domain": "schema:SoftwareApplication",
+      "status": "testing",
+      "seeAlso": "http://schema.org/SoftwareApplication"
+    },
+    {
+      "@id": "dpkg:output",
+      "@type": "rdf:Property",
+      "label": "output",
+      "comment":"List of absolute or relative URLs of data resources generated in a given analysis.",
+      "range": "xsd:string",
+      "domain": "schema:SoftwareApplication",
+      "status": "testing",
+      "seeAlso": "http://schema.org/SoftwareApplication"
+    },
+    {
+      "@id": "dpkg:contentData",
+      "@type": "rdf:Property",
+      "comment":"Inline data content of a datapackage Dataset.",
+      "label": "content data",
+      "range": "xsd:string",
+      "domain": "schema:DataDownload",
+      "status": "testing",
+      "seeAlso": "http://dataprotocols.org/data-packages/#resource-information"
+    },
+    {
+      "@id": "dpkg:contentPath",
+      "@type": "rdf:Property",
+      "comment":"Unix-style ('/') path to the data content of a datapackage Dataset. The path must be relative to the directory in which the DataCatalog containing this resource resides.",
+      "label": "content path",
+      "range": "xsd:string",
+      "domain": "schema:DataDownload",
+      "status": "testing",
+      "seeAlso": "http://dataprotocols.org/data-packages/#resource-information"
+    }
+
+  ],
+  "@type": "owl:Ontology",
+  "comment": "A lightweight vocabulary for terms of the data package spec",
+  "label": "The data package Vocabulary"
+};
+
+
 exports.context = {
   "@context": {
     "@base": BASE,
@@ -19,10 +145,11 @@ exports.context = {
     "nfo":  "http://www.semanticdesktop.org/ontologies/nfo/#",
     "dc":   "http://purl.org/dc/terms/",
 
-    "repository": { "@id": "dpkg:code",                      "@container": "@set" },
-    "analytics":  { "@id": "dpkg:analytics",                 "@container": "@list" },
-    "input":      { "@id": "dpkg:input",     "@type": "@id", "@container": "@set" },
-    "output":     { "@id": "dpkg:output",    "@type": "@id", "@container": "@set" },
+    "repository": { "@id": "dpkg:code",                      "@container": "@set"  },
+    "code":       { "@id": "dpkg:code",                      "@container": "@list" },
+    "figure":     { "@id": "dpkg:figure",                    "@container": "@list" },
+    "input":      { "@id": "dpkg:input",     "@type": "@id", "@container": "@set"  },
+    "output":     { "@id": "dpkg:output",    "@type": "@id", "@container": "@set"  },
     "path": "dpkg:path",
     "contentPath": "dpkg:contentPath",
     "contentData": "dpkg:contentData",
@@ -60,8 +187,14 @@ exports.context = {
     "catalog":             "sch:catalog",
     "datePublished":       "sch:datePublished",
     "uploadDate":          "sch:uploadDate",
+    "caption":             "sch:caption",
+    "thumbnail":           "sch:thumbnail",
+    "exifData":            "sch:exifData",
+    "height":              "sch:height",
+    "width":               "sch:width",
 
     "MediaObject":         { "@id": "sch:MediaObject",         "@type": "@id" },
+    "ImageObject":         { "@id": "sch:ImageObject",         "@type": "@id" },
     "Person":              { "@id": "sch:Person",              "@type": "@id" },
     "Organization":        { "@id": "sch:Person",              "@type": "@id" },
     "DataCatalog":         { "@id": "sch:DataCatalog",         "@type": "@id" },
@@ -196,7 +329,7 @@ exports.schema = {
       }
     },
 
-    analytics: {
+    code: {
       type: 'array',
       items: {
         type: 'object',
@@ -234,6 +367,27 @@ exports.schema = {
           }
         },
         required: [ 'name' ]
+      }
+    },
+
+    figure: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          name:           { type: 'string' },
+          description:    { type: 'string' },
+          caption:        { type: 'string' },
+          exifData:       { type: 'string' },
+          width:          { type: 'string' }, //e.g "100px" ??
+          height:         { type: 'string' },
+          thumbnail:      { type: 'object' }, 
+          contentUrl:     { type: 'string' },
+          contentPath:    { type: 'string' },
+          contentSize:    { type: 'integer' },           
+          encodingFormat: { type: 'string' },        
+          uploadDate:     { type: 'string' }
+        }
       }
     }
 
@@ -309,9 +463,9 @@ exports.linkDpkg = function(dpkg, options){
     });
   }
 
-  if('analytics' in dpkg){
-    dpkg.analytics.forEach(function(r){
-      linkAnalytics(r, dpkg.name, dpkg.version);
+  if('code' in dpkg){
+    dpkg.code.forEach(function(r){
+      linkCode(r, dpkg.name, dpkg.version);
     });
   }
 
@@ -342,19 +496,19 @@ exports.linkDataset = linkDataset;
 /**
  * modifies dataset in place to add @id, @type
  */
-function linkAnalytics(analytics, name, version){
-  if('name' in analytics){
-    analytics['@id'] = name + '/' + version + '/analytics/' + analytics.name;
+function linkCode(code, name, version){
+  if('name' in code){
+    code['@id'] = name + '/' + version + '/code/' + code.name;
   }
 
-  _addType(analytics, 'Code');
-  _addType(analytics.targetProduct, 'SoftwareApplication');
+  _addType(code, 'Code');
+  _addType(code.targetProduct, 'SoftwareApplication');
 
-  analytics.catalog = { name: name, version: version, url: name + '/' + version };  
+  code.catalog = { name: name, version: version, url: name + '/' + version };  
   
-  return analytics;
+  return code;
 };
-exports.linkAnalytics = linkAnalytics;
+exports.linkCode = linkCode;
 
 
 
@@ -467,12 +621,12 @@ function _validateLink(uri, dpkg, dataDependencies){
   if(parsed){ //uri from this doc, validate that there is a matching dataset
     var type = parsed.splt[2];
     var array;
-    if(type === 'analytics'){
-      array = dpkg.analytics || [];
+    if(type === 'code'){
+      array = dpkg.code || [];
     } else if (type === 'dataset'){
       array = dpkg.dataset || [];      
     } else {
-      throw new Error(  uri + ' should have contain dataset or analytics');
+      throw new Error(  uri + ' should have contain dataset or code');
     }
 
     var name = parsed.splt[3];
@@ -507,8 +661,8 @@ exports.validateRequire = function(dpkg, dataDependencies){
     }
   });
 
-  var analytics = dpkg.analytics || [];
-  analytics.forEach(function(r){
+  var code = dpkg.code || [];
+  code.forEach(function(r){
     if ('targetProduct' in r) {
 
       if('input' in r.targetProduct){
@@ -520,15 +674,15 @@ exports.validateRequire = function(dpkg, dataDependencies){
       if('output' in r.targetProduct){
         r.targetProduct.output.forEach(function(uri){
           var matched = _validateLink(uri, dpkg, dataDependencies);
-          if(matched){ //check that isBasedOnUrl points to the analytics
+          if(matched){ //check that isBasedOnUrl points to the code
             var isBasedOnUrl = matched.isBasedOnUrl || [];
             isBasedOnUrl = isBasedOnUrl
               .map(_parseUrl)
               .filter(function(x){return x;})
               .map(function(x) {return x.pathname;});
 
-            if(isBasedOnUrl.indexOf( [dpkg.name, dpkg.version, 'analytics', r.name].join('/') ) === -1){
-              throw new Error( 'dataset: ' + uri + ' should list ' + [dpkg.name, dpkg.version, 'analytics', r.name ].join('/') + ' in isBasedOnUrl');
+            if(isBasedOnUrl.indexOf( [dpkg.name, dpkg.version, 'code', r.name].join('/') ) === -1){
+              throw new Error( 'dataset: ' + uri + ' should list ' + [dpkg.name, dpkg.version, 'code', r.name ].join('/') + ' in isBasedOnUrl');
             }
           } else {
             throw new Error( 'output: ' + uri + ' does not have a matching dataset within this datapackage');
