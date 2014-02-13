@@ -183,30 +183,33 @@ exports.context = {
     "contentUrl":     { "@id": "sch:contentUrl",     "@type": "@id" },
     "downloadUrl":    { "@id": "sch:downloadUrl",    "@type": "@id" },
 
-    "name":                "sch:name",
-    "email":               "sch:email",
-    "about":               "sch:about",
-    "version":             "sch:version",
-    "description":         "sch:description",
-    "distribution":        "sch:distribution",
-    "author":              "sch:author",
-    "encoding":            "sch:encoding",
-    "runtime":             "sch:runtime",
-    "programmingLanguage": "sch:programmingLanguage",
-    "operatingSystem":     "sch:operatingSystem",
-    "sampleType":          "sch:sampleType", //executable script ready to be run
-    "contentSize":         "sch:contentSize",
-    "encodingFormat":      "sch:encodingFormat",
-    "catalog":             "sch:catalog",
-    "datePublished":       "sch:datePublished",
-    "uploadDate":          "sch:uploadDate",
-    "caption":             "sch:caption",
-    "thumbnail":           "sch:thumbnail",
-    "exifData":            "sch:exifData",
-    "height":              "sch:height",
-    "width":               "sch:width",
-    "fileFormat":          "sch:fileFormat",
-    "fileSize":            "sch:fileSize",
+    "name":                  "sch:name",
+    "email":                 "sch:email",
+    "about":                 "sch:about",
+    "version":               "sch:version",
+    "description":           "sch:description",
+    "distribution":          "sch:distribution",
+    "author":                "sch:author",
+    "encoding":              "sch:encoding",
+    "runtime":               "sch:runtime",
+    "programmingLanguage":   "sch:programmingLanguage",
+    "operatingSystem":       "sch:operatingSystem",
+    "sampleType":            "sch:sampleType", //executable script ready to be run
+    "contentSize":           "sch:contentSize",
+    "encodingFormat":        "sch:encodingFormat",
+    "catalog":               "sch:catalog",
+    "datePublished":         "sch:datePublished",
+    "uploadDate":            "sch:uploadDate",
+    "caption":               "sch:caption",
+    "thumbnail":             "sch:thumbnail",
+    "exifData":              "sch:exifData",
+    "height":                "sch:height",
+    "width":                 "sch:width",
+    "fileFormat":            "sch:fileFormat",
+    "fileSize":              "sch:fileSize",
+    "memoryRequirements":    "sch:memoryRequirements",
+    "processorRequirements": "sch:processorRequirements",
+    "storageRequirements":   "sch:storageRequirements",
 
     "MediaObject":         { "@id": "sch:MediaObject",         "@type": "@id" },
     "ImageObject":         { "@id": "sch:ImageObject",         "@type": "@id" },
@@ -363,6 +366,9 @@ exports.schema = {
             type: 'object',
             properties: {
               operatingSystem: { type: 'string' },
+              memoryRequirements: { type: 'string' },
+              processorRequirements: { type: 'string' },
+              storageRequirements: { type: 'string' },
               filePath: { type: 'string' },
               downloadUrl: { type: 'string' },
               fileSize: { type: 'integer' },
@@ -405,7 +411,16 @@ exports.schema = {
           contentPath:    { type: 'string' },
           contentSize:    { type: 'integer' },           
           encodingFormat: { type: 'string' },        
-          uploadDate:     { type: 'string' }
+          uploadDate:     { type: 'string' },
+          isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
+          catalog: {
+            type: 'object',
+            properties: {
+              name:    { type: 'string' },
+              version: { type: 'string' },
+              url:     { type: 'string' }
+            }
+          }
         }
       }
     }
