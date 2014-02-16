@@ -718,7 +718,7 @@ exports.validateRequire = function(dpkg, dataDependencies){
       validateName(r.name);
 
       if(r.contentUrl){
-        _validateLink(r.distribution.contentUrl, dpkg, dataDependencies);
+        _validateLink(r.contentUrl, dpkg, dataDependencies);
       }
 
       if('distribution' in r && r.distribution.contentUrl) {
