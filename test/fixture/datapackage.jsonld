@@ -33,8 +33,17 @@
       "targetProduct": { 
         "operatingSystem": "Unix",
         "input": [ "mydpkg/0.0.0/dataset/mycsv" ],
-        "output": [ "mydpkg/0.0.0/dataset/mydata" ]
+        "output": [ "mydpkg/0.0.0/dataset/mydata", "mydpkg/0.0.0/figure/myfig" ]
       }
+    }   
+  ],
+
+  "figure": [
+    {
+      "name": "myfig",
+      "contentPath": "figure/x.png",
+      "isBasedOnUrl": [ "mydpkg/0.0.0/dataset/mydata",  "mydpkg/0.0.0/code/myanalytics" ]
     }
   ]
+
 }

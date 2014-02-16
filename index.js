@@ -503,6 +503,12 @@ exports.linkDpkg = function(dpkg, options){
     });
   }
 
+  if('figure' in dpkg){
+    dpkg.figure.forEach(function(r){
+      linkFigure(r, dpkg.name, dpkg.version);
+    });
+  }
+
   dpkg.catalog = { name: dpkg.name, url: dpkg.name };
 
   return dpkg;
@@ -526,9 +532,8 @@ function linkDataset(dataset, name, version){
 exports.linkDataset = linkDataset;
 
 
-
 /**
- * modifies dataset in place to add @id, @type
+ * modifies code in place to add @id, @type
  */
 function linkCode(code, name, version){
   if('name' in code){
@@ -543,6 +548,23 @@ function linkCode(code, name, version){
   return code;
 };
 exports.linkCode = linkCode;
+
+
+/**
+ * modifies code in place to add @id, @type
+ */
+function linkFigure(figure, name, version){
+  if('name' in figure){
+    figure['@id'] = name + '/' + version + '/figure/' + figure.name;
+  }
+
+  _addType(figure, 'ImageObject');
+
+  figure.catalog = { name: name, version: version, url: name + '/' + version };  
+  
+  return figure;
+};
+exports.linkFigure = linkFigure;
 
 
 
@@ -647,20 +669,19 @@ exports.validateRequiredUri = validateRequiredUri;
 
 /**
  * validate uri and in case it's an uri pointing to the current doc,
- * check that the resource pointed to exists.
+ * check that the resource pointed to exists and if it does return it.
+ * If a resource points to code, check that the code list it as it inputs
  */
 function _validateLink(uri, dpkg, dataDependencies){
 
   var parsed = validateRequiredUri(uri, dpkg.name, dpkg.version, dataDependencies);
-  if(parsed){ //uri from this doc, validate that there is a matching dataset
+  if(parsed){ //uri from this doc, validate that there is a matching resource
     var type = parsed.splt[2];
-    var array;
-    if(type === 'code'){
-      array = dpkg.code || [];
-    } else if (type === 'dataset'){
-      array = dpkg.dataset || [];      
+
+    if(['code', 'dataset', 'figure'].indexOf(type) === -1){
+      throw new Error(  uri + ' should contain /dataset/, /code/ or /figure/');      
     } else {
-      throw new Error(  uri + ' should have contain dataset or code');
+      var array = dpkg[type] || [];
     }
 
     var name = parsed.splt[3];
@@ -670,33 +691,69 @@ function _validateLink(uri, dpkg, dataDependencies){
     }
     
     if(matched){
-      return matched;
+
+      return {resource: matched, type:type};
+
     } else {
-      throw new Error( 'input: ' + uri + ' does not have a matching dataset within this datapackage');
+
+      throw new Error( 'input: ' + uri + ' does not have a matching resource within this datapackage');
+
     }
+
   }
   
 };
 
-
+/**
+ * validateRequire AND name
+ */ 
 exports.validateRequire = function(dpkg, dataDependencies){
 
   var dataDependencies = dataDependencies || exports.dataDependencies(dpkg.isBasedOnUrl);
 
-  var dataset = dpkg.dataset || [];
-  dataset.forEach(function(r){
-    if('distribution' in r && r.distribution.contentUrl) {
-      _validateLink(r.distribution.contentUrl, dpkg, dataDependencies);
-    }
-    if('isBasedOnUrl' in r){
-      r.isBasedOnUrl.forEach(function(uri){
-        _validateLink(uri, dpkg, dataDependencies);
-      });
-    }
+  ['dataset', 'figure'].forEach(function(t){
+
+    var resource = dpkg[t] || [];
+    resource.forEach(function(r){
+      validateName(r.name);
+
+      if(r.contentUrl){
+        _validateLink(r.distribution.contentUrl, dpkg, dataDependencies);
+      }
+
+      if('distribution' in r && r.distribution.contentUrl) {
+        _validateLink(r.distribution.contentUrl, dpkg, dataDependencies);
+      }
+
+      if('isBasedOnUrl' in r){
+        r.isBasedOnUrl.forEach(function(uri){
+          var matched = _validateLink(uri, dpkg, dataDependencies);
+          
+          if(matched.type === 'code'){ //check that the matched code resource list the uri as it inputs
+            if(! ('targetProduct' in matched.resource && matched.resource.targetProduct.output) ){
+              throw new Error( t + ': ' + r.name  + ' points to code (' + uri + ") that does not list it as it's outputs");
+            }
+            
+            var output = matched.resource.targetProduct.output
+              .map(_parseUrl)
+              .filter(function(x){return x;})
+              .map(function(x) {return x.pathname;});
+            
+            if(output.indexOf( [dpkg.name, dpkg.version, t, r.name].join('/') ) === -1){
+              throw new Error(  t + ': ' + r.name  + ' points to code (' + uri + ") that does not list it as it's outputs");
+            }
+          }
+
+        });
+      }
+    });
+
   });
 
   var code = dpkg.code || [];
   code.forEach(function(r){
+    validateName(r.name);
+
     if ('targetProduct' in r) {
 
       if('input' in r.targetProduct){
@@ -709,21 +766,43 @@ exports.validateRequire = function(dpkg, dataDependencies){
         r.targetProduct.output.forEach(function(uri){
           var matched = _validateLink(uri, dpkg, dataDependencies);
           if(matched){ //check that isBasedOnUrl points to the code
-            var isBasedOnUrl = matched.isBasedOnUrl || [];
+            var isBasedOnUrl = matched.resource.isBasedOnUrl || [];
             isBasedOnUrl = isBasedOnUrl
               .map(_parseUrl)
               .filter(function(x){return x;})
               .map(function(x) {return x.pathname;});
 
             if(isBasedOnUrl.indexOf( [dpkg.name, dpkg.version, 'code', r.name].join('/') ) === -1){
-              throw new Error( 'dataset: ' + uri + ' should list ' + [dpkg.name, dpkg.version, 'code', r.name ].join('/') + ' in isBasedOnUrl');
+              throw new Error( 'resource: ' + uri + ' should list ' + [dpkg.name, dpkg.version, 'code', r.name ].join('/') + ' in isBasedOnUrl');
             }
           } else {
-            throw new Error( 'output: ' + uri + ' does not have a matching dataset within this datapackage');
+            throw new Error( 'output: ' + uri + ' does not have a matching resource within this datapackage');
           }
         });
       }
     }
-  }); 
+  });
   
 };
+
+
+/**
+ * inspired by npm name validation
+ */
+function validateName(name){
+
+  if (!name) throw new Error('no name');
+
+  var n = name.trim();
+
+  if ( !n || n.charAt(0) === "."
+       || !n.match(/^[a-zA-Z0-9]/)
+       || n.match(/[\/\(\)&\?#\|<>@:%\s\\\*'"!~`]/)
+       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'datapackage.jsonld', 'dataset', 'analytics', 'about', 'datapackages', 'favicon.ico'].indexOf(n.toLowerCase()) !== -1
+       || n !== encodeURIComponent(n) ) {
+
+    throw new Error('invalid name');
+  }
+
+};
+exports.validateName = validateName;

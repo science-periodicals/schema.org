@@ -36,7 +36,11 @@ describe('datapacakge-jsonld', function(){
         assert.deepEqual(r.catalog, { name: 'mydpkg', version: '0.0.0', url: 'mydpkg/0.0.0' } );
         assert.equal(r.targetProduct['@type'], 'SoftwareApplication');
       });
-
+      ldpkg.figure.forEach(function(r){
+        assert.equal(r['@type'], 'ImageObject');
+        assert.equal(r['@id'], 'mydpkg/0.0.0/figure/' + r.name);
+        assert.deepEqual(r.catalog, { name: 'mydpkg', version: '0.0.0', url: 'mydpkg/0.0.0' } );
+      });
     });
 
     it('should respect pre-existing dataset @type', function(){
@@ -122,10 +126,20 @@ describe('datapacakge-jsonld', function(){
 
   });
 
+  describe('validate name', function(){
+    ['.a', '<a>', 'a a', 'a/a', '', ' ', 'a@a', 'a%20'].forEach(function(invalidName){
+      it('should throw an error for invalid names', function(){      
+        assert.throws( function(){ 
+          dpkgJsonLd.validateName(invalidName);
+        }, Error);
+      });
+    });
+  });
+
   describe('validate require', function(){
+
     it('should validate when a package has valid require link', function(){
-      var mydpkg = clone(dpkg);
-      mydpkg.dataset[1].isBasedOnUrl = [ 'mydpkg/0.0.0/code/myanalytics' ];
+      var mydpkg = clone(dpkg);    
       assert(!dpkgJsonLd.validateRequire(dpkg));
     });
 
@@ -173,6 +187,22 @@ describe('datapacakge-jsonld', function(){
       assert.throws( function(){ 
         var mydpkg = clone(dpkg);
         mydpkg.dataset[2].isBasedOnUrl = ['http://ex.com/smtgelse'];
+        dpkgJsonLd.validateRequire(mydpkg)
+      }, Error);
+    });
+
+    it('should throw an error when a code list as output a local figure that does not list this code as isBasedOnUrl', function(){
+      assert.throws( function(){ 
+        var mydpkg = clone(dpkg);
+        mydpkg.figure[0].isBasedOnUrl = mydpkg.figure[0].isBasedOnUrl.slice(0,1);
+        dpkgJsonLd.validateRequire(mydpkg)
+      }, Error);
+    });
+
+    it("should throw an error when a resource list as isBasedOnUrl code that does not list that resource as it's outpt", function(){
+      assert.throws( function(){ 
+        var mydpkg = clone(dpkg);
+        mydpkg.dataset[1].isBasedOnUrl = [ 'mydpkg/0.0.0/code/myanalytics' ];
         dpkgJsonLd.validateRequire(mydpkg)
       }, Error);
     });
