@@ -171,7 +171,7 @@ exports.context = {
     "hashValue": "nfo:hashValue",
 
     "keywords":       { "@id": "sch:keywords",                       "@container": "@list" },
-    "requirements":   { "@id": "sch:requirements",                   "@container": "@list" },
+    "requirements":   { "@id": "sch:requirements",   "@type": "@id", "@container": "@list" },
     "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@container": "@list" }, //dataDependencies
     "citation":       { "@id": "sch:citation",                       "@container": "@list" },
     "contributor":    { "@id": "sch:contributor",                    "@container": "@list" },
@@ -366,6 +366,7 @@ exports.schema = {
             type: 'object',
             properties: {
               operatingSystem: { type: 'string' },
+              requirements:  { type: 'array', items: { type: 'string'} },
               memoryRequirements: { type: 'string' },
               processorRequirements: { type: 'string' },
               storageRequirements: { type: 'string' },
