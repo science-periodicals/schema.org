@@ -437,6 +437,8 @@ exports.schema = {
               downloadUrl: { type: 'string' },
               fileSize: { type: 'integer' },
               fileFormat: { type: 'string' },
+              hashAlgorithm: { type: 'string' },
+              hashValue: { type: 'string' },
               input:  { type: 'array', items: { type: 'string'} },
               output: { type: 'array', items: { type: 'string'} },
             },
@@ -475,6 +477,8 @@ exports.schema = {
           contentUrl:     { type: 'string' },
           contentPath:    { type: 'string' },
           contentSize:    { type: 'integer' },           
+          hashAlgorithm:  { type: 'string' },
+          hashValue:      { type: 'string' },
           encodingFormat: { type: 'string' },        
           uploadDate:     { type: 'string' },
           isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
@@ -863,7 +867,7 @@ function validateName(name){
   if ( !n || n.charAt(0) === "."
        || !n.match(/^[a-zA-Z0-9]/)
        || n.match(/[\/\(\)&\?#\|<>@:%\s\\\*'"!~`]/)
-       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'datapackage.jsonld', 'dataset', 'analytics', 'about', 'datapackages', 'favicon.ico'].indexOf(n.toLowerCase()) !== -1
+       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'datapackage.jsonld', 'dataset', 'code', 'figure', 'about', 'datapackages', 'favicon.ico'].indexOf(n.toLowerCase()) !== -1
        || n !== encodeURIComponent(n) ) {
 
     throw new Error('invalid name');
