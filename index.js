@@ -16,6 +16,7 @@ exports.terms = {
     "schema": "http://schema.org/",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
     "vs": "http://www.w3.org/2003/06/sw-vocab-status/ns#",
     "defines": {
       "@reverse": "rdfs:isDefinedBy"
@@ -140,6 +141,17 @@ exports.terms = {
     },
 
     {
+      "@id": "dpkg:valueType",
+      "@type": "rdf:Property",
+      "label": "value type",
+      "comment":"The type (typicaly xsd) of a value",
+      "range": "xsd:string",
+      "domain": "schema:Thing",
+      "status": "testing",
+      "seeAlso": "http://www.w3.org/2001/XMLSchema"
+    },
+
+    {
       "@id": "dpkg:Prior",
       "@type": "rdfs:Class",
       "label": "Statistical Prior",
@@ -202,12 +214,14 @@ exports.context = {
     "sch":  "http://schema.org/",
     "nfo":  "http://www.semanticdesktop.org/ontologies/nfo/#",
     "dc":   "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
 
     "repository": { "@id": "dpkg:code",                      "@container": "@set"  },
     "code":       { "@id": "dpkg:code",                      "@container": "@list" },
     "figure":     { "@id": "dpkg:figure",                    "@container": "@list" },
     "input":      { "@id": "dpkg:input",     "@type": "@id", "@container": "@set"  },
     "output":     { "@id": "dpkg:output",    "@type": "@id", "@container": "@set"  },
+    "valueType":  { "@id": "dpkg:valueType",  "@type": "@id" },
     "path": "dpkg:path",
     "contentPath": "dpkg:contentPath",
     "contentData": "dpkg:contentData",
@@ -219,6 +233,7 @@ exports.context = {
     "hashValue": "nfo:hashValue",
 
     "keywords":       { "@id": "sch:keywords",                       "@container": "@list" },
+    "about":          { "@id": "sch:about",                          "@container": "@list" },
     "requirements":   { "@id": "sch:requirements",   "@type": "@id", "@container": "@list" },
     "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@container": "@list" }, //dataDependencies
     "citation":       { "@id": "sch:citation",                       "@container": "@list" },
@@ -233,7 +248,6 @@ exports.context = {
 
     "name":                  "sch:name",
     "email":                 "sch:email",
-    "about":                 "sch:about",
     "version":               "sch:version",
     "description":           "sch:description",
     "distribution":          "sch:distribution",
@@ -361,7 +375,7 @@ exports.schema = {
           isBasedOnUrl: { type: 'array', items: { type: 'string' } },
           discussionUrl: { type: 'string' },
           '@context': { type: 'object' },
-          about: { type: 'object' },
+          about: { type: ['object', 'array'] },
           distribution: {
             type: 'object',
             properties: {              
@@ -573,7 +587,7 @@ function linkDataset(dataset, name, version){
     dataset['@id'] = name + '/' + version + '/dataset/' + dataset.name;
   }
 
-  _addType(dataset, 'Dataset');
+  _addType(dataset, 'Dataset'); //TODO check content and add Prior and co...
   _addType(dataset.distribution, 'DataDownload');
 
   dataset.catalog = { name: name, version: version, url: name + '/' + version };  
