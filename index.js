@@ -137,6 +137,54 @@ exports.terms = {
       "domain": "schema:DataDownload",
       "status": "testing",
       "seeAlso": "http://dataprotocols.org/data-packages/#resource-information"
+    },
+
+    {
+      "@id": "dpkg:Prior",
+      "@type": "rdfs:Class",
+      "label": "Statistical Prior",
+      "comment": "A body of structured information describing a statistical prior",
+      "seeAlso": "http://en.wikipedia.org/wiki/Prior",
+      "subClassOf": [
+        "schema:Dataset"
+      ],
+      "status": "testing"
+    },
+
+    {
+      "@id": "dpkg:Analytics",
+      "@type": "rdfs:Class",
+      "label": "Analytics",
+      "comment": "A body of structured information describing the discovery of meaningful patterns in data",
+      "seeAlso": "http://en.wikipedia.org/wiki/Analytics",
+      "subClassOf": [
+        "schema:Dataset"
+      ],
+      "status": "testing"
+    },
+
+    {
+      "@id": "dpkg:SampleSequence",
+      "@type": "rdfs:Class",
+      "label": "Sample sequence",
+      "comment": "Sample sequence (as obtained for instance with an MCMC run)",
+      "seeAlso": "http://en.wikipedia.org/wiki/Sample_(statistics)",
+      "subClassOf": [
+        "schema:Dataset"
+      ],
+      "status": "testing"
+    },
+
+    {
+      "@id": "dpkg:Configuration",
+      "@type": "rdfs:Class",
+      "label": "Configuration file",
+      "comment": "Configuration file configure the initial settings for some computer programs",
+      "seeAlso": "http://en.wikipedia.org/wiki/Configuration_file",
+      "subClassOf": [
+        "schema:Dataset"
+      ],
+      "status": "testing"
     }
 
   ],
@@ -354,6 +402,7 @@ exports.schema = {
         properties: {
           name: { type: 'string'},
           description: { type: 'string'},
+          about: { type: 'object' },
           programmingLanguage: {
             type: 'object',
             properties: {
@@ -403,6 +452,7 @@ exports.schema = {
         properties: {
           name:           { type: 'string' },
           description:    { type: 'string' },
+          about:          { type: 'object' },
           caption:        { type: 'string' },
           exifData:       { type: 'string' },
           width:          { type: 'string' }, //e.g "100px" ??
