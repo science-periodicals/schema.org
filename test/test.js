@@ -43,18 +43,25 @@ describe('datapacakge-jsonld', function(){
       });
     });
 
-    it('should respect pre-existing dataset @type', function(){
+    it('should respect pre-existing figure or code @type', function(){
       var mydpkg = clone(dpkg);
-      mydpkg.dataset[0]['@type'] = 'StatTest';
+      mydpkg.code[0]['@type'] = 'CodeType';
       var ldpkg = dpkgJsonLd.linkDpkg(mydpkg);
-      assert.deepEqual(['StatTest', 'Dataset'], ldpkg.dataset[0]['@type']);
+      assert.deepEqual(['CodeType', 'Code'], ldpkg.code[0]['@type']);
     });
 
-    it('should respect pre-existing dataset @type array', function(){
+    it('should respect pre-existing figure or code @type array', function(){
       var mydpkg = clone(dpkg);
-      mydpkg.dataset[0]['@type'] = ['StatTest', 'ChisqTest'];
+      mydpkg.figure[0]['@type'] = ['FigType', 'FigType2'];
       var ldpkg = dpkgJsonLd.linkDpkg(mydpkg);
-      assert.deepEqual(['StatTest', 'ChisqTest', 'Dataset'], ldpkg.dataset[0]['@type']);
+      assert.deepEqual(['FigType', 'FigType2', 'ImageObject'], ldpkg.figure[0]['@type']);
+    });
+
+    it('should add @type Dataset only if type is non existent', function(){
+      var mydpkg = clone(dpkg);
+      mydpkg.dataset[0]['@type'] = 'EmpiricalDataset';
+      var ldpkg = dpkgJsonLd.linkDpkg(mydpkg);
+      assert.equal('EmpiricalDataset', ldpkg.dataset[0]['@type']);
     });
 
   });

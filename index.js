@@ -522,20 +522,20 @@ exports.schema = {
 /**
  * add @type to an obj if possible
  */
-function _addType(x, type){
+function _addType(x, type, onlyIfEmpty){
 
   if( (typeof x !== 'object') || Array.isArray(x) ){
     return;
   }
-  
+   
   //x is an obj
-  if( !('@type' in x) ){
+  if( !('@type' in x) || !x['@type'] ){
     x['@type'] = type;
-  } else if(Array.isArray(x['@type'])){
+  } else if(!onlyIfEmpty && Array.isArray(x['@type'])){
     if(x['@type'].indexOf(type) === -1){
       x['@type'].push(type);
     }
-  } else if(typeof x['@type'] === 'string'){
+  } else if(!onlyIfEmpty && typeof x['@type'] === 'string'){
     if(x['@type'] !== type){
       x['@type'] = [x['@type'], type];
     }
@@ -611,7 +611,7 @@ function linkDataset(dataset, name, version){
     dataset['@id'] = name + '/' + version + '/dataset/' + dataset.name;
   }
 
-  _addType(dataset, 'Dataset'); //TODO check content and add Prior and co...
+  _addType(dataset, 'Dataset', true); //add default type only if empty (to avoid accumulating subClasses of Dataset).
   _addType(dataset.distribution, 'DataDownload');
 
   dataset.catalog = { name: name, version: version, url: name + '/' + version };  
