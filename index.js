@@ -176,11 +176,23 @@ exports.terms = {
     },
 
     {
-      "@id": "dpkg:SampleSequence",
+      "@id": "dpkg:EmpiricalDataset",
       "@type": "rdfs:Class",
-      "label": "Sample sequence",
-      "comment": "Sample sequence (as obtained for instance with an MCMC run)",
-      "seeAlso": "http://en.wikipedia.org/wiki/Sample_(statistics)",
+      "label": "empirical data",
+      "comment": "Data acquired by means of observation or experimentation.",
+      "seeAlso": "http://en.wikipedia.org/wiki/Empirical_evidence",
+      "subClassOf": [
+        "schema:Dataset"
+      ],
+      "status": "testing"
+    },
+
+    {
+      "@id": "dpkg:SimulatedDataset",
+      "@type": "rdfs:Class",
+      "label": "simulated data",
+      "comment": "Data acquired by means of computer simulation",
+      "seeAlso": "http://en.wikipedia.org/wiki/Computer_simulation",
       "subClassOf": [
         "schema:Dataset"
       ],
@@ -272,6 +284,7 @@ exports.context = {
     "memoryRequirements":    "sch:memoryRequirements",
     "processorRequirements": "sch:processorRequirements",
     "storageRequirements":   "sch:storageRequirements",
+    "softwareVersion":       "sch:softwareVersion",
 
     "MediaObject":         { "@id": "sch:MediaObject",         "@type": "@id" },
     "ImageObject":         { "@id": "sch:ImageObject",         "@type": "@id" },
@@ -441,8 +454,15 @@ exports.schema = {
               hashValue: { type: 'string' },
               input:  { type: 'array', items: { type: 'string'} },
               output: { type: 'array', items: { type: 'string'} },
-            },
-            required: [ 'operatingSystem' ]
+              encoding: { //in case resource can be further compressed
+                type: 'object',
+                properties: {
+                  contentSize: { type: 'integer' },
+                  encodingFormat: { type: 'string' },
+                }
+              },
+              softwareVersion: { type: 'string' }
+            }
           },
           sampleType: { type: 'string'},
           codeRepository: { type: 'string'},
