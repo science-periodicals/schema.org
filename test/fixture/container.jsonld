@@ -1,9 +1,9 @@
 {
-  "name": "mydpkg",
+  "name": "myctnr",
   "version": "0.0.0",
   "description": "a description",
   "keywords": ["hyperdata", "json-ld", "test"],
-  "isBasedOnUrl": ["../../dpkg1/0.0.1", "../../dpkg2/0.2.1", "http://data.com/"],
+  "isBasedOnUrl": ["../../ctnr1/0.0.1", "../../ctnr2/0.2.1", "http://data.com/"],
   "author": {
     "name": "Sebastien Ballesteros",
     "email": "sebastien@standardanalytics.io"
@@ -22,7 +22,7 @@
     },
     {
       "name": "mydata",
-      "isBasedOnUrl": [ "mydpkg/0.0.0/code/myanalytics" ],
+      "isBasedOnUrl": [ "myctnr/0.0.0/code/myanalytics" ],
       "distribution": { "contentData": { "inline": "data" } }
     }
   ],
@@ -32,8 +32,8 @@
       "name": "myanalytics",
       "targetProduct": { 
         "operatingSystem": "Unix",
-        "input": [ "mydpkg/0.0.0/dataset/mycsv" ],
-        "output": [ "mydpkg/0.0.0/dataset/mydata", "mydpkg/0.0.0/figure/myfig" ]
+        "input": [ "myctnr/0.0.0/dataset/mycsv" ],
+        "output": [ "myctnr/0.0.0/dataset/mydata", "myctnr/0.0.0/figure/myfig" ]
       }
     }   
   ],
@@ -42,7 +42,7 @@
     {
       "name": "myfig",
       "contentPath": "figure/x.png",
-      "isBasedOnUrl": [ "mydpkg/0.0.0/dataset/mydata",  "mydpkg/0.0.0/code/myanalytics" ]
+      "isBasedOnUrl": [ "myctnr/0.0.0/dataset/mydata",  "myctnr/0.0.0/code/myanalytics" ]
     }
   ]
 

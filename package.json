@@ -1,6 +1,6 @@
 {
   "name": "container-jsonld",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "datapackage in JSON-LD and schema.org style because semantic web, linked data and hypermedia.",
   "main": "index.js",
   "directories": {

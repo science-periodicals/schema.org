@@ -5,14 +5,14 @@ var isUrl = require('is-url')
   , url = require('url');
 
 var BASE = "https://registry.standardanalytics.io/";
-var URL = 'https://registry.standardanalytics.io/datapackage.jsonld';
+var URL = 'https://registry.standardanalytics.io/container.jsonld';
 
 exports.contextUrl = URL;
 exports.link = '<' + URL + '>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
 exports.terms = {
   "@context": {
-    "dpkg": "http://standardanalytics.io/datapackage/",
+    "container": "http://standardanalytics.io/container/",
     "schema": "http://schema.org/",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
@@ -47,20 +47,20 @@ exports.terms = {
     },
     "status": "vs:term_status"
   },
-  "@id": "http://standardanalytics.io/datapackage",
+  "@id": "http://standardanalytics.io/container",
   "defines": [
     {
-      "@id": "dpkg:repository",
+      "@id": "ctnr:repository",
       "@type": "rdf:Property",
       "label": "repository",
       "comment":"Array of repositories where the package can be located. For a github repository, for example, it is common practice to indicate the codeRepository link to the repo, and the relative path of the folder.",
       "range": "schema:Code",
-      "domain": "schema:DataCatalog",
+      "domain": "schema:Container",
       "status": "testing",
       "seeAlso": "http://schema.org/Code"
     },
     {
-      "@id": "dpkg:path",
+      "@id": "ctnr:path",
       "@type": "rdf:Property",
       "label": "path",
       "comment":"Absolute or relative path.",
@@ -69,28 +69,51 @@ exports.terms = {
       "status": "testing",
       "seeAlso": "http://wiki.commonjs.org/wiki/Packages/1.1"
     },
+
     {
-      "@id": "dpkg:code",
+      "@id": "ctnr:dataset",
+      "@type": "rdf:Property",
+      "label": "dataset",
+      "comment":"List of dataset",
+      "range": "schema:Code",
+      "domain": "schema:Container",
+      "status": "testing",
+      "seeAlso": "http://schema.org/Dataset"
+    },
+    {
+      "@id": "ctnr:code",
       "@type": "rdf:Property",
       "label": "code",
       "comment":"List of code resources used for analytics or views",
       "range": "schema:Code",
-      "domain": "schema:DataCatalog",
+      "domain": "schema:Container",
       "status": "testing",
       "seeAlso": "http://schema.org/Code"
     },
     {
-      "@id": "dpkg:figure",
+      "@id": "ctnr:figure",
       "@type": "rdf:Property",
       "label": "figure",
       "comment":"List of figures",
       "range": "schema:ImageObject",
-      "domain": "schema:DataCatalog",
+      "domain": "schema:Container",
       "status": "testing",
       "seeAlso": "http://schema.org/ImageObject"
     },
     {
-      "@id": "dpkg:input",
+      "@id": "ctnr:registry",
+      "@type": "rdf:Property",
+      "label": "registry",
+      "comment":"registry hosting resource of type Container",
+      "range": "schema:Thing",
+      "domain": "schema:Container",
+      "status": "testing",
+      "seeAlso": "http://en.wikipedia.org/wiki/Metadata_registry"
+    },
+
+
+    {
+      "@id": "ctnr:input",
       "@type": "rdf:Property",
       "label": "input",
       "comment":"List of absolute or relative URLs of data resources used in a given analysis.",
@@ -100,7 +123,7 @@ exports.terms = {
       "seeAlso": "http://schema.org/SoftwareApplication"
     },
     {
-      "@id": "dpkg:output",
+      "@id": "ctnr:output",
       "@type": "rdf:Property",
       "label": "output",
       "comment":"List of absolute or relative URLs of data resources generated in a given analysis.",
@@ -110,9 +133,9 @@ exports.terms = {
       "seeAlso": "http://schema.org/SoftwareApplication"
     },
     {
-      "@id": "dpkg:filePath",
+      "@id": "ctnr:filePath",
       "@type": "rdf:Property",
-      "comment":"Unix-style ('/') path to a runnable file (typically a script) or binary. The path must be relative to the directory in which the DataCatalog containing this resource resides.",
+      "comment":"Unix-style ('/') path to a runnable file (typically a script) or binary. The path must be relative to the directory in which the Container containing this resource resides.",
       "label": "file path",
       "range": "xsd:string",
       "domain": "schema:SoftwareApplication",
@@ -120,9 +143,9 @@ exports.terms = {
       "seeAlso": "http://dataprotocols.org/data-packages/#resource-information"
     },
     {
-      "@id": "dpkg:contentData",
+      "@id": "ctnr:contentData",
       "@type": "rdf:Property",
-      "comment":"Inline data content of a datapackage Dataset.",
+      "comment":"Inline data content of a container dataset.",
       "label": "content data",
       "range": "xsd:string",
       "domain": "schema:DataDownload",
@@ -130,9 +153,9 @@ exports.terms = {
       "seeAlso": "http://dataprotocols.org/data-packages/#resource-information"
     },
     {
-      "@id": "dpkg:contentPath",
+      "@id": "ctnr:contentPath",
       "@type": "rdf:Property",
-      "comment":"Unix-style ('/') path to the data content of a datapackage Dataset. The path must be relative to the directory in which the DataCatalog containing this resource resides.",
+      "comment":"Unix-style ('/') path to the data content of a container dataset. The path must be relative to the directory in which the Container containing this resource resides.",
       "label": "content path",
       "range": "xsd:string",
       "domain": "schema:DataDownload",
@@ -141,7 +164,7 @@ exports.terms = {
     },
 
     {
-      "@id": "dpkg:valueType",
+      "@id": "ctnr:valueType",
       "@type": "rdf:Property",
       "label": "value type",
       "comment":"The type (typicaly xsd) of a value",
@@ -152,7 +175,19 @@ exports.terms = {
     },
 
     {
-      "@id": "dpkg:Prior",
+      "@id": "ctnr:Container",
+      "@type": "rdfs:Class",
+      "label": "Container",
+      "comment": "A collection of resources associated with structured metadata describing their content and relationships", //TODO improve definition
+      "seeAlso": "http://schema.org/DataCatalog",
+      "subClassOf": [
+        "schema:CreativeWork"
+      ],
+      "status": "testing"
+    },
+
+    {
+      "@id": "ctnr:Prior",
       "@type": "rdfs:Class",
       "label": "Statistical Prior",
       "comment": "A body of structured information describing a statistical prior",
@@ -164,7 +199,7 @@ exports.terms = {
     },
 
     {
-      "@id": "dpkg:Analytics",
+      "@id": "ctnr:Analytics",
       "@type": "rdfs:Class",
       "label": "Analytics",
       "comment": "A body of structured information describing the discovery of meaningful patterns in data",
@@ -176,7 +211,7 @@ exports.terms = {
     },
 
     {
-      "@id": "dpkg:EmpiricalDataset",
+      "@id": "ctnr:EmpiricalDataset",
       "@type": "rdfs:Class",
       "label": "empirical data",
       "comment": "Data acquired by means of observation or experimentation.",
@@ -188,7 +223,7 @@ exports.terms = {
     },
 
     {
-      "@id": "dpkg:SimulatedDataset",
+      "@id": "ctnr:SimulatedDataset",
       "@type": "rdfs:Class",
       "label": "simulated data",
       "comment": "Data acquired by means of computer simulation",
@@ -200,7 +235,7 @@ exports.terms = {
     },
 
     {
-      "@id": "dpkg:Configuration",
+      "@id": "ctnr:Configuration",
       "@type": "rdfs:Class",
       "label": "Configuration file",
       "comment": "Configuration file configure the initial settings for some computer programs",
@@ -222,22 +257,27 @@ exports.context = {
   "@context": {
     "@base": BASE,
 
-    "dpkg": "http://standardanalytics.io/datapackage/",
+    "ctnr": "http://standardanalytics.io/container/",
     "sch":  "http://schema.org/",
     "nfo":  "http://www.semanticdesktop.org/ontologies/nfo/#",
     "dc":   "http://purl.org/dc/terms/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
 
-    "repository": { "@id": "dpkg:code",                      "@container": "@set"  },
-    "code":       { "@id": "dpkg:code",                      "@container": "@list" },
-    "figure":     { "@id": "dpkg:figure",                    "@container": "@list" },
-    "input":      { "@id": "dpkg:input",     "@type": "@id", "@container": "@set"  },
-    "output":     { "@id": "dpkg:output",    "@type": "@id", "@container": "@set"  },
-    "valueType":  { "@id": "dpkg:valueType",  "@type": "@id" },
-    "path": "dpkg:path",
-    "contentPath": "dpkg:contentPath",
-    "contentData": "dpkg:contentData",
-    "filePath":    "dpkg:filePath",
+    "Container":  { "@id": "ctnr:Container", "@type": "@id" },
+
+    "container":  { "@id": "ctnr:container",                 "@container": "@list" },
+    "repository": { "@id": "ctnr:repository",                "@container": "@list" },
+    "dataset"   : { "@id": "ctnr:dataset",                   "@container": "@list" },
+    "code":       { "@id": "ctnr:code",                      "@container": "@list" },
+    "figure":     { "@id": "ctnr:figure",                    "@container": "@list" },
+    "input":      { "@id": "ctnr:input",     "@type": "@id", "@container": "@set"  },
+    "output":     { "@id": "ctnr:output",    "@type": "@id", "@container": "@set"  },
+    "valueType":  { "@id": "ctnr:valueType", "@type": "@id" },
+    "path": "ctnr:path",
+    "contentPath": "ctnr:contentPath",
+    "contentData": "ctnr:contentData",
+    "filePath":    "ctnr:filePath",
+    "registry":    "ctnr:registry",
 
     "license": "dc:license",
 
@@ -250,7 +290,6 @@ exports.context = {
     "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@container": "@list" }, //dataDependencies
     "citation":       { "@id": "sch:citation",                       "@container": "@list" },
     "contributor":    { "@id": "sch:contributor",                    "@container": "@list" },
-    "dataset":        { "@id": "sch:dataset",                        "@container": "@list" },
     "codeRepository": { "@id": "sch:codeRepository", "@type": "@id" },
     "discussionUrl":  { "@id": "sch:discussionUrl",  "@type": "@id" },
     "targetProduct":  { "@id": "sch:targetProduct",  "@type": "@id" },
@@ -271,7 +310,6 @@ exports.context = {
     "sampleType":            "sch:sampleType", //executable script ready to be run
     "contentSize":           "sch:contentSize",
     "encodingFormat":        "sch:encodingFormat",
-    "catalog":               "sch:catalog",
     "datePublished":         "sch:datePublished",
     "uploadDate":            "sch:uploadDate",
     "caption":               "sch:caption",
@@ -290,7 +328,6 @@ exports.context = {
     "ImageObject":         { "@id": "sch:ImageObject",         "@type": "@id" },
     "Person":              { "@id": "sch:Person",              "@type": "@id" },
     "Organization":        { "@id": "sch:Person",              "@type": "@id" },
-    "DataCatalog":         { "@id": "sch:DataCatalog",         "@type": "@id" },
     "DataDownload":        { "@id": "sch:DataDownload",        "@type": "@id" },
     "Dataset":             { "@id": "sch:Dataset",             "@type": "@id" },
     "Code":                { "@id": "sch:Code",                "@type": "@id" },
@@ -368,7 +405,7 @@ exports.schema = {
       required: ['contentUrl']
     },
 
-    catalog: { //if a catalog is part of a larger catalog (i.e a registry)
+    registry: {
       type: 'object',
       properties: {
         name: { type: 'string' },
@@ -409,7 +446,7 @@ exports.schema = {
               }
             }
           },
-          catalog: {
+          container: {
             type: 'object',
             properties: {
               name: { type: 'string' },
@@ -468,7 +505,7 @@ exports.schema = {
           codeRepository: { type: 'string'},
           discussionUrl:  { type: 'string' },
           isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
-          catalog: {
+          container: {
             type: 'object',
             properties: {
               name:    { type: 'string' },
@@ -502,7 +539,7 @@ exports.schema = {
           encodingFormat: { type: 'string' },        
           uploadDate:     { type: 'string' },
           isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
-          catalog: {
+          container: {
             type: 'object',
             properties: {
               name:    { type: 'string' },
@@ -546,9 +583,9 @@ function _addType(x, type, onlyIfEmpty){
 
 
 /**
- * modifies dpkg in place to add @id, @type and optionaly @context
+ * modifies container in place to add @id, @type and optionaly @context
  */
-exports.linkDpkg = function(dpkg, options){  
+exports.linkContainer = function(ctnr, options){  
   options = options || {addCtx: true};
   if(! ('addCtx' in options)){
     options.addCtx = true;
@@ -556,51 +593,51 @@ exports.linkDpkg = function(dpkg, options){
   
   if(options.addCtx){
     var ctx = options.ctx || URL;
-    dpkg["@context"] = ctx;
+    ctnr["@context"] = ctx;
   }
 
-  dpkg['@id'] = dpkg.name + '/' + dpkg.version;
-  dpkg['@type'] = 'DataCatalog';
+  ctnr['@id'] = ctnr.name + '/' + ctnr.version;
+  ctnr['@type'] = 'Container';
 
-  if( 'author' in dpkg && !('@type' in dpkg.author) ){ //pre-existing type might be Organization
-    _addType(dpkg.author, 'Person');
+  if( 'author' in ctnr && !('@type' in ctnr.author) ){ //pre-existing type might be Organization
+    _addType(ctnr.author, 'Person');
   }
 
-  if('repository' in dpkg){
-    dpkg.repository.forEach(function(c){
+  if('repository' in ctnr){
+    ctnr.repository.forEach(function(c){
       _addType(c, 'Code');
     });
   }
 
-  if('contributor' in dpkg){
-    dpkg.contributor.forEach(function(c){
+  if('contributor' in ctnr){
+    ctnr.contributor.forEach(function(c){
       if ( !('@type' in c) ) { //pre-existing type might be Organization
         _addType(c, 'Person');
       }
     });
   }
 
-  if('dataset' in dpkg){
-    dpkg.dataset.forEach(function(r){
-      linkDataset(r, dpkg.name, dpkg.version);
+  if('dataset' in ctnr){
+    ctnr.dataset.forEach(function(r){
+      linkDataset(r, ctnr.name, ctnr.version);
     });
   }
 
-  if('code' in dpkg){
-    dpkg.code.forEach(function(r){
-      linkCode(r, dpkg.name, dpkg.version);
+  if('code' in ctnr){
+    ctnr.code.forEach(function(r){
+      linkCode(r, ctnr.name, ctnr.version);
     });
   }
 
-  if('figure' in dpkg){
-    dpkg.figure.forEach(function(r){
-      linkFigure(r, dpkg.name, dpkg.version);
+  if('figure' in ctnr){
+    ctnr.figure.forEach(function(r){
+      linkFigure(r, ctnr.name, ctnr.version);
     });
   }
 
-  dpkg.catalog = { name: dpkg.name, url: dpkg.name };
+  ctnr.registry = { name: "Standard Analytics IO", url: BASE };
 
-  return dpkg;
+  return ctnr;
 };
 
 /**
@@ -614,7 +651,7 @@ function linkDataset(dataset, name, version){
   _addType(dataset, 'Dataset', true); //add default type only if empty (to avoid accumulating subClasses of Dataset).
   _addType(dataset.distribution, 'DataDownload');
 
-  dataset.catalog = { name: name, version: version, url: name + '/' + version };  
+  dataset.container = { name: name, version: version, url: name + '/' + version };  
   
   return dataset;
 };
@@ -632,7 +669,7 @@ function linkCode(code, name, version){
   _addType(code, 'Code');
   _addType(code.targetProduct, 'SoftwareApplication');
 
-  code.catalog = { name: name, version: version, url: name + '/' + version };  
+  code.container = { name: name, version: version, url: name + '/' + version };  
   
   return code;
 };
@@ -649,7 +686,7 @@ function linkFigure(figure, name, version){
 
   _addType(figure, 'ImageObject');
 
-  figure.catalog = { name: name, version: version, url: name + '/' + version };  
+  figure.container = { name: name, version: version, url: name + '/' + version };  
   
   return figure;
 };
@@ -665,7 +702,7 @@ function _parseUrl(uri){
   var absUrl = (isUrl(uri)) ? uri : url.resolve(BASE, uri);
   var urlObj = url.parse(absUrl, true);
 
-  if(urlObj.hostname === url.parse(BASE).hostname){ //it's a dpkg of this registry
+  if(urlObj.hostname === url.parse(BASE).hostname){ //it's a ctnr of this registry
     var pathname = urlObj.pathname.replace(/^\//, '');
     var splt = pathname.split('/'); //name, version, ...
 
@@ -718,10 +755,10 @@ exports.dataDependencies = function(isBasedOnUrl){
 };
 
 /**
- * make sure that link to dpkg hosted on the registry respect the
+ * make sure that link to ctnr hosted on the registry respect the
  * versioning scheme used
  *
- * return parsed uri if within dpkg link
+ * return parsed uri if within ctnr link
  */
 function validateRequiredUri(uri, name, version, dataDependencies){
 
@@ -730,13 +767,13 @@ function validateRequiredUri(uri, name, version, dataDependencies){
   var parsed = _parseUrl(uri);
   if(!parsed) return;
 
-  if (parsed.splt[0] === name){ //whithin dpkg link
+  if (parsed.splt[0] === name){ //whithin ctnr link
     if (parsed.splt[1] !== version){
       throw new Error('version mismatch for :' + uri);
     } else {
       return parsed;
     };
-  } else { //link to another dpkg on this registry: does it satisfies the data dependencies constraints ?
+  } else { //link to another ctnr on this registry: does it satisfies the data dependencies constraints ?
 
     if(!(parsed.splt[0] in dataDependencies)){
       throw new Error( parsed.splt[0] + '/' + parsed.splt[1] + ' is not listed in isBasedOnUrl (required in ' + uri  + ')');
@@ -751,7 +788,7 @@ function validateRequiredUri(uri, name, version, dataDependencies){
 };
 
 /**
- * suppose that dpkg schema has been validated
+ * suppose that ctnr schema has been validated
  */
 exports.validateRequiredUri = validateRequiredUri;
 
@@ -761,16 +798,16 @@ exports.validateRequiredUri = validateRequiredUri;
  * check that the resource pointed to exists and if it does return it.
  * If a resource points to code, check that the code list it as it inputs
  */
-function _validateLink(uri, dpkg, dataDependencies){
+function _validateLink(uri, ctnr, dataDependencies){
 
-  var parsed = validateRequiredUri(uri, dpkg.name, dpkg.version, dataDependencies);
+  var parsed = validateRequiredUri(uri, ctnr.name, ctnr.version, dataDependencies);
   if(parsed){ //uri from this doc, validate that there is a matching resource
     var type = parsed.splt[2];
 
     if(['code', 'dataset', 'figure'].indexOf(type) === -1){
       throw new Error(  uri + ' should contain /dataset/, /code/ or /figure/');      
     } else {
-      var array = dpkg[type] || [];
+      var array = ctnr[type] || [];
     }
 
     var name = parsed.splt[3];
@@ -785,7 +822,7 @@ function _validateLink(uri, dpkg, dataDependencies){
 
     } else {
 
-      throw new Error( 'input: ' + uri + ' does not have a matching resource within this datapackage');
+      throw new Error( 'input: ' + uri + ' does not have a matching resource within this container');
 
     }
 
@@ -796,27 +833,27 @@ function _validateLink(uri, dpkg, dataDependencies){
 /**
  * validateRequire AND name
  */ 
-exports.validateRequire = function(dpkg, dataDependencies){
+exports.validateRequire = function(ctnr, dataDependencies){
 
-  var dataDependencies = dataDependencies || exports.dataDependencies(dpkg.isBasedOnUrl);
+  var dataDependencies = dataDependencies || exports.dataDependencies(ctnr.isBasedOnUrl);
 
   ['dataset', 'figure'].forEach(function(t){
 
-    var resource = dpkg[t] || [];
+    var resource = ctnr[t] || [];
     resource.forEach(function(r){
       validateName(r.name);
 
       if(r.contentUrl){
-        _validateLink(r.contentUrl, dpkg, dataDependencies);
+        _validateLink(r.contentUrl, ctnr, dataDependencies);
       }
 
       if('distribution' in r && r.distribution.contentUrl) {
-        _validateLink(r.distribution.contentUrl, dpkg, dataDependencies);
+        _validateLink(r.distribution.contentUrl, ctnr, dataDependencies);
       }
 
       if('isBasedOnUrl' in r){
         r.isBasedOnUrl.forEach(function(uri){
-          var matched = _validateLink(uri, dpkg, dataDependencies);
+          var matched = _validateLink(uri, ctnr, dataDependencies);
           
           if(matched.type === 'code'){ //check that the matched code resource list the uri as it inputs
             if(! ('targetProduct' in matched.resource && matched.resource.targetProduct.output) ){
@@ -828,7 +865,7 @@ exports.validateRequire = function(dpkg, dataDependencies){
               .filter(function(x){return x;})
               .map(function(x) {return x.pathname;});
             
-            if(output.indexOf( [dpkg.name, dpkg.version, t, r.name].join('/') ) === -1){
+            if(output.indexOf( [ctnr.name, ctnr.version, t, r.name].join('/') ) === -1){
               throw new Error(  t + ': ' + r.name  + ' points to code (' + uri + ") that does not list it as it's outputs");
             }
           }
@@ -839,7 +876,7 @@ exports.validateRequire = function(dpkg, dataDependencies){
 
   });
 
-  var code = dpkg.code || [];
+  var code = ctnr.code || [];
   code.forEach(function(r){
     validateName(r.name);
 
@@ -847,13 +884,13 @@ exports.validateRequire = function(dpkg, dataDependencies){
 
       if('input' in r.targetProduct){
         r.targetProduct.input.forEach(function(uri){
-          _validateLink(uri, dpkg, dataDependencies);
+          _validateLink(uri, ctnr, dataDependencies);
         });
       }
 
       if('output' in r.targetProduct){
         r.targetProduct.output.forEach(function(uri){
-          var matched = _validateLink(uri, dpkg, dataDependencies);
+          var matched = _validateLink(uri, ctnr, dataDependencies);
           if(matched){ //check that isBasedOnUrl points to the code
             var isBasedOnUrl = matched.resource.isBasedOnUrl || [];
             isBasedOnUrl = isBasedOnUrl
@@ -861,11 +898,11 @@ exports.validateRequire = function(dpkg, dataDependencies){
               .filter(function(x){return x;})
               .map(function(x) {return x.pathname;});
 
-            if(isBasedOnUrl.indexOf( [dpkg.name, dpkg.version, 'code', r.name].join('/') ) === -1){
-              throw new Error( 'resource: ' + uri + ' should list ' + [dpkg.name, dpkg.version, 'code', r.name ].join('/') + ' in isBasedOnUrl');
+            if(isBasedOnUrl.indexOf( [ctnr.name, ctnr.version, 'code', r.name].join('/') ) === -1){
+              throw new Error( 'resource: ' + uri + ' should list ' + [ctnr.name, ctnr.version, 'code', r.name ].join('/') + ' in isBasedOnUrl');
             }
           } else {
-            throw new Error( 'output: ' + uri + ' does not have a matching resource within this datapackage');
+            throw new Error( 'output: ' + uri + ' does not have a matching resource within this container');
           }
         });
       }
@@ -887,7 +924,7 @@ function validateName(name){
   if ( !n || n.charAt(0) === "."
        || !n.match(/^[a-zA-Z0-9]/)
        || n.match(/[\/\(\)&\?#\|<>@:%\s\\\*'"!~`]/)
-       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'datapackage.jsonld', 'dataset', 'code', 'figure', 'about', 'datapackages', 'favicon.ico'].indexOf(n.toLowerCase()) !== -1
+       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'container.jsonld', 'dataset', 'code', 'figure', 'about', 'containers', 'favicon.ico'].indexOf(n.toLowerCase()) !== -1
        || n !== encodeURIComponent(n) ) {
 
     throw new Error('invalid name');
