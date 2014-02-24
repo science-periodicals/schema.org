@@ -111,6 +111,16 @@ exports.terms = {
       "seeAlso": "http://en.wikipedia.org/wiki/Metadata_registry"
     },
 
+    {
+      "@id": "ctnr:container",
+      "@type": "rdf:Property",
+      "label": "container",
+      "comment":"container hosting the resource",
+      "range": "schema:Thing",
+      "domain": "schema:CreativeWork", //TODO fix that: if domain can be a list, should be Dataset, Code and ImageObject
+      "status": "testing",
+      "seeAlso": "http://www.schema.org/catalog"
+    },
 
     {
       "@id": "ctnr:input",
