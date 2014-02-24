@@ -55,7 +55,7 @@ exports.terms = {
       "label": "repository",
       "comment":"Array of repositories where the package can be located. For a github repository, for example, it is common practice to indicate the codeRepository link to the repo, and the relative path of the folder.",
       "range": "schema:Code",
-      "domain": "schema:Container",
+      "domain": "ctnr:Container",
       "status": "testing",
       "seeAlso": "http://schema.org/Code"
     },
@@ -76,7 +76,7 @@ exports.terms = {
       "label": "dataset",
       "comment":"List of dataset",
       "range": "schema:Code",
-      "domain": "schema:Container",
+      "domain": "ctnr:Container",
       "status": "testing",
       "seeAlso": "http://schema.org/Dataset"
     },
@@ -86,7 +86,7 @@ exports.terms = {
       "label": "code",
       "comment":"List of code resources used for analytics or views",
       "range": "schema:Code",
-      "domain": "schema:Container",
+      "domain": "ctnr:Container",
       "status": "testing",
       "seeAlso": "http://schema.org/Code"
     },
@@ -96,7 +96,7 @@ exports.terms = {
       "label": "figure",
       "comment":"List of figures",
       "range": "schema:ImageObject",
-      "domain": "schema:Container",
+      "domain": "ctnr:Container",
       "status": "testing",
       "seeAlso": "http://schema.org/ImageObject"
     },
@@ -106,7 +106,7 @@ exports.terms = {
       "label": "registry",
       "comment":"registry hosting resource of type Container",
       "range": "schema:Thing",
-      "domain": "schema:Container",
+      "domain": "ctnr:Container",
       "status": "testing",
       "seeAlso": "http://en.wikipedia.org/wiki/Metadata_registry"
     },
