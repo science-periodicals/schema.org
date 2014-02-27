@@ -308,6 +308,7 @@ exports.context = {
     "sampleType":            "sch:sampleType", //executable script ready to be run
     "contentSize":           "sch:contentSize",
     "encodingFormat":        "sch:encodingFormat",
+    "catalog":               "sch:catalog",
     "datePublished":         "sch:datePublished",
     "uploadDate":            "sch:uploadDate",
     "caption":               "sch:caption",
@@ -328,6 +329,7 @@ exports.context = {
     "Organization":        { "@id": "sch:Person",              "@type": "@id" },
     "DataDownload":        { "@id": "sch:DataDownload",        "@type": "@id" },
     "Dataset":             { "@id": "sch:Dataset",             "@type": "@id" },
+    "DataCatalog":         { "@id": "sch:DataCatalog",         "@type": "@id" },
     "Code":                { "@id": "sch:Code",                "@type": "@id" },
     "SoftwareApplication": { "@id": "sch:SoftwareApplication", "@type": "@id" }
   }
@@ -435,7 +437,7 @@ exports.schema = {
               }
             }
           },
-          container: {
+          catalog: {
             type: 'object',
             properties: {
               name: { type: 'string' },
@@ -587,7 +589,7 @@ exports.linkContainer = function(ctnr, options){
   }
 
   ctnr['@id'] = ctnr.name + '/' + ctnr.version;
-  ctnr['@type'] = 'Container';
+  ctnr['@type'] = (ctnr.dataset.length)? ['Container', 'DataCatalog'] : ['Container'];
 
   if( 'author' in ctnr && !('@type' in ctnr.author) ){ //pre-existing type might be Organization
     _addType(ctnr.author, 'Person');
@@ -635,7 +637,7 @@ function linkDataset(dataset, name, version){
   _addType(dataset, 'Dataset', true); //add default type only if empty (to avoid accumulating subClasses of Dataset).
   _addType(dataset.distribution, 'DataDownload');
 
-  dataset.container = { name: name, version: version, url: name + '/' + version };  
+  dataset.catalog = { '@type': ['Container', 'DataCatalog'], name: name, version: version, url: name + '/' + version }; 
   
   return dataset;
 };

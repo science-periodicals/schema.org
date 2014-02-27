@@ -20,13 +20,13 @@ describe('container-jsonld', function(){
 
       assert.equal(container['@context'], cjsonld.contextUrl);
       assert.equal(container['@id'], 'myctnr/0.0.0');
-      assert.equal(container['@type'], 'Container');
+      assert.deepEqual(container['@type'], ['Container', 'DataCatalog']);
       assert.equal(container.author['@type'], 'Person');
       assert.deepEqual(container.registry, { name: 'Standard Analytics IO', url:'https://registry.standardanalytics.io/' } );
       container.dataset.forEach(function(r){
         assert.equal(r['@type'], 'Dataset');
         assert.equal(r['@id'], 'myctnr/0.0.0/dataset/' + r.name);
-        assert.deepEqual(r.container, { name: 'myctnr', version: '0.0.0', url: 'myctnr/0.0.0' } );
+        assert.deepEqual(r.catalog, { '@type': ['Container', 'DataCatalog'], name: 'myctnr', version: '0.0.0', url: 'myctnr/0.0.0' } );
         assert.equal(r.distribution['@type'], 'DataDownload');
       });
       container.code.forEach(function(r){
