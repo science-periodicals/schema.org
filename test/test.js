@@ -22,7 +22,6 @@ describe('container-jsonld', function(){
       assert.equal(container['@id'], 'myctnr/0.0.0');
       assert.equal(container['@type'], 'Container');
       assert.equal(container.author['@type'], 'Person');
-      assert.equal(container.repository[0]['@type'], 'Code');
       assert.deepEqual(container.registry, { name: 'Standard Analytics IO', url:'https://registry.standardanalytics.io/' } );
       container.dataset.forEach(function(r){
         assert.equal(r['@type'], 'Dataset');

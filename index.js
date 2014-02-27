@@ -50,27 +50,6 @@ exports.terms = {
   "@id": "http://standardanalytics.io/container",
   "defines": [
     {
-      "@id": "ctnr:repository",
-      "@type": "rdf:Property",
-      "label": "repository",
-      "comment":"Array of repositories where the package can be located. For a github repository, for example, it is common practice to indicate the codeRepository link to the repo, and the relative path of the folder.",
-      "range": "schema:Code",
-      "domain": "ctnr:Container",
-      "status": "testing",
-      "seeAlso": "http://schema.org/Code"
-    },
-    {
-      "@id": "ctnr:path",
-      "@type": "rdf:Property",
-      "label": "path",
-      "comment":"Absolute or relative path.",
-      "range": "xsd:string",
-      "domain": "schema:Code",
-      "status": "testing",
-      "seeAlso": "http://wiki.commonjs.org/wiki/Packages/1.1"
-    },
-
-    {
       "@id": "ctnr:dataset",
       "@type": "rdf:Property",
       "label": "dataset",
@@ -109,6 +88,17 @@ exports.terms = {
       "domain": "ctnr:Container",
       "status": "testing",
       "seeAlso": "http://en.wikipedia.org/wiki/Metadata_registry"
+    },
+
+    { 
+      "@id": "ctnr:codeRepository", //TODO fix this is wrong as codeRepository belongs to Code...
+      "@type": "rdf:Property",
+      "label": "code repository",
+      "comment":"Link to the repository (under version control) where container.jsonld file is located (SVN, github, CodePlex)",
+      "range": "xsd:string",
+      "domain": "ctnr:Container",
+      "status": "testing",
+      "seeAlso": "http://www.schema.org/codeRepository"
     },
 
     {
@@ -276,14 +266,12 @@ exports.context = {
     "Container":  { "@id": "ctnr:Container", "@type": "@id" },
 
     "container":  { "@id": "ctnr:container",                 "@container": "@list" },
-    "repository": { "@id": "ctnr:repository",                "@container": "@list" },
     "dataset"   : { "@id": "ctnr:dataset",                   "@container": "@list" },
     "code":       { "@id": "ctnr:code",                      "@container": "@list" },
     "figure":     { "@id": "ctnr:figure",                    "@container": "@list" },
     "input":      { "@id": "ctnr:input",     "@type": "@id", "@container": "@set"  },
     "output":     { "@id": "ctnr:output",    "@type": "@id", "@container": "@set"  },
     "valueType":  { "@id": "ctnr:valueType", "@type": "@id" },
-    "path": "ctnr:path",
     "contentPath": "ctnr:contentPath",
     "contentData": "ctnr:contentData",
     "filePath":    "ctnr:filePath",
@@ -391,16 +379,7 @@ exports.schema = {
     },
     keywords: { type: 'array', items: { type: 'string' } },
     isBasedOnUrl: { type: 'array', items: { type: 'string' } },
-    repository: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          codeRepository: { type: 'string' },
-          path: { type: 'string' }
-        }
-      }
-    },
+    codeRepository: { type: ['array', 'string'] },
     discussionUrl: { type: 'string' },
     encoding: { //dist_.tar.gz
       type: 'object',
@@ -493,6 +472,7 @@ exports.schema = {
               memoryRequirements: { type: 'string' },
               processorRequirements: { type: 'string' },
               storageRequirements: { type: 'string' },
+              bundlePath: { type: 'string' }, //non semantic, not defined in the ontology, just here for ref.
               filePath: { type: 'string' },
               downloadUrl: { type: 'string' },
               fileSize: { type: 'integer' },
@@ -611,12 +591,6 @@ exports.linkContainer = function(ctnr, options){
 
   if( 'author' in ctnr && !('@type' in ctnr.author) ){ //pre-existing type might be Organization
     _addType(ctnr.author, 'Person');
-  }
-
-  if('repository' in ctnr){
-    ctnr.repository.forEach(function(c){
-      _addType(c, 'Code');
-    });
   }
 
   if('contributor' in ctnr){
