@@ -383,7 +383,7 @@ exports.schema = {
     isBasedOnUrl: { type: 'array', items: { type: 'string' } },
     codeRepository: { type: ['array', 'string'] },
     discussionUrl: { type: 'string' },
-    encoding: { //dist_.tar.gz
+    encoding: { //env_.tar.gz
       type: 'object',
       properties: {
         contentUrl: { type: 'string' },
@@ -589,7 +589,7 @@ exports.linkContainer = function(ctnr, options){
   }
 
   ctnr['@id'] = ctnr.name + '/' + ctnr.version;
-  ctnr['@type'] = (ctnr.dataset.length)? ['Container', 'DataCatalog'] : ['Container'];
+  ctnr['@type'] = (ctnr.dataset && ctnr.dataset.length)? ['Container', 'DataCatalog'] : ['Container'];
 
   if( 'author' in ctnr && !('@type' in ctnr.author) ){ //pre-existing type might be Organization
     _addType(ctnr.author, 'Person');
