@@ -5,14 +5,14 @@ var isUrl = require('is-url')
   , url = require('url');
 
 var BASE = "https://registry.standardanalytics.io/";
-var URL = 'https://registry.standardanalytics.io/container.jsonld';
+var URL = 'https://registry.standardanalytics.io/scheme.jsonld';
 
 exports.contextUrl = URL;
 exports.link = '<' + URL + '>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
 exports.terms = {
   "@context": {
-    "container": "http://standardanalytics.io/container/",
+    "scheme": "http://standardanalytics.io/scheme/",
     "schema": "http://schema.org/",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
@@ -34,12 +34,12 @@ exports.terms = {
     "subClassOf": {
       "@id": "rdfs:subClassOf",
       "@type": "@id",
-      "@container": "@set"
+      "@scheme": "@set"
     },
     "subPropertyOf": {
       "@id": "rdfs:subPropertyOf",
       "@type": "@id",
-      "@container": "@set"
+      "@scheme": "@set"
     },
     "seeAlso": {
       "@id": "rdfs:seeAlso",
@@ -47,7 +47,7 @@ exports.terms = {
     },
     "status": "vs:term_status"
   },
-  "@id": "http://standardanalytics.io/container",
+  "@id": "http://standardanalytics.io/scheme",
   "defines": [
     {
       "@id": "ctnr:dataset",
@@ -55,7 +55,7 @@ exports.terms = {
       "label": "dataset",
       "comment":"List of dataset",
       "range": "schema:Code",
-      "domain": "ctnr:Container",
+      "domain": "ctnr:Scheme",
       "status": "testing",
       "seeAlso": "http://schema.org/Dataset"
     },
@@ -65,7 +65,7 @@ exports.terms = {
       "label": "code",
       "comment":"List of code resources used for analytics or views",
       "range": "schema:Code",
-      "domain": "ctnr:Container",
+      "domain": "ctnr:Scheme",
       "status": "testing",
       "seeAlso": "http://schema.org/Code"
     },
@@ -75,7 +75,7 @@ exports.terms = {
       "label": "figure",
       "comment":"List of figures",
       "range": "schema:ImageObject",
-      "domain": "ctnr:Container",
+      "domain": "ctnr:Scheme",
       "status": "testing",
       "seeAlso": "http://schema.org/ImageObject"
     },
@@ -83,31 +83,20 @@ exports.terms = {
       "@id": "ctnr:registry",
       "@type": "rdf:Property",
       "label": "registry",
-      "comment":"registry hosting resource of type Container",
+      "comment":"registry hosting resource of type Scheme",
       "range": "schema:Thing",
-      "domain": "ctnr:Container",
+      "domain": "ctnr:Scheme",
       "status": "testing",
       "seeAlso": "http://en.wikipedia.org/wiki/Metadata_registry"
     },
 
-    { 
-      "@id": "ctnr:codeRepository", //TODO fix this is wrong as codeRepository belongs to Code...
-      "@type": "rdf:Property",
-      "label": "code repository",
-      "comment":"Link to the repository (under version control) where container.jsonld file is located (SVN, github, CodePlex)",
-      "range": "xsd:string",
-      "domain": "ctnr:Container",
-      "status": "testing",
-      "seeAlso": "http://www.schema.org/codeRepository"
-    },
-
     {
-      "@id": "ctnr:container",
+      "@id": "ctnr:scheme",
       "@type": "rdf:Property",
-      "label": "container",
-      "comment":"container hosting the resource",
+      "label": "scheme",
+      "comment":"scheme hosting the resource",
       "range": "schema:Thing",
-      "domain": "schema:CreativeWork", //TODO fix that: if domain can be a list, should be Dataset, Code and ImageObject
+      "domain": "schema:CreativeWork",
       "status": "testing",
       "seeAlso": "http://www.schema.org/catalog"
     },
@@ -135,7 +124,7 @@ exports.terms = {
     {
       "@id": "ctnr:filePath",
       "@type": "rdf:Property",
-      "comment":"Unix-style ('/') path to a runnable file (typically a script) or binary. The path must be relative to the directory in which the Container containing this resource resides.",
+      "comment":"Unix-style ('/') path to a runnable file (typically a script) or binary. The path must be relative to the directory in which the Scheme containing this resource resides.",
       "label": "file path",
       "range": "xsd:string",
       "domain": "schema:SoftwareApplication",
@@ -145,7 +134,7 @@ exports.terms = {
     {
       "@id": "ctnr:contentData",
       "@type": "rdf:Property",
-      "comment":"Inline data content of a container dataset.",
+      "comment":"Inline data content of a scheme dataset.",
       "label": "content data",
       "range": "xsd:string",
       "domain": "schema:DataDownload",
@@ -155,7 +144,7 @@ exports.terms = {
     {
       "@id": "ctnr:contentPath",
       "@type": "rdf:Property",
-      "comment":"Unix-style ('/') path to the data content of a container dataset. The path must be relative to the directory in which the Container containing this resource resides.",
+      "comment":"Unix-style ('/') path to the data content of a scheme dataset. The path must be relative to the directory in which the Scheme containing this resource resides.",
       "label": "content path",
       "range": "xsd:string",
       "domain": "schema:DataDownload",
@@ -175,9 +164,9 @@ exports.terms = {
     },
 
     {
-      "@id": "ctnr:Container",
+      "@id": "ctnr:Scheme",
       "@type": "rdfs:Class",
-      "label": "Container",
+      "label": "Scheme",
       "comment": "A collection of resources associated with structured metadata describing their content and relationships", //TODO improve definition
       "seeAlso": "http://schema.org/DataCatalog",
       "subClassOf": [
@@ -257,20 +246,20 @@ exports.context = {
   "@context": {
     "@base": BASE,
 
-    "ctnr": "http://standardanalytics.io/container/",
+    "ctnr": "http://standardanalytics.io/scheme/",
     "sch":  "http://schema.org/",
     "nfo":  "http://www.semanticdesktop.org/ontologies/nfo/#",
     "dc":   "http://purl.org/dc/terms/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
 
-    "Container":  { "@id": "ctnr:Container", "@type": "@id" },
+    "Scheme":  { "@id": "ctnr:Scheme", "@type": "@id" },
 
-    "container":  { "@id": "ctnr:container",                 "@container": "@list" },
-    "dataset"   : { "@id": "ctnr:dataset",                   "@container": "@list" },
-    "code":       { "@id": "ctnr:code",                      "@container": "@list" },
-    "figure":     { "@id": "ctnr:figure",                    "@container": "@list" },
-    "input":      { "@id": "ctnr:input",     "@type": "@id", "@container": "@set"  },
-    "output":     { "@id": "ctnr:output",    "@type": "@id", "@container": "@set"  },
+    "scheme":  { "@id": "ctnr:scheme",                 "@scheme": "@list" },
+    "dataset"   : { "@id": "ctnr:dataset",                   "@scheme": "@list" },
+    "code":       { "@id": "ctnr:code",                      "@scheme": "@list" },
+    "figure":     { "@id": "ctnr:figure",                    "@scheme": "@list" },
+    "input":      { "@id": "ctnr:input",     "@type": "@id", "@scheme": "@set"  },
+    "output":     { "@id": "ctnr:output",    "@type": "@id", "@scheme": "@set"  },
     "valueType":  { "@id": "ctnr:valueType", "@type": "@id" },
     "contentPath": "ctnr:contentPath",
     "contentData": "ctnr:contentData",
@@ -282,12 +271,12 @@ exports.context = {
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
 
-    "keywords":       { "@id": "sch:keywords",                       "@container": "@list" },
-    "about":          { "@id": "sch:about",                          "@container": "@list" },
-    "requirements":   { "@id": "sch:requirements",   "@type": "@id", "@container": "@list" },
-    "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@container": "@list" }, //dataDependencies
-    "citation":       { "@id": "sch:citation",                       "@container": "@list" },
-    "contributor":    { "@id": "sch:contributor",                    "@container": "@list" },
+    "keywords":       { "@id": "sch:keywords",                       "@scheme": "@list" },
+    "about":          { "@id": "sch:about",                          "@scheme": "@list" },
+    "requirements":   { "@id": "sch:requirements",   "@type": "@id", "@scheme": "@list" },
+    "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@scheme": "@list" }, //dataDependencies
+    "citation":       { "@id": "sch:citation",                       "@scheme": "@list" },
+    "contributor":    { "@id": "sch:contributor",                    "@scheme": "@list" },
     "codeRepository": { "@id": "sch:codeRepository", "@type": "@id" },
     "discussionUrl":  { "@id": "sch:discussionUrl",  "@type": "@id" },
     "targetProduct":  { "@id": "sch:targetProduct",  "@type": "@id" },
@@ -381,7 +370,6 @@ exports.schema = {
     },
     keywords: { type: 'array', items: { type: 'string' } },
     isBasedOnUrl: { type: 'array', items: { type: 'string' } },
-    codeRepository: { type: ['array', 'string'] },
     discussionUrl: { type: 'string' },
     encoding: { //env_.tar.gz
       type: 'object',
@@ -497,7 +485,7 @@ exports.schema = {
           codeRepository: { type: 'string'},
           discussionUrl:  { type: 'string' },
           isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
-          container: {
+          scheme: {
             type: 'object',
             properties: {
               name:    { type: 'string' },
@@ -531,7 +519,7 @@ exports.schema = {
           encodingFormat: { type: 'string' },        
           uploadDate:     { type: 'string' },
           isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
-          container: {
+          scheme: {
             type: 'object',
             properties: {
               name:    { type: 'string' },
@@ -575,9 +563,9 @@ function _addType(x, type, onlyIfEmpty){
 
 
 /**
- * modifies container in place to add @id, @type and optionaly @context
+ * modifies scheme in place to add @id, @type and optionaly @context
  */
-exports.linkContainer = function(ctnr, options){  
+exports.linkScheme = function(ctnr, options){  
   options = options || {addCtx: true};
   if(! ('addCtx' in options)){
     options.addCtx = true;
@@ -589,7 +577,7 @@ exports.linkContainer = function(ctnr, options){
   }
 
   ctnr['@id'] = ctnr.name + '/' + ctnr.version;
-  ctnr['@type'] = (ctnr.dataset && ctnr.dataset.length)? ['Container', 'DataCatalog'] : ['Container'];
+  ctnr['@type'] = (ctnr.dataset && ctnr.dataset.length)? ['Scheme', 'DataCatalog'] : ['Scheme'];
 
   if( 'author' in ctnr && !('@type' in ctnr.author) ){ //pre-existing type might be Organization
     _addType(ctnr.author, 'Person');
@@ -637,7 +625,7 @@ function linkDataset(dataset, name, version){
   _addType(dataset, 'Dataset', true); //add default type only if empty (to avoid accumulating subClasses of Dataset).
   _addType(dataset.distribution, 'DataDownload');
 
-  dataset.catalog = { '@type': ['Container', 'DataCatalog'], name: name, version: version, url: name + '/' + version }; 
+  dataset.catalog = { '@type': ['Scheme', 'DataCatalog'], name: name, version: version, url: name + '/' + version }; 
   
   return dataset;
 };
@@ -655,7 +643,7 @@ function linkCode(code, name, version){
   _addType(code, 'Code');
   _addType(code.targetProduct, 'SoftwareApplication');
 
-  code.container = { name: name, version: version, url: name + '/' + version };  
+  code.scheme = { name: name, version: version, url: name + '/' + version };  
   
   return code;
 };
@@ -672,7 +660,7 @@ function linkFigure(figure, name, version){
 
   _addType(figure, 'ImageObject');
 
-  figure.container = { name: name, version: version, url: name + '/' + version };  
+  figure.scheme = { name: name, version: version, url: name + '/' + version };  
   
   return figure;
 };
@@ -808,7 +796,7 @@ function _validateLink(uri, ctnr, dataDependencies){
 
     } else {
 
-      throw new Error( 'input: ' + uri + ' does not have a matching resource within this container');
+      throw new Error( 'input: ' + uri + ' does not have a matching resource within this scheme');
 
     }
 
@@ -888,7 +876,7 @@ exports.validateRequire = function(ctnr, dataDependencies){
               throw new Error( 'resource: ' + uri + ' should list ' + [ctnr.name, ctnr.version, 'code', r.name ].join('/') + ' in isBasedOnUrl');
             }
           } else {
-            throw new Error( 'output: ' + uri + ' does not have a matching resource within this container');
+            throw new Error( 'output: ' + uri + ' does not have a matching resource within this scheme');
           }
         });
       }
@@ -910,7 +898,7 @@ function validateName(name){
   if ( !n || n.charAt(0) === "."
        || !n.match(/^[a-zA-Z0-9]/)
        || n.match(/[\/\(\)&\?#\|<>@:%\s\\\*'"!~`]/)
-       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'container.jsonld', 'dataset', 'code', 'figure', 'about', 'containers', 'favicon.ico'].indexOf(n.toLowerCase()) !== -1
+       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'scheme.jsonld', 'dataset', 'code', 'figure', 'about', 'ld_schemes', 'favicon.ico'].indexOf(n.toLowerCase()) !== -1
        || n !== encodeURIComponent(n) ) {
 
     throw new Error('invalid name');

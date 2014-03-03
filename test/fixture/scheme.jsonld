@@ -1,15 +1,13 @@
 {
-  "name": "myctnr",
+  "name": "mysch",
   "version": "0.0.0",
   "description": "a description",
   "keywords": ["hyperdata", "json-ld", "test"],
-  "isBasedOnUrl": ["../../ctnr1/0.0.1", "../../ctnr2/0.2.1", "http://data.com/"],
+  "isBasedOnUrl": ["../../sch1/0.0.1", "../../sch2/0.2.1", "http://data.com/"],
   "author": {
     "name": "Sebastien Ballesteros",
     "email": "sebastien@standardanalytics.io"
   },
-
-  "codeRepository": "git://github.com/standard-analytics/data-analysis.git",
 
   "dataset": [
     {
@@ -22,7 +20,7 @@
     },
     {
       "name": "mydata",
-      "isBasedOnUrl": [ "myctnr/0.0.0/code/myanalytics" ],
+      "isBasedOnUrl": [ "mysch/0.0.0/code/myanalytics" ],
       "distribution": { "contentData": { "inline": "data" } }
     }
   ],
@@ -32,8 +30,8 @@
       "name": "myanalytics",
       "targetProduct": { 
         "operatingSystem": "Unix",
-        "input": [ "myctnr/0.0.0/dataset/mycsv" ],
-        "output": [ "myctnr/0.0.0/dataset/mydata", "myctnr/0.0.0/figure/myfig" ]
+        "input": [ "mysch/0.0.0/dataset/mycsv" ],
+        "output": [ "mysch/0.0.0/dataset/mydata", "mysch/0.0.0/figure/myfig" ]
       }
     }   
   ],
@@ -42,7 +40,7 @@
     {
       "name": "myfig",
       "contentPath": "figure/x.png",
-      "isBasedOnUrl": [ "myctnr/0.0.0/dataset/mydata",  "myctnr/0.0.0/code/myanalytics" ]
+      "isBasedOnUrl": [ "mysch/0.0.0/dataset/mydata",  "mysch/0.0.0/code/myanalytics" ]
     }
   ]
 

@@ -1,6 +1,6 @@
 {
-  "name": "container-jsonld",
-  "version": "0.1.0",
+  "name": "scheme-jsonld",
+  "version": "0.0.0",
   "description": "datapackage in JSON-LD and schema.org style because semantic web, linked data and hypermedia.",
   "main": "index.js",
   "directories": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/standard-analytics/container-jsonld.git"
+    "url": "git://github.com/standard-analytics/scheme-jsonld.git"
   },
   "keywords": [
     "hyperdata",
@@ -26,9 +26,9 @@
   "author": "Sebastien Ballesteros",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/standard-analytics/container-jsonld/issues"
+    "url": "https://github.com/standard-analytics/scheme-jsonld/issues"
   },
-  "homepage": "https://github.com/standard-analytics/container-jsonld",
+  "homepage": "https://github.com/standard-analytics/scheme-jsonld",
   "devDependencies": {
     "mocha": "~1.15.1",
     "clone": "~0.1.11"
