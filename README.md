@@ -1,17 +1,12 @@
-scheme-jsonld
-=============
+package-jsonld
+==============
 
-scheme:
 
-> a large-scale systematic plan or arrangement for attaining some particular object or putting a particular idea into effect.
+a [commonJS](http://wiki.commonjs.org/wiki/Packages/1.1) thingy in
+[JSON-LD](http://json-ld.org/) / [schema.org](http://schema.org)
+because semantic web, linked data and hypermedia.
 
-[datapackage](http://dataprotocols.org/data-packages/) in
-[JSON-LD](http://json-ld.org/) and
-[schema.org/DataCatalog](http://schema.org/DataCatalog) style because
-semantic web, linked data and hypermedia.
-
-[![NPM](https://nodei.co/npm/scheme-jsonld.png)](https://nodei.co/npm/scheme-jsonld/)
-
+[![NPM](https://nodei.co/npm/package-jsonld.png)](https://nodei.co/npm/package-jsonld/)
 
 Tests
 =====

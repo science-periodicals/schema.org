@@ -1,9 +1,9 @@
 {
-  "name": "mysch",
+  "name": "mypkg",
   "version": "0.0.0",
   "description": "a description",
   "keywords": ["hyperdata", "json-ld", "test"],
-  "isBasedOnUrl": ["../../sch1/0.0.1", "../../sch2/0.2.1", "http://data.com/"],
+  "isBasedOnUrl": ["../../pkg1/0.0.1", "../../pkg2/0.2.1", "http://data.com/"],
   "author": {
     "name": "Sebastien Ballesteros",
     "email": "sebastien@standardanalytics.io"
@@ -20,7 +20,7 @@
     },
     {
       "name": "mydata",
-      "isBasedOnUrl": [ "mysch/0.0.0/code/myanalytics" ],
+      "isBasedOnUrl": [ "mypkg/0.0.0/code/myanalytics" ],
       "distribution": { "contentData": { "inline": "data" } }
     }
   ],
@@ -30,8 +30,8 @@
       "name": "myanalytics",
       "targetProduct": { 
         "operatingSystem": "Unix",
-        "input": [ "mysch/0.0.0/dataset/mycsv" ],
-        "output": [ "mysch/0.0.0/dataset/mydata", "mysch/0.0.0/figure/myfig" ]
+        "input": [ "mypkg/0.0.0/dataset/mycsv" ],
+        "output": [ "mypkg/0.0.0/dataset/mydata", "mypkg/0.0.0/figure/myfig" ]
       }
     }   
   ],
@@ -40,7 +40,7 @@
     {
       "name": "myfig",
       "contentPath": "figure/x.png",
-      "isBasedOnUrl": [ "mysch/0.0.0/dataset/mydata",  "mysch/0.0.0/code/myanalytics" ]
+      "isBasedOnUrl": [ "mypkg/0.0.0/dataset/mydata",  "mypkg/0.0.0/code/myanalytics" ]
     }
   ]
 

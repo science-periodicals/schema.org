@@ -8,59 +8,59 @@ var fs = require('fs')
 var root = path.dirname(__filename);
 var base = cjsonld.context['@context']['@base'];
 
-var sch = JSON.parse(fs.readFileSync(path.join(root, 'fixture', 'scheme.jsonld')));
+var pkg = JSON.parse(fs.readFileSync(path.join(root, 'fixture', 'package.jsonld')));
 
-describe('scheme-jsonld', function(){
+describe('package-jsonld', function(){
 
   describe('jsonldify', function(){
 
     it('should add @type and @id', function(){
       
-      var scheme = cjsonld.linkScheme(clone(sch));
+      var package = cjsonld.linkPackage(clone(pkg));
 
-      assert.equal(scheme['@context'], cjsonld.contextUrl);
-      assert.equal(scheme['@id'], 'mysch/0.0.0');
-      assert.deepEqual(scheme['@type'], ['Scheme', 'DataCatalog']);
-      assert.equal(scheme.author['@type'], 'Person');
-      assert.deepEqual(scheme.registry, { name: 'Standard Analytics IO', url:'https://registry.standardanalytics.io/' } );
-      scheme.dataset.forEach(function(r){
+      assert.equal(package['@context'], cjsonld.contextUrl);
+      assert.equal(package['@id'], 'mypkg/0.0.0');
+      assert.deepEqual(package['@type'], ['Package', 'DataCatalog']);
+      assert.equal(package.author['@type'], 'Person');
+      assert.deepEqual(package.registry, { name: 'Standard Analytics IO', url:'https://registry.standardanalytics.io/' } );
+      package.dataset.forEach(function(r){
         assert.equal(r['@type'], 'Dataset');
-        assert.equal(r['@id'], 'mysch/0.0.0/dataset/' + r.name);
-        assert.deepEqual(r.catalog, { '@type': ['Scheme', 'DataCatalog'], name: 'mysch', version: '0.0.0', url: 'mysch/0.0.0' } );
+        assert.equal(r['@id'], 'mypkg/0.0.0/dataset/' + r.name);
+        assert.deepEqual(r.catalog, { '@type': ['Package', 'DataCatalog'], name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
         assert.equal(r.distribution['@type'], 'DataDownload');
       });
-      scheme.code.forEach(function(r){
+      package.code.forEach(function(r){
         assert.equal(r['@type'], 'Code');
-        assert.equal(r['@id'], 'mysch/0.0.0/code/' + r.name);
-        assert.deepEqual(r.scheme, { name: 'mysch', version: '0.0.0', url: 'mysch/0.0.0' } );
+        assert.equal(r['@id'], 'mypkg/0.0.0/code/' + r.name);
+        assert.deepEqual(r.package, { name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
         assert.equal(r.targetProduct['@type'], 'SoftwareApplication');
       });
-      scheme.figure.forEach(function(r){
+      package.figure.forEach(function(r){
         assert.equal(r['@type'], 'ImageObject');
-        assert.equal(r['@id'], 'mysch/0.0.0/figure/' + r.name);
-        assert.deepEqual(r.scheme, { name: 'mysch', version: '0.0.0', url: 'mysch/0.0.0' } );
+        assert.equal(r['@id'], 'mypkg/0.0.0/figure/' + r.name);
+        assert.deepEqual(r.package, { name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
       });
     });
 
     it('should respect pre-existing figure or code @type', function(){
-      var mysch = clone(sch);
-      mysch.code[0]['@type'] = 'CodeType';
-      var scheme = cjsonld.linkScheme(mysch);
-      assert.deepEqual(['CodeType', 'Code'], scheme.code[0]['@type']);
+      var mypkg = clone(pkg);
+      mypkg.code[0]['@type'] = 'CodeType';
+      var package = cjsonld.linkPackage(mypkg);
+      assert.deepEqual(['CodeType', 'Code'], package.code[0]['@type']);
     });
 
     it('should respect pre-existing figure or code @type array', function(){
-      var mysch = clone(sch);
-      mysch.figure[0]['@type'] = ['FigType', 'FigType2'];
-      var scheme = cjsonld.linkScheme(mysch);
-      assert.deepEqual(['FigType', 'FigType2', 'ImageObject'], scheme.figure[0]['@type']);
+      var mypkg = clone(pkg);
+      mypkg.figure[0]['@type'] = ['FigType', 'FigType2'];
+      var package = cjsonld.linkPackage(mypkg);
+      assert.deepEqual(['FigType', 'FigType2', 'ImageObject'], package.figure[0]['@type']);
     });
 
     it('should add @type Dataset only if type is non existent', function(){
-      var mysch = clone(sch);
-      mysch.dataset[0]['@type'] = 'EmpiricalDataset';
-      var scheme = cjsonld.linkScheme(mysch);
-      assert.equal('EmpiricalDataset', scheme.dataset[0]['@type']);
+      var mypkg = clone(pkg);
+      mypkg.dataset[0]['@type'] = 'EmpiricalDataset';
+      var package = cjsonld.linkPackage(mypkg);
+      assert.equal('EmpiricalDataset', package.dataset[0]['@type']);
     });
 
   });
@@ -69,33 +69,33 @@ describe('scheme-jsonld', function(){
     
     it('should extract dataDependencies', function(){
       var isBasedOnUrl = [
-        'sch0/0.0.0',
-        'sch1/latest',
-        url.resolve(base, 'sch2/0.0.0'),
-        url.resolve(base, 'sch3/0.0.1'),
-        url.resolve(base, 'sch4/latest'),
-        url.resolve(base, 'sch5/latest?range=' + encodeURIComponent('>2.0.0')),
+        'pkg0/0.0.0',
+        'pkg1/latest',
+        url.resolve(base, 'pkg2/0.0.0'),
+        url.resolve(base, 'pkg3/0.0.1'),
+        url.resolve(base, 'pkg4/latest'),
+        url.resolve(base, 'pkg5/latest?range=' + encodeURIComponent('>2.0.0')),
         'http://example.com/a/b',
         'https://example.com/a/b/c/'
       ];
       var dataDependencies = cjsonld.dataDependencies(isBasedOnUrl);
-      var expected = { sch0: '0.0.0', sch1: '*', sch2: '0.0.0', sch3: '0.0.1', sch4: '*', sch5: '>2.0.0' };
+      var expected = { pkg0: '0.0.0', pkg1: '*', pkg2: '0.0.0', pkg3: '0.0.1', pkg4: '*', pkg5: '>2.0.0' };
 
       assert.deepEqual(dataDependencies, expected);
     });
 
     it('should throw an error when a version range does not respect semver', function(){      
-      assert.throws( function(){ cjsonld.dataDependencies(['sch/a.b.c']); }, Error );
+      assert.throws( function(){ cjsonld.dataDependencies(['pkg/a.b.c']); }, Error );
     });
     
-    it('should throw an error when a sch as an invalid URI', function(){
-      assert.throws( function(){ cjsonld.dataDependencies(['sch']); }, Error);
+    it('should throw an error when a pkg as an invalid URI', function(){
+      assert.throws( function(){ cjsonld.dataDependencies(['pkg']); }, Error);
       assert.throws( function(){ cjsonld.dataDependencies(['']); }, Error );
       assert.throws( function(){ cjsonld.dataDependencies([base]); }, Error );            
     });
 
-    it('should throw an error when a sch is listed many times as dep', function(){      
-      assert.throws( function(){ cjsonld.dataDependencies(['sch/0.0.0', url.resolve(base, 'sch/0.1.1')]); }, Error );     
+    it('should throw an error when a pkg is listed many times as dep', function(){      
+      assert.throws( function(){ cjsonld.dataDependencies(['pkg/0.0.0', url.resolve(base, 'pkg/0.1.1')]); }, Error );     
     });
 
   });
@@ -103,30 +103,30 @@ describe('scheme-jsonld', function(){
   describe('required links', function(){
 
     it('should validate a valid required uri', function(){
-      assert(!cjsonld.validateRequiredUri('sch2/0.0.0', 'sch', '0.0.0', {sch2: '*'}));
+      assert(!cjsonld.validateRequiredUri('pkg2/0.0.0', 'pkg', '0.0.0', {pkg2: '*'}));
     });
     
-    it('should throw an error when on whithin sch version mismatch', function(){
+    it('should throw an error when on whithin pkg version mismatch', function(){
       assert.throws( function(){ 
-        cjsonld.validateRequiredUri('sch/0.0.0', 'sch', '0.0.1', {});
+        cjsonld.validateRequiredUri('pkg/0.0.0', 'pkg', '0.0.1', {});
       }, Error);
     });
 
     it('should throw an error when a required uri is not listed as dep', function(){
       assert.throws( function(){ 
-        cjsonld.validateRequiredUri('sch2/0.0.0', 'sch', '0.0.0', {});
+        cjsonld.validateRequiredUri('pkg2/0.0.0', 'pkg', '0.0.0', {});
       }, Error);
     });
 
     it('should throw an error when a required uri does not satisfy the dep version', function(){
       assert.throws( function(){ 
-        cjsonld.validateRequiredUri('sch2/0.0.0', 'sch', '0.0.0', {'sch2':'0.1.0'});
+        cjsonld.validateRequiredUri('pkg2/0.0.0', 'pkg', '0.0.0', {'pkg2':'0.1.0'});
       }, Error);
     });
 
     it('should throw an error on invalid uri', function(){
       assert.throws( function(){ 
-        cjsonld.validateRequiredUri('sch2', 'sch', '0.0.0', {'sch2':'0.1.0'});
+        cjsonld.validateRequiredUri('pkg2', 'pkg', '0.0.0', {'pkg2':'0.1.0'});
       }, Error);
     });
 
@@ -144,72 +144,72 @@ describe('scheme-jsonld', function(){
 
   describe('validate require', function(){
 
-    it('should validate when a scheme has valid require link', function(){
-      var mysch = clone(sch);    
-      assert(!cjsonld.validateRequire(sch));
+    it('should validate when a package has valid require link', function(){
+      var mypkg = clone(pkg);    
+      assert(!cjsonld.validateRequire(pkg));
     });
 
     it('should throw an error when a code has invalid require links', function(){
       assert.throws( function(){ 
-        var mysch = clone(sch);
-        mysch.code = [ { targetProduct: { input: ['sch5/0.0.0'] } } ];
-        cjsonld.validateRequire(mysch)
+        var mypkg = clone(pkg);
+        mypkg.code = [ { targetProduct: { input: ['pkg5/0.0.0'] } } ];
+        cjsonld.validateRequire(mypkg)
       }, Error);
     });
 
     it('should throw an error when a dataset point to an invalid require links', function(){
       assert.throws( function(){ 
-        var mysch = clone(sch);
-        mysch.dataset[1].isBasedOnUrl = [ 'mysch/0.0.1/code/myanalytics' ];
-        cjsonld.validateRequire(mysch)
+        var mypkg = clone(pkg);
+        mypkg.dataset[1].isBasedOnUrl = [ 'mypkg/0.0.1/code/myanalytics' ];
+        cjsonld.validateRequire(mypkg)
       }, Error);
     });
 
     it('should throw an error when a code list as input a local dataset that does not exists', function(){
       assert.throws( function(){ 
-        var mysch = clone(sch);
-        mysch.code[0].targetProduct.input = [ 'mysch/0.0.0/dataset/donotexists' ];
-        cjsonld.validateRequire(mysch)
+        var mypkg = clone(pkg);
+        mypkg.code[0].targetProduct.input = [ 'mypkg/0.0.0/dataset/donotexists' ];
+        cjsonld.validateRequire(mypkg)
       }, Error);
     });
 
     it('should throw an error when a code list as output a local dataset that does not exists', function(){
       assert.throws( function(){ 
-        var mysch = clone(sch);
-        mysch.code[0].targetProduct.output = [ 'mysch/0.0.0/dataset/donotexists' ];
-        cjsonld.validateRequire(mysch)
+        var mypkg = clone(pkg);
+        mypkg.code[0].targetProduct.output = [ 'mypkg/0.0.0/dataset/donotexists' ];
+        cjsonld.validateRequire(mypkg)
       }, Error);
     });
 
     it('should throw an error when a code list as output a local dataset that does not list this code as isBasedOnUrl (no isBasedOnUrl at all)', function(){
       assert.throws( function(){ 
-        var mysch = clone(sch);
-        delete mysch.dataset[2].isBasedOnUrl;
-        cjsonld.validateRequire(mysch)
+        var mypkg = clone(pkg);
+        delete mypkg.dataset[2].isBasedOnUrl;
+        cjsonld.validateRequire(mypkg)
       }, Error);
     });
 
     it('should throw an error when a code list as output a local dataset that does not list this code as isBasedOnUrl', function(){
       assert.throws( function(){ 
-        var mysch = clone(sch);
-        mysch.dataset[2].isBasedOnUrl = ['http://ex.com/smtgelse'];
-        cjsonld.validateRequire(mysch)
+        var mypkg = clone(pkg);
+        mypkg.dataset[2].isBasedOnUrl = ['http://ex.com/smtgelse'];
+        cjsonld.validateRequire(mypkg)
       }, Error);
     });
 
     it('should throw an error when a code list as output a local figure that does not list this code as isBasedOnUrl', function(){
       assert.throws( function(){ 
-        var mysch = clone(sch);
-        mysch.figure[0].isBasedOnUrl = mysch.figure[0].isBasedOnUrl.slice(0,1);
-        cjsonld.validateRequire(mysch)
+        var mypkg = clone(pkg);
+        mypkg.figure[0].isBasedOnUrl = mypkg.figure[0].isBasedOnUrl.slice(0,1);
+        cjsonld.validateRequire(mypkg)
       }, Error);
     });
 
     it("should throw an error when a resource list as isBasedOnUrl code that does not list that resource as it's outpt", function(){
       assert.throws( function(){ 
-        var mysch = clone(sch);
-        mysch.dataset[1].isBasedOnUrl = [ 'mysch/0.0.0/code/myanalytics' ];
-        cjsonld.validateRequire(mysch)
+        var mypkg = clone(pkg);
+        mypkg.dataset[1].isBasedOnUrl = [ 'mypkg/0.0.0/code/myanalytics' ];
+        cjsonld.validateRequire(mypkg)
       }, Error);
     });
 

@@ -5,14 +5,14 @@ var isUrl = require('is-url')
   , url = require('url');
 
 var BASE = "https://registry.standardanalytics.io/";
-var URL = 'https://registry.standardanalytics.io/scheme.jsonld';
+var URL = 'https://registry.standardanalytics.io/package.jsonld';
 
 exports.contextUrl = URL;
 exports.link = '<' + URL + '>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
 exports.terms = {
   "@context": {
-    "scheme": "http://standardanalytics.io/scheme/",
+    "pkg": "http://standardanalytics.io/package/",
     "schema": "http://schema.org/",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
@@ -34,12 +34,12 @@ exports.terms = {
     "subClassOf": {
       "@id": "rdfs:subClassOf",
       "@type": "@id",
-      "@scheme": "@set"
+      "@package": "@set"
     },
     "subPropertyOf": {
       "@id": "rdfs:subPropertyOf",
       "@type": "@id",
-      "@scheme": "@set"
+      "@package": "@set"
     },
     "seeAlso": {
       "@id": "rdfs:seeAlso",
@@ -47,54 +47,54 @@ exports.terms = {
     },
     "status": "vs:term_status"
   },
-  "@id": "http://standardanalytics.io/scheme",
+  "@id": "http://standardanalytics.io/package",
   "defines": [
     {
-      "@id": "ctnr:dataset",
+      "@id": "pkg:dataset",
       "@type": "rdf:Property",
       "label": "dataset",
       "comment":"List of dataset",
       "range": "schema:Code",
-      "domain": "ctnr:Scheme",
+      "domain": "pkg:Package",
       "status": "testing",
       "seeAlso": "http://schema.org/Dataset"
     },
     {
-      "@id": "ctnr:code",
+      "@id": "pkg:code",
       "@type": "rdf:Property",
       "label": "code",
       "comment":"List of code resources used for analytics or views",
       "range": "schema:Code",
-      "domain": "ctnr:Scheme",
+      "domain": "pkg:Package",
       "status": "testing",
       "seeAlso": "http://schema.org/Code"
     },
     {
-      "@id": "ctnr:figure",
+      "@id": "pkg:figure",
       "@type": "rdf:Property",
       "label": "figure",
       "comment":"List of figures",
       "range": "schema:ImageObject",
-      "domain": "ctnr:Scheme",
+      "domain": "pkg:Package",
       "status": "testing",
       "seeAlso": "http://schema.org/ImageObject"
     },
     {
-      "@id": "ctnr:registry",
+      "@id": "pkg:registry",
       "@type": "rdf:Property",
       "label": "registry",
-      "comment":"registry hosting resource of type Scheme",
+      "comment":"registry hosting resource of type Package",
       "range": "schema:Thing",
-      "domain": "ctnr:Scheme",
+      "domain": "pkg:Package",
       "status": "testing",
       "seeAlso": "http://en.wikipedia.org/wiki/Metadata_registry"
     },
 
     {
-      "@id": "ctnr:scheme",
+      "@id": "pkg:package",
       "@type": "rdf:Property",
-      "label": "scheme",
-      "comment":"scheme hosting the resource",
+      "label": "package",
+      "comment":"package hosting the resource",
       "range": "schema:Thing",
       "domain": "schema:CreativeWork",
       "status": "testing",
@@ -102,7 +102,7 @@ exports.terms = {
     },
 
     {
-      "@id": "ctnr:input",
+      "@id": "pkg:input",
       "@type": "rdf:Property",
       "label": "input",
       "comment":"List of absolute or relative URLs of data resources used in a given analysis.",
@@ -112,7 +112,7 @@ exports.terms = {
       "seeAlso": "http://schema.org/SoftwareApplication"
     },
     {
-      "@id": "ctnr:output",
+      "@id": "pkg:output",
       "@type": "rdf:Property",
       "label": "output",
       "comment":"List of absolute or relative URLs of data resources generated in a given analysis.",
@@ -122,9 +122,9 @@ exports.terms = {
       "seeAlso": "http://schema.org/SoftwareApplication"
     },
     {
-      "@id": "ctnr:filePath",
+      "@id": "pkg:filePath",
       "@type": "rdf:Property",
-      "comment":"Unix-style ('/') path to a runnable file (typically a script) or binary. The path must be relative to the directory in which the Scheme containing this resource resides.",
+      "comment":"Unix-style ('/') path to a runnable file (typically a script) or binary. The path must be relative to the directory in which the Package containing this resource resides.",
       "label": "file path",
       "range": "xsd:string",
       "domain": "schema:SoftwareApplication",
@@ -132,9 +132,9 @@ exports.terms = {
       "seeAlso": "http://dataprotocols.org/data-packages/#resource-information"
     },
     {
-      "@id": "ctnr:contentData",
+      "@id": "pkg:contentData",
       "@type": "rdf:Property",
-      "comment":"Inline data content of a scheme dataset.",
+      "comment":"Inline data content of a package dataset.",
       "label": "content data",
       "range": "xsd:string",
       "domain": "schema:DataDownload",
@@ -142,9 +142,9 @@ exports.terms = {
       "seeAlso": "http://dataprotocols.org/data-packages/#resource-information"
     },
     {
-      "@id": "ctnr:contentPath",
+      "@id": "pkg:contentPath",
       "@type": "rdf:Property",
-      "comment":"Unix-style ('/') path to the data content of a scheme dataset. The path must be relative to the directory in which the Scheme containing this resource resides.",
+      "comment":"Unix-style ('/') path to the data content of a package dataset. The path must be relative to the directory in which the Package containing this resource resides.",
       "label": "content path",
       "range": "xsd:string",
       "domain": "schema:DataDownload",
@@ -153,7 +153,7 @@ exports.terms = {
     },
 
     {
-      "@id": "ctnr:valueType",
+      "@id": "pkg:valueType",
       "@type": "rdf:Property",
       "label": "value type",
       "comment":"The type (typicaly xsd) of a value",
@@ -164,9 +164,9 @@ exports.terms = {
     },
 
     {
-      "@id": "ctnr:Scheme",
+      "@id": "pkg:Package",
       "@type": "rdfs:Class",
-      "label": "Scheme",
+      "label": "Package",
       "comment": "A collection of resources associated with structured metadata describing their content and relationships", //TODO improve definition
       "seeAlso": "http://schema.org/DataCatalog",
       "subClassOf": [
@@ -176,7 +176,7 @@ exports.terms = {
     },
 
     {
-      "@id": "ctnr:Prior",
+      "@id": "pkg:Prior",
       "@type": "rdfs:Class",
       "label": "Statistical Prior",
       "comment": "A body of structured information describing a statistical prior",
@@ -188,7 +188,7 @@ exports.terms = {
     },
 
     {
-      "@id": "ctnr:Analytics",
+      "@id": "pkg:Analytics",
       "@type": "rdfs:Class",
       "label": "Analytics",
       "comment": "A body of structured information describing the discovery of meaningful patterns in data",
@@ -200,7 +200,7 @@ exports.terms = {
     },
 
     {
-      "@id": "ctnr:EmpiricalDataset",
+      "@id": "pkg:EmpiricalDataset",
       "@type": "rdfs:Class",
       "label": "empirical data",
       "comment": "Data acquired by means of observation or experimentation.",
@@ -212,7 +212,7 @@ exports.terms = {
     },
 
     {
-      "@id": "ctnr:SimulatedDataset",
+      "@id": "pkg:SimulatedDataset",
       "@type": "rdfs:Class",
       "label": "simulated data",
       "comment": "Data acquired by means of computer simulation",
@@ -224,7 +224,7 @@ exports.terms = {
     },
 
     {
-      "@id": "ctnr:Configuration",
+      "@id": "pkg:Configuration",
       "@type": "rdfs:Class",
       "label": "Configuration file",
       "comment": "Configuration file configure the initial settings for some computer programs",
@@ -246,37 +246,37 @@ exports.context = {
   "@context": {
     "@base": BASE,
 
-    "ctnr": "http://standardanalytics.io/scheme/",
+    "pkg": "http://standardanalytics.io/package/",
     "sch":  "http://schema.org/",
     "nfo":  "http://www.semanticdesktop.org/ontologies/nfo/#",
     "dc":   "http://purl.org/dc/terms/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
 
-    "Scheme":  { "@id": "ctnr:Scheme", "@type": "@id" },
+    "Package":  { "@id": "pkg:Package", "@type": "@id" },
 
-    "scheme":  { "@id": "ctnr:scheme",                 "@scheme": "@list" },
-    "dataset"   : { "@id": "ctnr:dataset",                   "@scheme": "@list" },
-    "code":       { "@id": "ctnr:code",                      "@scheme": "@list" },
-    "figure":     { "@id": "ctnr:figure",                    "@scheme": "@list" },
-    "input":      { "@id": "ctnr:input",     "@type": "@id", "@scheme": "@set"  },
-    "output":     { "@id": "ctnr:output",    "@type": "@id", "@scheme": "@set"  },
-    "valueType":  { "@id": "ctnr:valueType", "@type": "@id" },
-    "contentPath": "ctnr:contentPath",
-    "contentData": "ctnr:contentData",
-    "filePath":    "ctnr:filePath",
-    "registry":    "ctnr:registry",
+    "package":  { "@id": "pkg:package",                 "@package": "@list" },
+    "dataset"   : { "@id": "pkg:dataset",                   "@package": "@list" },
+    "code":       { "@id": "pkg:code",                      "@package": "@list" },
+    "figure":     { "@id": "pkg:figure",                    "@package": "@list" },
+    "input":      { "@id": "pkg:input",     "@type": "@id", "@package": "@set"  },
+    "output":     { "@id": "pkg:output",    "@type": "@id", "@package": "@set"  },
+    "valueType":  { "@id": "pkg:valueType", "@type": "@id" },
+    "contentPath": "pkg:contentPath",
+    "contentData": "pkg:contentData",
+    "filePath":    "pkg:filePath",
+    "registry":    "pkg:registry",
 
     "license": "dc:license",
 
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
 
-    "keywords":       { "@id": "sch:keywords",                       "@scheme": "@list" },
-    "about":          { "@id": "sch:about",                          "@scheme": "@list" },
-    "requirements":   { "@id": "sch:requirements",   "@type": "@id", "@scheme": "@list" },
-    "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@scheme": "@list" }, //dataDependencies
-    "citation":       { "@id": "sch:citation",                       "@scheme": "@list" },
-    "contributor":    { "@id": "sch:contributor",                    "@scheme": "@list" },
+    "keywords":       { "@id": "sch:keywords",                       "@package": "@list" },
+    "about":          { "@id": "sch:about",                          "@package": "@list" },
+    "requirements":   { "@id": "sch:requirements",   "@type": "@id", "@package": "@list" },
+    "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@package": "@list" }, //dataDependencies
+    "citation":       { "@id": "sch:citation",                       "@package": "@list" },
+    "contributor":    { "@id": "sch:contributor",                    "@package": "@list" },
     "codeRepository": { "@id": "sch:codeRepository", "@type": "@id" },
     "discussionUrl":  { "@id": "sch:discussionUrl",  "@type": "@id" },
     "targetProduct":  { "@id": "sch:targetProduct",  "@type": "@id" },
@@ -485,7 +485,7 @@ exports.schema = {
           codeRepository: { type: 'string'},
           discussionUrl:  { type: 'string' },
           isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
-          scheme: {
+          package: {
             type: 'object',
             properties: {
               name:    { type: 'string' },
@@ -519,7 +519,7 @@ exports.schema = {
           encodingFormat: { type: 'string' },        
           uploadDate:     { type: 'string' },
           isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
-          scheme: {
+          package: {
             type: 'object',
             properties: {
               name:    { type: 'string' },
@@ -563,9 +563,9 @@ function _addType(x, type, onlyIfEmpty){
 
 
 /**
- * modifies scheme in place to add @id, @type and optionaly @context
+ * modifies package in place to add @id, @type and optionaly @context
  */
-exports.linkScheme = function(ctnr, options){  
+exports.linkPackage = function(pkg, options){  
   options = options || {addCtx: true};
   if(! ('addCtx' in options)){
     options.addCtx = true;
@@ -573,45 +573,45 @@ exports.linkScheme = function(ctnr, options){
   
   if(options.addCtx){
     var ctx = options.ctx || URL;
-    ctnr["@context"] = ctx;
+    pkg["@context"] = ctx;
   }
 
-  ctnr['@id'] = ctnr.name + '/' + ctnr.version;
-  ctnr['@type'] = (ctnr.dataset && ctnr.dataset.length)? ['Scheme', 'DataCatalog'] : ['Scheme'];
+  pkg['@id'] = pkg.name + '/' + pkg.version;
+  pkg['@type'] = (pkg.dataset && pkg.dataset.length)? ['Package', 'DataCatalog'] : ['Package'];
 
-  if( 'author' in ctnr && !('@type' in ctnr.author) ){ //pre-existing type might be Organization
-    _addType(ctnr.author, 'Person');
+  if( 'author' in pkg && !('@type' in pkg.author) ){ //pre-existing type might be Organization
+    _addType(pkg.author, 'Person');
   }
 
-  if('contributor' in ctnr){
-    ctnr.contributor.forEach(function(c){
+  if('contributor' in pkg){
+    pkg.contributor.forEach(function(c){
       if ( !('@type' in c) ) { //pre-existing type might be Organization
         _addType(c, 'Person');
       }
     });
   }
 
-  if('dataset' in ctnr){
-    ctnr.dataset.forEach(function(r){
-      linkDataset(r, ctnr.name, ctnr.version);
+  if('dataset' in pkg){
+    pkg.dataset.forEach(function(r){
+      linkDataset(r, pkg.name, pkg.version);
     });
   }
 
-  if('code' in ctnr){
-    ctnr.code.forEach(function(r){
-      linkCode(r, ctnr.name, ctnr.version);
+  if('code' in pkg){
+    pkg.code.forEach(function(r){
+      linkCode(r, pkg.name, pkg.version);
     });
   }
 
-  if('figure' in ctnr){
-    ctnr.figure.forEach(function(r){
-      linkFigure(r, ctnr.name, ctnr.version);
+  if('figure' in pkg){
+    pkg.figure.forEach(function(r){
+      linkFigure(r, pkg.name, pkg.version);
     });
   }
 
-  ctnr.registry = { name: "Standard Analytics IO", url: BASE };
+  pkg.registry = { name: "Standard Analytics IO", url: BASE };
 
-  return ctnr;
+  return pkg;
 };
 
 /**
@@ -625,7 +625,7 @@ function linkDataset(dataset, name, version){
   _addType(dataset, 'Dataset', true); //add default type only if empty (to avoid accumulating subClasses of Dataset).
   _addType(dataset.distribution, 'DataDownload');
 
-  dataset.catalog = { '@type': ['Scheme', 'DataCatalog'], name: name, version: version, url: name + '/' + version }; 
+  dataset.catalog = { '@type': ['Package', 'DataCatalog'], name: name, version: version, url: name + '/' + version }; 
   
   return dataset;
 };
@@ -643,7 +643,7 @@ function linkCode(code, name, version){
   _addType(code, 'Code');
   _addType(code.targetProduct, 'SoftwareApplication');
 
-  code.scheme = { name: name, version: version, url: name + '/' + version };  
+  code.package = { name: name, version: version, url: name + '/' + version };  
   
   return code;
 };
@@ -660,7 +660,7 @@ function linkFigure(figure, name, version){
 
   _addType(figure, 'ImageObject');
 
-  figure.scheme = { name: name, version: version, url: name + '/' + version };  
+  figure.package = { name: name, version: version, url: name + '/' + version };  
   
   return figure;
 };
@@ -676,7 +676,7 @@ function _parseUrl(uri){
   var absUrl = (isUrl(uri)) ? uri : url.resolve(BASE, uri);
   var urlObj = url.parse(absUrl, true);
 
-  if(urlObj.hostname === url.parse(BASE).hostname){ //it's a ctnr of this registry
+  if(urlObj.hostname === url.parse(BASE).hostname){ //it's a pkg of this registry
     var pathname = urlObj.pathname.replace(/^\//, '');
     var splt = pathname.split('/'); //name, version, ...
 
@@ -729,10 +729,10 @@ exports.dataDependencies = function(isBasedOnUrl){
 };
 
 /**
- * make sure that link to ctnr hosted on the registry respect the
- * versioning scheme used
+ * make sure that link to pkg hosted on the registry respect the
+ * versioning package used
  *
- * return parsed uri if within ctnr link
+ * return parsed uri if within pkg link
  */
 function validateRequiredUri(uri, name, version, dataDependencies){
 
@@ -741,13 +741,13 @@ function validateRequiredUri(uri, name, version, dataDependencies){
   var parsed = _parseUrl(uri);
   if(!parsed) return;
 
-  if (parsed.splt[0] === name){ //whithin ctnr link
+  if (parsed.splt[0] === name){ //whithin pkg link
     if (parsed.splt[1] !== version){
       throw new Error('version mismatch for :' + uri);
     } else {
       return parsed;
     };
-  } else { //link to another ctnr on this registry: does it satisfies the data dependencies constraints ?
+  } else { //link to another pkg on this registry: does it satisfies the data dependencies constraints ?
 
     if(!(parsed.splt[0] in dataDependencies)){
       throw new Error( parsed.splt[0] + '/' + parsed.splt[1] + ' is not listed in isBasedOnUrl (required in ' + uri  + ')');
@@ -762,7 +762,7 @@ function validateRequiredUri(uri, name, version, dataDependencies){
 };
 
 /**
- * suppose that ctnr schema has been validated
+ * suppose that pkg schema has been validated
  */
 exports.validateRequiredUri = validateRequiredUri;
 
@@ -772,16 +772,16 @@ exports.validateRequiredUri = validateRequiredUri;
  * check that the resource pointed to exists and if it does return it.
  * If a resource points to code, check that the code list it as it inputs
  */
-function _validateLink(uri, ctnr, dataDependencies){
+function _validateLink(uri, pkg, dataDependencies){
 
-  var parsed = validateRequiredUri(uri, ctnr.name, ctnr.version, dataDependencies);
+  var parsed = validateRequiredUri(uri, pkg.name, pkg.version, dataDependencies);
   if(parsed){ //uri from this doc, validate that there is a matching resource
     var type = parsed.splt[2];
 
     if(['code', 'dataset', 'figure'].indexOf(type) === -1){
       throw new Error(  uri + ' should contain /dataset/, /code/ or /figure/');      
     } else {
-      var array = ctnr[type] || [];
+      var array = pkg[type] || [];
     }
 
     var name = parsed.splt[3];
@@ -796,7 +796,7 @@ function _validateLink(uri, ctnr, dataDependencies){
 
     } else {
 
-      throw new Error( 'input: ' + uri + ' does not have a matching resource within this scheme');
+      throw new Error( 'input: ' + uri + ' does not have a matching resource within this package');
 
     }
 
@@ -807,27 +807,27 @@ function _validateLink(uri, ctnr, dataDependencies){
 /**
  * validateRequire AND name
  */ 
-exports.validateRequire = function(ctnr, dataDependencies){
+exports.validateRequire = function(pkg, dataDependencies){
 
-  var dataDependencies = dataDependencies || exports.dataDependencies(ctnr.isBasedOnUrl);
+  var dataDependencies = dataDependencies || exports.dataDependencies(pkg.isBasedOnUrl);
 
   ['dataset', 'figure'].forEach(function(t){
 
-    var resource = ctnr[t] || [];
+    var resource = pkg[t] || [];
     resource.forEach(function(r){
       validateName(r.name);
 
       if(r.contentUrl){
-        _validateLink(r.contentUrl, ctnr, dataDependencies);
+        _validateLink(r.contentUrl, pkg, dataDependencies);
       }
 
       if('distribution' in r && r.distribution.contentUrl) {
-        _validateLink(r.distribution.contentUrl, ctnr, dataDependencies);
+        _validateLink(r.distribution.contentUrl, pkg, dataDependencies);
       }
 
       if('isBasedOnUrl' in r){
         r.isBasedOnUrl.forEach(function(uri){
-          var matched = _validateLink(uri, ctnr, dataDependencies);
+          var matched = _validateLink(uri, pkg, dataDependencies);
           
           if(matched.type === 'code'){ //check that the matched code resource list the uri as it inputs
             if(! ('targetProduct' in matched.resource && matched.resource.targetProduct.output) ){
@@ -839,7 +839,7 @@ exports.validateRequire = function(ctnr, dataDependencies){
               .filter(function(x){return x;})
               .map(function(x) {return x.pathname;});
             
-            if(output.indexOf( [ctnr.name, ctnr.version, t, r.name].join('/') ) === -1){
+            if(output.indexOf( [pkg.name, pkg.version, t, r.name].join('/') ) === -1){
               throw new Error(  t + ': ' + r.name  + ' points to code (' + uri + ") that does not list it as it's outputs");
             }
           }
@@ -850,7 +850,7 @@ exports.validateRequire = function(ctnr, dataDependencies){
 
   });
 
-  var code = ctnr.code || [];
+  var code = pkg.code || [];
   code.forEach(function(r){
     validateName(r.name);
 
@@ -858,13 +858,13 @@ exports.validateRequire = function(ctnr, dataDependencies){
 
       if('input' in r.targetProduct){
         r.targetProduct.input.forEach(function(uri){
-          _validateLink(uri, ctnr, dataDependencies);
+          _validateLink(uri, pkg, dataDependencies);
         });
       }
 
       if('output' in r.targetProduct){
         r.targetProduct.output.forEach(function(uri){
-          var matched = _validateLink(uri, ctnr, dataDependencies);
+          var matched = _validateLink(uri, pkg, dataDependencies);
           if(matched){ //check that isBasedOnUrl points to the code
             var isBasedOnUrl = matched.resource.isBasedOnUrl || [];
             isBasedOnUrl = isBasedOnUrl
@@ -872,11 +872,11 @@ exports.validateRequire = function(ctnr, dataDependencies){
               .filter(function(x){return x;})
               .map(function(x) {return x.pathname;});
 
-            if(isBasedOnUrl.indexOf( [ctnr.name, ctnr.version, 'code', r.name].join('/') ) === -1){
-              throw new Error( 'resource: ' + uri + ' should list ' + [ctnr.name, ctnr.version, 'code', r.name ].join('/') + ' in isBasedOnUrl');
+            if(isBasedOnUrl.indexOf( [pkg.name, pkg.version, 'code', r.name].join('/') ) === -1){
+              throw new Error( 'resource: ' + uri + ' should list ' + [pkg.name, pkg.version, 'code', r.name ].join('/') + ' in isBasedOnUrl');
             }
           } else {
-            throw new Error( 'output: ' + uri + ' does not have a matching resource within this scheme');
+            throw new Error( 'output: ' + uri + ' does not have a matching resource within this package');
           }
         });
       }
@@ -898,7 +898,7 @@ function validateName(name){
   if ( !n || n.charAt(0) === "."
        || !n.match(/^[a-zA-Z0-9]/)
        || n.match(/[\/\(\)&\?#\|<>@:%\s\\\*'"!~`]/)
-       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'scheme.jsonld', 'dataset', 'code', 'figure', 'about', 'ld_schemes', 'favicon.ico'].indexOf(n.toLowerCase()) !== -1
+       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'package.jsonld', 'dataset', 'code', 'figure', 'about', 'ld_packages', 'favicon.ico'].indexOf(n.toLowerCase()) !== -1
        || n !== encodeURIComponent(n) ) {
 
     throw new Error('invalid name');
