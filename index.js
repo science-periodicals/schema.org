@@ -54,7 +54,7 @@ exports.terms = {
       "@type": "rdf:Property",
       "label": "dataset",
       "comment":"List of dataset",
-      "range": "schema:Code",
+      "range": "schema:Dataset",
       "domain": "pkg:Package",
       "status": "testing",
       "seeAlso": "http://schema.org/Dataset"
