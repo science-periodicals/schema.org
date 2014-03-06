@@ -1,6 +1,6 @@
 {
   "name": "package-jsonld",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "a commonJS thingy in JSON-LD / schema.org because semantic web, linked data and hypermedia.",
   "main": "index.js",
   "directories": {

@@ -354,8 +354,7 @@ exports.schema = {
       properties: {
         name: { type: 'string' },
         email: { type: 'string' }
-      },
-      required: ['name']
+      }
     },
     contributor: {
       type: 'array',
@@ -364,8 +363,7 @@ exports.schema = {
         properties: {
           name: { type: 'string' },
           email: { type: 'string' }
-        },
-        required: ['name']
+        }
       }
     },
     keywords: { type: 'array', items: { type: 'string' } },
@@ -380,8 +378,7 @@ exports.schema = {
         hashAlgorithm: { type: 'string' },
         hashValue: { type: 'string' },
         uploadDate: { type: 'string' }
-      },
-      required: ['contentUrl']
+      }
     },
 
     registry: {
