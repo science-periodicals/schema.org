@@ -49,6 +49,7 @@ exports.terms = {
   },
   "@id": "http://standardanalytics.io/package",
   "defines": [
+
     {
       "@id": "pkg:dataset",
       "@type": "rdf:Property",
@@ -78,6 +79,16 @@ exports.terms = {
       "domain": "pkg:Package",
       "status": "testing",
       "seeAlso": "http://schema.org/ImageObject"
+    },
+    {
+      "@id": "pkg:article",
+      "@type": "rdf:Property",
+      "label": "article",
+      "comment":"List of articles",
+      "range": "schema:Article",
+      "domain": "pkg:Package",
+      "status": "testing",
+      "seeAlso": "http://schema.org/Article"
     },
     {
       "@id": "pkg:registry",
@@ -147,7 +158,7 @@ exports.terms = {
       "comment":"Unix-style ('/') path to the data content of a package dataset. The path must be relative to the directory in which the Package containing this resource resides.",
       "label": "content path",
       "range": "xsd:string",
-      "domain": "schema:DataDownload",
+      "domain": "schema:MediaObject",
       "status": "testing",
       "seeAlso": "http://dataprotocols.org/data-packages/#resource-information"
     },
@@ -312,15 +323,22 @@ exports.context = {
     "storageRequirements":   "sch:storageRequirements",
     "softwareVersion":       "sch:softwareVersion",
 
-    "MediaObject":         { "@id": "sch:MediaObject",         "@type": "@id" },
-    "ImageObject":         { "@id": "sch:ImageObject",         "@type": "@id" },
-    "Person":              { "@id": "sch:Person",              "@type": "@id" },
-    "Organization":        { "@id": "sch:Person",              "@type": "@id" },
-    "DataDownload":        { "@id": "sch:DataDownload",        "@type": "@id" },
-    "Dataset":             { "@id": "sch:Dataset",             "@type": "@id" },
-    "DataCatalog":         { "@id": "sch:DataCatalog",         "@type": "@id" },
-    "Code":                { "@id": "sch:Code",                "@type": "@id" },
-    "SoftwareApplication": { "@id": "sch:SoftwareApplication", "@type": "@id" }
+    "Article":                 { "@id": "sch:Article",                 "@type": "@id" },
+    "MedicalScholarlyArticle": { "@id": "sch:MedicalScholarlyArticle", "@type": "@id" },
+    "BlogPosting":             { "@id": "sch:BlogPosting",             "@type": "@id" },
+    "NewsArticle":             { "@id": "sch:NewsArticle",             "@type": "@id" },
+    "ScholarlyArticle":        { "@id": "sch:ScholarlyArticle",        "@type": "@id" },
+    "TechArticle":             { "@id": "sch:TechArticle",             "@type": "@id" },
+    "MediaObject":             { "@id": "sch:MediaObject",             "@type": "@id" },
+    "ImageObject":             { "@id": "sch:ImageObject",             "@type": "@id" },
+    "Person":                  { "@id": "sch:Person",                  "@type": "@id" },
+    "Organization":            { "@id": "sch:Person",                  "@type": "@id" },
+    "DataDownload":            { "@id": "sch:DataDownload",            "@type": "@id" },
+    "Dataset":                 { "@id": "sch:Dataset",                 "@type": "@id" },
+    "DataCatalog":             { "@id": "sch:DataCatalog",             "@type": "@id" },
+    "Code":                    { "@id": "sch:Code",                    "@type": "@id" },
+    "SoftwareApplication":     { "@id": "sch:SoftwareApplication",     "@type": "@id" }
+
   }
 };
 
@@ -400,7 +418,6 @@ exports.schema = {
           description: { type: 'string'},
           isBasedOnUrl: { type: 'array', items: { type: 'string' } },
           discussionUrl: { type: 'string' },
-          '@context': { type: 'object' },
           about: { type: ['object', 'array'] },
           distribution: {
             type: 'object',
@@ -516,6 +533,60 @@ exports.schema = {
           encodingFormat: { type: 'string' },        
           uploadDate:     { type: 'string' },
           isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
+          citation: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                url: { type: 'string' }
+              }
+            }
+          },
+          package: {
+            type: 'object',
+            properties: {
+              name:    { type: 'string' },
+              version: { type: 'string' },
+              url:     { type: 'string' }
+            }
+          }
+        }
+      }
+    },
+
+    article: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          name: { type: 'string'},
+          description: { type: 'string'},
+          isBasedOnUrl: { type: 'array', items: { type: 'string' } },
+          discussionUrl: { type: 'string' },
+          about: { type: 'string' },
+          encoding: {
+            type: 'object',
+            properties: {
+              hashAlgorithm: { type: 'string' },
+              hashValue: { type: 'string' },
+              uploadDate: { type: 'string' },
+              contentUrl: { type: 'string' },
+              contentSize: { type: 'integer' },
+              encodingFormat: { type: 'string' },
+              hashAlgorithm: { type: 'string' },
+              hashValue: { type: 'string' },
+              uploadDate: { type: 'string' }
+            }
+          },
+          citation: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                url: { type: 'string' }
+              }
+            }
+          },
           package: {
             type: 'object',
             properties: {
@@ -527,7 +598,6 @@ exports.schema = {
         }
       }
     }
-
   },
   required: ['name', 'version']
 };
@@ -606,10 +676,18 @@ exports.linkPackage = function(pkg, options){
     });
   }
 
+
+  if('article' in pkg){
+    pkg.article.forEach(function(r){
+      linkArticle(r, pkg.name, pkg.version);
+    });
+  }
+
   pkg.registry = { name: "Standard Analytics IO", url: BASE };
 
   return pkg;
 };
+
 
 /**
  * modifies dataset in place to add @id, @type
@@ -619,7 +697,7 @@ function linkDataset(dataset, name, version){
     dataset['@id'] = name + '/' + version + '/dataset/' + dataset.name;
   }
 
-  _addType(dataset, 'Dataset', true); //add default type only if empty (to avoid accumulating subClasses of Dataset).
+  _addType(dataset, 'Dataset');
   _addType(dataset.distribution, 'DataDownload');
 
   dataset.catalog = { '@type': ['Package', 'DataCatalog'], name: name, version: version, url: name + '/' + version }; 
@@ -627,6 +705,25 @@ function linkDataset(dataset, name, version){
   return dataset;
 };
 exports.linkDataset = linkDataset;
+
+
+
+/**
+ * modifies dataset in place to add @id, @type
+ */
+function linkArticle(article, name, version){
+  if('name' in article){
+    article['@id'] = name + '/' + version + '/article/' + article.name;
+  }
+
+  _addType(article, 'Article');
+  _addType(article.encoding, 'MediaObject');
+
+  article.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version }; 
+  
+  return article;
+};
+exports.linkArticle = linkArticle;
 
 
 /**
@@ -640,7 +737,7 @@ function linkCode(code, name, version){
   _addType(code, 'Code');
   _addType(code.targetProduct, 'SoftwareApplication');
 
-  code.package = { name: name, version: version, url: name + '/' + version };  
+  code.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };  
   
   return code;
 };
@@ -657,7 +754,7 @@ function linkFigure(figure, name, version){
 
   _addType(figure, 'ImageObject');
 
-  figure.package = { name: name, version: version, url: name + '/' + version };  
+  figure.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };  
   
   return figure;
 };
@@ -775,8 +872,8 @@ function _validateLink(uri, pkg, dataDependencies){
   if(parsed){ //uri from this doc, validate that there is a matching resource
     var type = parsed.splt[2];
 
-    if(['code', 'dataset', 'figure'].indexOf(type) === -1){
-      throw new Error(  uri + ' should contain /dataset/, /code/ or /figure/');      
+    if(['code', 'dataset', 'figure', 'article'].indexOf(type) === -1){
+      throw new Error(  uri + ' should contain /dataset/, /code/, /figure/ or /article/');      
     } else {
       var array = pkg[type] || [];
     }
@@ -808,7 +905,7 @@ exports.validateRequire = function(pkg, dataDependencies){
 
   var dataDependencies = dataDependencies || exports.dataDependencies(pkg.isBasedOnUrl);
 
-  ['dataset', 'figure'].forEach(function(t){
+  ['dataset', 'figure', 'article'].forEach(function(t){
 
     var resource = pkg[t] || [];
     resource.forEach(function(r){
@@ -820,6 +917,10 @@ exports.validateRequire = function(pkg, dataDependencies){
 
       if('distribution' in r && r.distribution.contentUrl) {
         _validateLink(r.distribution.contentUrl, pkg, dataDependencies);
+      }
+
+      if('encoding' in r && r.encoding.contentUrl) {
+        _validateLink(r.encoding.contentUrl, pkg, dataDependencies);
       }
 
       if('isBasedOnUrl' in r){

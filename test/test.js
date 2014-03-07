@@ -32,13 +32,18 @@ describe('package-jsonld', function(){
       package.code.forEach(function(r){
         assert.equal(r['@type'], 'Code');
         assert.equal(r['@id'], 'mypkg/0.0.0/code/' + r.name);
-        assert.deepEqual(r.package, { name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
+        assert.deepEqual(r.package, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
         assert.equal(r.targetProduct['@type'], 'SoftwareApplication');
       });
       package.figure.forEach(function(r){
         assert.equal(r['@type'], 'ImageObject');
         assert.equal(r['@id'], 'mypkg/0.0.0/figure/' + r.name);
-        assert.deepEqual(r.package, { name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
+        assert.deepEqual(r.package, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
+      });
+      package.article.forEach(function(r){
+        assert.equal(r['@type'], 'Article');
+        assert.equal(r['@id'], 'mypkg/0.0.0/article/' + r.name);
+        assert.deepEqual(r.package, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
       });
     });
 
@@ -48,19 +53,12 @@ describe('package-jsonld', function(){
       var package = cjsonld.linkPackage(mypkg);
       assert.deepEqual(['CodeType', 'Code'], package.code[0]['@type']);
     });
-
+    
     it('should respect pre-existing figure or code @type array', function(){
       var mypkg = clone(pkg);
       mypkg.figure[0]['@type'] = ['FigType', 'FigType2'];
       var package = cjsonld.linkPackage(mypkg);
       assert.deepEqual(['FigType', 'FigType2', 'ImageObject'], package.figure[0]['@type']);
-    });
-
-    it('should add @type Dataset only if type is non existent', function(){
-      var mypkg = clone(pkg);
-      mypkg.dataset[0]['@type'] = 'EmpiricalDataset';
-      var package = cjsonld.linkPackage(mypkg);
-      assert.equal('EmpiricalDataset', package.dataset[0]['@type']);
     });
 
   });
