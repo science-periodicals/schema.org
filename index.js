@@ -322,6 +322,7 @@ exports.context = {
     "processorRequirements": "sch:processorRequirements",
     "storageRequirements":   "sch:storageRequirements",
     "softwareVersion":       "sch:softwareVersion",
+    "contentRating":         "sch:contentRating",
 
     "Article":                 { "@id": "sch:Article",                 "@type": "@id" },
     "MedicalScholarlyArticle": { "@id": "sch:MedicalScholarlyArticle", "@type": "@id" },
@@ -338,7 +339,6 @@ exports.context = {
     "DataCatalog":             { "@id": "sch:DataCatalog",             "@type": "@id" },
     "Code":                    { "@id": "sch:Code",                    "@type": "@id" },
     "SoftwareApplication":     { "@id": "sch:SoftwareApplication",     "@type": "@id" }
-
   }
 };
 
@@ -351,6 +351,7 @@ exports.schema = {
     version: { type: 'string' },
     license: { type: 'string' },
     description: { type: 'string' },
+    contentRating: { type: 'string' },
     citation: {
       type: 'array',
       items: {
@@ -416,6 +417,7 @@ exports.schema = {
         properties: {
           name: { type: 'string'},
           description: { type: 'string'},
+          contentRating: { type: 'string' },
           isBasedOnUrl: { type: 'array', items: { type: 'string' } },
           discussionUrl: { type: 'string' },
           about: { type: ['object', 'array'] },
@@ -460,6 +462,7 @@ exports.schema = {
           name: { type: 'string'},
           description: { type: 'string'},
           about: { type: 'object' },
+          contentRating: { type: 'string' },
           programmingLanguage: {
             type: 'object',
             properties: {
@@ -468,6 +471,15 @@ exports.schema = {
             required: [ 'name' ]
           },
           runtime: { type: 'string' },
+          citation: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                url: { type: 'string' }
+              }
+            }
+          },
           targetProduct: { 
             type: 'object',
             properties: {
@@ -520,6 +532,7 @@ exports.schema = {
           name:           { type: 'string' },
           description:    { type: 'string' },
           about:          { type: 'object' },
+          contentRating:  { type: 'string' },
           caption:        { type: 'string' },
           exifData:       { type: 'string' },
           width:          { type: 'string' }, //e.g "100px" ??
@@ -563,6 +576,7 @@ exports.schema = {
           description: { type: 'string'},
           isBasedOnUrl: { type: 'array', items: { type: 'string' } },
           discussionUrl: { type: 'string' },
+          contentRating: { type: 'string' },
           about: { type: 'string' },
           encoding: {
             type: 'object',
