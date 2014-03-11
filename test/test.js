@@ -2,11 +2,11 @@ var fs = require('fs')
   , url = require('url')
   , assert = require('assert')
   , clone = require('clone')
-  , cjsonld = require('..')
+  , pjsonld = require('..')
   , path = require('path');
 
 var root = path.dirname(__filename);
-var base = cjsonld.context['@context']['@base'];
+var base = pjsonld.context['@context']['@base'];
 
 var pkg = JSON.parse(fs.readFileSync(path.join(root, 'fixture', 'package.jsonld')));
 
@@ -16,9 +16,9 @@ describe('package-jsonld', function(){
 
     it('should add @type and @id', function(){
       
-      var package = cjsonld.linkPackage(clone(pkg));
+      var package = pjsonld.linkPackage(clone(pkg));
 
-      assert.equal(package['@context'], cjsonld.contextUrl);
+      assert.equal(package['@context'], pjsonld.contextUrl);
       assert.equal(package['@id'], 'mypkg/0.0.0');
       assert.deepEqual(package['@type'], ['Package', 'DataCatalog']);
       assert.equal(package.author['@type'], 'Person');
@@ -50,14 +50,14 @@ describe('package-jsonld', function(){
     it('should respect pre-existing figure or code @type', function(){
       var mypkg = clone(pkg);
       mypkg.code[0]['@type'] = 'CodeType';
-      var package = cjsonld.linkPackage(mypkg);
+      var package = pjsonld.linkPackage(mypkg);
       assert.deepEqual(['CodeType', 'Code'], package.code[0]['@type']);
     });
     
     it('should respect pre-existing figure or code @type array', function(){
       var mypkg = clone(pkg);
       mypkg.figure[0]['@type'] = ['FigType', 'FigType2'];
-      var package = cjsonld.linkPackage(mypkg);
+      var package = pjsonld.linkPackage(mypkg);
       assert.deepEqual(['FigType', 'FigType2', 'ImageObject'], package.figure[0]['@type']);
     });
 
@@ -76,24 +76,24 @@ describe('package-jsonld', function(){
         'http://example.com/a/b',
         'https://example.com/a/b/c/'
       ];
-      var dataDependencies = cjsonld.dataDependencies(isBasedOnUrl);
+      var dataDependencies = pjsonld.dataDependencies(isBasedOnUrl);
       var expected = { pkg0: '0.0.0', pkg1: '*', pkg2: '0.0.0', pkg3: '0.0.1', pkg4: '*', pkg5: '>2.0.0' };
 
       assert.deepEqual(dataDependencies, expected);
     });
 
     it('should throw an error when a version range does not respect semver', function(){      
-      assert.throws( function(){ cjsonld.dataDependencies(['pkg/a.b.c']); }, Error );
+      assert.throws( function(){ pjsonld.dataDependencies(['pkg/a.b.c']); }, Error );
     });
     
     it('should throw an error when a pkg as an invalid URI', function(){
-      assert.throws( function(){ cjsonld.dataDependencies(['pkg']); }, Error);
-      assert.throws( function(){ cjsonld.dataDependencies(['']); }, Error );
-      assert.throws( function(){ cjsonld.dataDependencies([base]); }, Error );            
+      assert.throws( function(){ pjsonld.dataDependencies(['pkg']); }, Error);
+      assert.throws( function(){ pjsonld.dataDependencies(['']); }, Error );
+      assert.throws( function(){ pjsonld.dataDependencies([base]); }, Error );            
     });
 
     it('should throw an error when a pkg is listed many times as dep', function(){      
-      assert.throws( function(){ cjsonld.dataDependencies(['pkg/0.0.0', url.resolve(base, 'pkg/0.1.1')]); }, Error );     
+      assert.throws( function(){ pjsonld.dataDependencies(['pkg/0.0.0', url.resolve(base, 'pkg/0.1.1')]); }, Error );     
     });
 
   });
@@ -101,30 +101,30 @@ describe('package-jsonld', function(){
   describe('required links', function(){
 
     it('should validate a valid required uri', function(){
-      assert(!cjsonld.validateRequiredUri('pkg2/0.0.0', 'pkg', '0.0.0', {pkg2: '*'}));
+      assert(!pjsonld.validateRequiredUri('pkg2/0.0.0', 'pkg', '0.0.0', {pkg2: '*'}));
     });
     
     it('should throw an error when on whithin pkg version mismatch', function(){
       assert.throws( function(){ 
-        cjsonld.validateRequiredUri('pkg/0.0.0', 'pkg', '0.0.1', {});
+        pjsonld.validateRequiredUri('pkg/0.0.0', 'pkg', '0.0.1', {});
       }, Error);
     });
 
     it('should throw an error when a required uri is not listed as dep', function(){
       assert.throws( function(){ 
-        cjsonld.validateRequiredUri('pkg2/0.0.0', 'pkg', '0.0.0', {});
+        pjsonld.validateRequiredUri('pkg2/0.0.0', 'pkg', '0.0.0', {});
       }, Error);
     });
 
     it('should throw an error when a required uri does not satisfy the dep version', function(){
       assert.throws( function(){ 
-        cjsonld.validateRequiredUri('pkg2/0.0.0', 'pkg', '0.0.0', {'pkg2':'0.1.0'});
+        pjsonld.validateRequiredUri('pkg2/0.0.0', 'pkg', '0.0.0', {'pkg2':'0.1.0'});
       }, Error);
     });
 
     it('should throw an error on invalid uri', function(){
       assert.throws( function(){ 
-        cjsonld.validateRequiredUri('pkg2', 'pkg', '0.0.0', {'pkg2':'0.1.0'});
+        pjsonld.validateRequiredUri('pkg2', 'pkg', '0.0.0', {'pkg2':'0.1.0'});
       }, Error);
     });
 
@@ -134,7 +134,7 @@ describe('package-jsonld', function(){
     ['.a', '<a>', 'a a', 'a/a', '', ' ', 'a@a', 'a%20'].forEach(function(invalidName){
       it('should throw an error for invalid names', function(){      
         assert.throws( function(){ 
-          cjsonld.validateName(invalidName);
+          pjsonld.validateName(invalidName);
         }, Error);
       });
     });
@@ -144,22 +144,14 @@ describe('package-jsonld', function(){
 
     it('should validate when a package has valid require link', function(){
       var mypkg = clone(pkg);    
-      assert(!cjsonld.validateRequire(pkg));
+      assert(!pjsonld.validateRequire(pkg));
     });
 
     it('should throw an error when a code has invalid require links', function(){
       assert.throws( function(){ 
         var mypkg = clone(pkg);
         mypkg.code = [ { targetProduct: { input: ['pkg5/0.0.0'] } } ];
-        cjsonld.validateRequire(mypkg)
-      }, Error);
-    });
-
-    it('should throw an error when a dataset point to an invalid require links', function(){
-      assert.throws( function(){ 
-        var mypkg = clone(pkg);
-        mypkg.dataset[1].isBasedOnUrl = [ 'mypkg/0.0.1/code/myanalytics' ];
-        cjsonld.validateRequire(mypkg)
+        pjsonld.validateRequire(mypkg)
       }, Error);
     });
 
@@ -167,47 +159,7 @@ describe('package-jsonld', function(){
       assert.throws( function(){ 
         var mypkg = clone(pkg);
         mypkg.code[0].targetProduct.input = [ 'mypkg/0.0.0/dataset/donotexists' ];
-        cjsonld.validateRequire(mypkg)
-      }, Error);
-    });
-
-    it('should throw an error when a code list as output a local dataset that does not exists', function(){
-      assert.throws( function(){ 
-        var mypkg = clone(pkg);
-        mypkg.code[0].targetProduct.output = [ 'mypkg/0.0.0/dataset/donotexists' ];
-        cjsonld.validateRequire(mypkg)
-      }, Error);
-    });
-
-    it('should throw an error when a code list as output a local dataset that does not list this code as isBasedOnUrl (no isBasedOnUrl at all)', function(){
-      assert.throws( function(){ 
-        var mypkg = clone(pkg);
-        delete mypkg.dataset[2].isBasedOnUrl;
-        cjsonld.validateRequire(mypkg)
-      }, Error);
-    });
-
-    it('should throw an error when a code list as output a local dataset that does not list this code as isBasedOnUrl', function(){
-      assert.throws( function(){ 
-        var mypkg = clone(pkg);
-        mypkg.dataset[2].isBasedOnUrl = ['http://ex.com/smtgelse'];
-        cjsonld.validateRequire(mypkg)
-      }, Error);
-    });
-
-    it('should throw an error when a code list as output a local figure that does not list this code as isBasedOnUrl', function(){
-      assert.throws( function(){ 
-        var mypkg = clone(pkg);
-        mypkg.figure[0].isBasedOnUrl = mypkg.figure[0].isBasedOnUrl.slice(0,1);
-        cjsonld.validateRequire(mypkg)
-      }, Error);
-    });
-
-    it("should throw an error when a resource list as isBasedOnUrl code that does not list that resource as it's outpt", function(){
-      assert.throws( function(){ 
-        var mypkg = clone(pkg);
-        mypkg.dataset[1].isBasedOnUrl = [ 'mypkg/0.0.0/code/myanalytics' ];
-        cjsonld.validateRequire(mypkg)
+        pjsonld.validateRequire(mypkg)
       }, Error);
     });
 

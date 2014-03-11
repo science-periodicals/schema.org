@@ -30,8 +30,7 @@
       "name": "myanalytics",
       "targetProduct": { 
         "operatingSystem": "Unix",
-        "input": [ "mypkg/0.0.0/dataset/mycsv" ],
-        "output": [ "mypkg/0.0.0/dataset/mydata", "mypkg/0.0.0/figure/myfig" ]
+        "input": [ "mypkg/0.0.0/dataset/mycsv" ]
       }
     }   
   ],

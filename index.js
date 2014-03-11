@@ -124,16 +124,6 @@ exports.terms = {
       "seeAlso": "http://schema.org/SoftwareApplication"
     },
     {
-      "@id": "pkg:output",
-      "@type": "rdf:Property",
-      "label": "output",
-      "comment":"List of absolute or relative URLs of data resources generated in a given analysis.",
-      "range": "xsd:string",
-      "domain": "schema:SoftwareApplication",
-      "status": "testing",
-      "seeAlso": "http://schema.org/SoftwareApplication"
-    },
-    {
       "@id": "pkg:filePath",
       "@type": "rdf:Property",
       "comment":"Unix-style ('/') path to a runnable file (typically a script) or binary. The path must be relative to the directory in which the Package containing this resource resides.",
@@ -271,7 +261,6 @@ exports.context = {
     "code":       { "@id": "pkg:code",                      "@package": "@list" },
     "figure":     { "@id": "pkg:figure",                    "@package": "@list" },
     "input":      { "@id": "pkg:input",     "@type": "@id", "@package": "@set"  },
-    "output":     { "@id": "pkg:output",    "@type": "@id", "@package": "@set"  },
     "valueType":  { "@id": "pkg:valueType", "@type": "@id" },
     "contentPath": "pkg:contentPath",
     "contentData": "pkg:contentData",
@@ -497,7 +486,6 @@ exports.schema = {
               hashAlgorithm: { type: 'string' },
               hashValue: { type: 'string' },
               input:  { type: 'array', items: { type: 'string'} },
-              output: { type: 'array', items: { type: 'string'} },
               encoding: { //in case resource can be further compressed
                 type: 'object',
                 properties: {
@@ -920,7 +908,7 @@ exports.validateRequire = function(pkg, dataDependencies){
 
   var dataDependencies = dataDependencies || exports.dataDependencies(pkg.isBasedOnUrl);
 
-  ['dataset', 'figure', 'article'].forEach(function(t){
+  ['dataset', 'code', 'figure', 'article'].forEach(function(t){
 
     var resource = pkg[t] || [];
     resource.forEach(function(r){
@@ -938,62 +926,14 @@ exports.validateRequire = function(pkg, dataDependencies){
         _validateLink(r.encoding.contentUrl, pkg, dataDependencies);
       }
 
-      if('isBasedOnUrl' in r){
-        r.isBasedOnUrl.forEach(function(uri){
-          var matched = _validateLink(uri, pkg, dataDependencies);
-          
-          if(matched.type === 'code'){ //check that the matched code resource list the uri as it inputs
-            if(! ('targetProduct' in matched.resource && matched.resource.targetProduct.output) ){
-              throw new Error( t + ': ' + r.name  + ' points to code (' + uri + ") that does not list it as it's outputs");
-            }
-            
-            var output = matched.resource.targetProduct.output
-              .map(_parseUrl)
-              .filter(function(x){return x;})
-              .map(function(x) {return x.pathname;});
-            
-            if(output.indexOf( [pkg.name, pkg.version, t, r.name].join('/') ) === -1){
-              throw new Error(  t + ': ' + r.name  + ' points to code (' + uri + ") that does not list it as it's outputs");
-            }
-          }
-
-        });
-      }
-    });
-
-  });
-
-  var code = pkg.code || [];
-  code.forEach(function(r){
-    validateName(r.name);
-
-    if ('targetProduct' in r) {
-
-      if('input' in r.targetProduct){
+      if ( 'targetProduct' in r && 'input' in r.targetProduct ) {
         r.targetProduct.input.forEach(function(uri){
           _validateLink(uri, pkg, dataDependencies);
         });
       }
 
-      if('output' in r.targetProduct){
-        r.targetProduct.output.forEach(function(uri){
-          var matched = _validateLink(uri, pkg, dataDependencies);
-          if(matched){ //check that isBasedOnUrl points to the code
-            var isBasedOnUrl = matched.resource.isBasedOnUrl || [];
-            isBasedOnUrl = isBasedOnUrl
-              .map(_parseUrl)
-              .filter(function(x){return x;})
-              .map(function(x) {return x.pathname;});
+    });
 
-            if(isBasedOnUrl.indexOf( [pkg.name, pkg.version, 'code', r.name].join('/') ) === -1){
-              throw new Error( 'resource: ' + uri + ' should list ' + [pkg.name, pkg.version, 'code', r.name ].join('/') + ' in isBasedOnUrl');
-            }
-          } else {
-            throw new Error( 'output: ' + uri + ' does not have a matching resource within this package');
-          }
-        });
-      }
-    }
   });
   
 };
