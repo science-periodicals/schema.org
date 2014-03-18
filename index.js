@@ -249,7 +249,6 @@ exports.terms = {
       "status": "testing"
     }
 
-
   ],
   "@type": "owl:Ontology",
   "comment": "A lightweight vocabulary for terms of the data package spec",
