@@ -235,7 +235,20 @@ exports.terms = {
         "schema:Dataset"
       ],
       "status": "testing"
+    },
+
+    {
+      "@id": "pkg:TypesettingApplication",
+      "@type": "rdfs:Class",
+      "label": "Typeseting application",
+      "comment": "A typesetting application (e.g latex) or full compile ready solution (bundle of latex, bibtex and style files)",
+      "seeAlso": "http://en.wikipedia.org/wiki/Typesetting",
+      "subClassOf": [
+        "schema:SoftwareApplication"
+      ],
+      "status": "testing"
     }
+
 
   ],
   "@type": "owl:Ontology",
@@ -255,9 +268,13 @@ exports.context = {
     "xsd": "http://www.w3.org/2001/XMLSchema#",
 
     "Package":  { "@id": "pkg:Package", "@type": "@id" },
+    "EmpiricalDataset":  { "@id": "pkg:EmpiricalDataset", "@type": "@id" },
+    "SimulatedDataset":  { "@id": "pkg:SimulatedDataset", "@type": "@id" },
+    "Configuration":  { "@id": "pkg:Configuration", "@type": "@id" },
+    "TypesettingApplication":  { "@id": "pkg:TypesettingApplication", "@type": "@id" },
 
-    "package":  { "@id": "pkg:package",                 "@package": "@list" },
-    "dataset"   : { "@id": "pkg:dataset",                   "@package": "@list" },
+    "package":    { "@id": "pkg:package",                 "@package": "@list" },
+    "dataset":    { "@id": "pkg:dataset",                   "@package": "@list" },
     "code":       { "@id": "pkg:code",                      "@package": "@list" },
     "figure":     { "@id": "pkg:figure",                    "@package": "@list" },
     "input":      { "@id": "pkg:input",     "@type": "@id", "@package": "@set"  },
@@ -334,7 +351,7 @@ exports.context = {
 
 exports.schema = {
   $schema: 'http://json-schema.org/draft-04/schema#',
-  type: 'object', 
+  type: 'object',
   properties: {
 
     name: { type: 'string' },
@@ -413,11 +430,11 @@ exports.schema = {
           about: { type: ['object', 'array'] },
           distribution: {
             type: 'object',
-            properties: {              
+            properties: {
               contentUrl: { type: 'string' },
               contentPath: { type: 'string' },
               contentData: { type: ['string', 'object', 'array', 'number', 'boolean'] },
-              contentSize: { type: 'integer' },           
+              contentSize: { type: 'integer' },
               encodingFormat: { type: 'string' },
               hashAlgorithm: { type: 'string' },
               hashValue: { type: 'string' },
@@ -470,7 +487,7 @@ exports.schema = {
               }
             }
           },
-          targetProduct: { 
+          targetProduct: {
             type: 'object',
             properties: {
               operatingSystem: { type: 'string' },
@@ -526,13 +543,13 @@ exports.schema = {
           exifData:       { type: 'string' },
           width:          { type: 'string' }, //e.g "100px" ??
           height:         { type: 'string' },
-          thumbnail:      { type: 'object' }, 
+          thumbnail:      { type: 'object' },
           contentUrl:     { type: 'string' },
           contentPath:    { type: 'string' },
-          contentSize:    { type: 'integer' },           
+          contentSize:    { type: 'integer' },
           hashAlgorithm:  { type: 'string' },
           hashValue:      { type: 'string' },
-          encodingFormat: { type: 'string' },        
+          encodingFormat: { type: 'string' },
           uploadDate:     { type: 'string' },
           isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
           citation: {
@@ -614,7 +631,7 @@ function _addType(x, type, onlyIfEmpty){
   if( (typeof x !== 'object') || Array.isArray(x) ){
     return;
   }
-   
+
   //x is an obj
   if( !('@type' in x) || !x['@type'] ){
     x['@type'] = type;
@@ -635,12 +652,12 @@ function _addType(x, type, onlyIfEmpty){
 /**
  * modifies package in place to add @id, @type and optionaly @context
  */
-exports.linkPackage = function(pkg, options){  
+exports.linkPackage = function(pkg, options){
   options = options || {addCtx: true};
   if(! ('addCtx' in options)){
     options.addCtx = true;
   }
-  
+
   if(options.addCtx){
     var ctx = options.ctx || URL;
     pkg["@context"] = ctx;
@@ -703,8 +720,8 @@ function linkDataset(dataset, name, version){
   _addType(dataset, 'Dataset');
   _addType(dataset.distribution, 'DataDownload');
 
-  dataset.catalog = { '@type': ['Package', 'DataCatalog'], name: name, version: version, url: name + '/' + version }; 
-  
+  dataset.catalog = { '@type': ['Package', 'DataCatalog'], name: name, version: version, url: name + '/' + version };
+
   return dataset;
 };
 exports.linkDataset = linkDataset;
@@ -722,8 +739,8 @@ function linkArticle(article, name, version){
   _addType(article, 'Article');
   _addType(article.encoding, 'MediaObject');
 
-  article.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version }; 
-  
+  article.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+
   return article;
 };
 exports.linkArticle = linkArticle;
@@ -740,8 +757,8 @@ function linkCode(code, name, version){
   _addType(code, 'Code');
   _addType(code.targetProduct, 'SoftwareApplication');
 
-  code.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };  
-  
+  code.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+
   return code;
 };
 exports.linkCode = linkCode;
@@ -757,8 +774,8 @@ function linkFigure(figure, name, version){
 
   _addType(figure, 'ImageObject');
 
-  figure.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };  
-  
+  figure.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+
   return figure;
 };
 exports.linkFigure = linkFigure;
@@ -812,7 +829,7 @@ exports.dataDependencies = function(isBasedOnUrl){
     }
 
     if(!semver.validRange(version)){
-      throw new Error('invalid version/range '+ version);        
+      throw new Error('invalid version/range '+ version);
     }
 
     if(name in dataDependencies){
@@ -848,7 +865,7 @@ function validateRequiredUri(uri, name, version, dataDependencies){
 
     if(!(parsed.splt[0] in dataDependencies)){
       throw new Error( parsed.splt[0] + '/' + parsed.splt[1] + ' is not listed in isBasedOnUrl (required in ' + uri  + ')');
-    } else {        
+    } else {
       //check version match
       if(!semver.satisfies(parsed.splt[1], dataDependencies[parsed.splt[0]])){
         throw new Error( uri + ' does not respect semver requirement of isBasedOnUrl (' + dataDependencies[parsed.splt[0]] + ')');
@@ -876,7 +893,7 @@ function _validateLink(uri, pkg, dataDependencies){
     var type = parsed.splt[2];
 
     if(['code', 'dataset', 'figure', 'article'].indexOf(type) === -1){
-      throw new Error(  uri + ' should contain /dataset/, /code/, /figure/ or /article/');      
+      throw new Error(  uri + ' should contain /dataset/, /code/, /figure/ or /article/');
     } else {
       var array = pkg[type] || [];
     }
@@ -884,9 +901,9 @@ function _validateLink(uri, pkg, dataDependencies){
     var name = parsed.splt[3];
     var matched;
     if(name){
-      matched = array.filter(function(x){return x.name === name;})[0];              
+      matched = array.filter(function(x){return x.name === name;})[0];
     }
-    
+
     if(matched){
 
       return {resource: matched, type:type};
@@ -898,12 +915,12 @@ function _validateLink(uri, pkg, dataDependencies){
     }
 
   }
-  
+
 };
 
 /**
  * validateRequire AND name
- */ 
+ */
 exports.validateRequire = function(pkg, dataDependencies){
 
   var dataDependencies = dataDependencies || exports.dataDependencies(pkg.isBasedOnUrl);
@@ -936,7 +953,7 @@ exports.validateRequire = function(pkg, dataDependencies){
     });
 
   });
-  
+
 };
 
 
