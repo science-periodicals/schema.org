@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "a description",
   "keywords": ["hyperdata", "json-ld", "test"],
-  "isBasedOnUrl": ["../../pkg1/0.0.1", "../../pkg2/0.2.1", "http://data.com/"],
+  "isBasedOnUrl": ["pkg1/0.0.1", "pkg2/0.2.1", "http://data.com/"],
   "author": {
     "name": "Sebastien Ballesteros",
     "email": "sebastien@standardanalytics.io"

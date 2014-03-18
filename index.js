@@ -914,16 +914,17 @@ exports.validateRequire = function(pkg, dataDependencies){
     resource.forEach(function(r){
       validateName(r.name);
 
-      if(r.contentUrl){
-        _validateLink(r.contentUrl, pkg, dataDependencies);
+
+      if(r.isBasedOnUrl){
+        r.isBasedOnUrl.forEach(function(uri){
+          _validateLink(uri, pkg, dataDependencies);
+        });
       }
 
-      if('distribution' in r && r.distribution.contentUrl) {
-        _validateLink(r.distribution.contentUrl, pkg, dataDependencies);
-      }
-
-      if('encoding' in r && r.encoding.contentUrl) {
-        _validateLink(r.encoding.contentUrl, pkg, dataDependencies);
+      if(r.citation){
+        r.citation.forEach(function(c){
+          _validateLink(c.url, pkg, dataDependencies);
+        });
       }
 
       if ( 'targetProduct' in r && 'input' in r.targetProduct ) {
