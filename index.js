@@ -591,6 +591,7 @@ exports.schema = {
               uploadDate: { type: 'string' },
               contentUrl: { type: 'string' },
               contentSize: { type: 'integer' },
+              contentPath:    { type: 'string' },
               encodingFormat: { type: 'string' },
               hashAlgorithm: { type: 'string' },
               hashValue: { type: 'string' },
@@ -968,7 +969,7 @@ function validateName(name){
   if ( !n || n.charAt(0) === "."
        || !n.match(/^[a-zA-Z0-9]/)
        || n.match(/[\/\(\)&\?#\|<>@:%\s\\\*'"!~`]/)
-       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'package.jsonld', 'dataset', 'code', 'figure', 'about', 'ld_packages', 'favicon.ico'].indexOf(n.toLowerCase()) !== -1
+       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'package.jsonld', 'dataset', 'code', 'figure', 'about', 'ld_packages', 'favicon.ico', 'r'].indexOf(n.toLowerCase()) !== -1
        || n !== encodeURIComponent(n) ) {
 
     throw new Error('invalid name');
