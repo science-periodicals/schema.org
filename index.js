@@ -453,7 +453,8 @@ exports.schema = {
             properties: {
               name: { type: 'string' },
               version: { type: 'string' },
-              url: { type: 'string' }
+              url: { type: 'string' },
+              private: { type: 'string' }
             }
           }
         },
