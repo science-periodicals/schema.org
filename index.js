@@ -112,6 +112,16 @@ exports.terms = {
       "status": "testing",
       "seeAlso": "http://www.schema.org/catalog"
     },
+    {
+      "@id": "pkg:doi",
+      "@type": "rdf:Property",
+      "label": "digital object identifier",
+      "comment":"digital object identifier",
+      "range": "xsd:string",
+      "domain": "schema:CreativeWork",
+      "status": "testing",
+      "seeAlso": "http://en.wikipedia.org/wiki/Digital_object_identifier"
+    },
 
     {
       "@id": "pkg:input",
