@@ -955,7 +955,9 @@ exports.validateRequire = function(pkg, dataDependencies){
 
       if(r.citation){
         r.citation.forEach(function(c){
-          _validateLink(c.url, pkg, dataDependencies);
+          if(c.url){
+            _validateLink(c.url, pkg, dataDependencies);
+          }
         });
       }
 
