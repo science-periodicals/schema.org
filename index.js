@@ -257,6 +257,17 @@ exports.terms = {
         "schema:SoftwareApplication"
       ],
       "status": "testing"
+    },
+
+    {
+      "@id": "pkg:journal",
+      "@type": "rdf:Property",
+      "label": "journal",
+      "comment":"Journal in which the article was published",
+      "range": "xsd:string",
+      "domain": "schema:ScholarlyArticle",
+      "status": "testing",
+      "seeAlso": "http://en.wikipedia.org/wiki/Scientific_journal"
     }
 
   ],
