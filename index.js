@@ -360,7 +360,7 @@ exports.schema = {
 
     name: { type: 'string' },
     version: { type: 'string' },
-    private: { type: 'string' },
+    private: { type: 'boolean' },
     license: { type: 'string' },
     description: { type: 'string' },
     contentRating: { type: 'string' },
@@ -458,8 +458,7 @@ exports.schema = {
             properties: {
               name: { type: 'string' },
               version: { type: 'string' },
-              url: { type: 'string' },
-              private: { type: 'string' }
+              url: { type: 'string' }
             }
           }
         },
@@ -528,8 +527,7 @@ exports.schema = {
             properties: {
               name:    { type: 'string' },
               version: { type: 'string' },
-              url:     { type: 'string' },
-              private: { type: 'string' }
+              url:     { type: 'string' }
             }
           }
         },
@@ -573,8 +571,7 @@ exports.schema = {
             properties: {
               name:    { type: 'string' },
               version: { type: 'string' },
-              url:     { type: 'string' },
-              private: { type: 'string' }
+              url:     { type: 'string' }
             }
           }
         }
@@ -621,8 +618,7 @@ exports.schema = {
             properties: {
               name:    { type: 'string' },
               version: { type: 'string' },
-              url:     { type: 'string' },
-              private: { type: 'string' }
+              url:     { type: 'string' }
             }
           }
         }
