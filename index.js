@@ -112,16 +112,6 @@ exports.terms = {
       "status": "testing",
       "seeAlso": "http://www.schema.org/catalog"
     },
-    {
-      "@id": "pkg:doi",
-      "@type": "rdf:Property",
-      "label": "digital object identifier",
-      "comment":"digital object identifier",
-      "range": "xsd:string",
-      "domain": "schema:CreativeWork",
-      "status": "testing",
-      "seeAlso": "http://en.wikipedia.org/wiki/Digital_object_identifier"
-    },
 
     {
       "@id": "pkg:input",
@@ -257,17 +247,6 @@ exports.terms = {
         "schema:SoftwareApplication"
       ],
       "status": "testing"
-    },
-
-    {
-      "@id": "pkg:journal",
-      "@type": "rdf:Property",
-      "label": "journal",
-      "comment":"Journal in which the article was published",
-      "range": "xsd:string",
-      "domain": "schema:ScholarlyArticle",
-      "status": "testing",
-      "seeAlso": "http://en.wikipedia.org/wiki/Scientific_journal"
     }
 
   ],
@@ -286,6 +265,7 @@ exports.context = {
     "nfo":  "http://www.semanticdesktop.org/ontologies/nfo/#",
     "dc":   "http://purl.org/dc/terms/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "bibo": "http://purl.org/ontology/bibo/",
 
     "Package":  { "@id": "pkg:Package", "@type": "@id" },
     "EmpiricalDataset":  { "@id": "pkg:EmpiricalDataset", "@type": "@id" },
@@ -305,6 +285,10 @@ exports.context = {
     "registry":    "pkg:registry",
 
     "license": "dc:license",
+
+    "doi": "bibo:doi",
+    "abstract": "bibo:abstract",
+    "journal": "bibo:journal",
 
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
