@@ -273,7 +273,7 @@ exports.context = {
     "Configuration":  { "@id": "pkg:Configuration", "@type": "@id" },
     "TypesettingApplication":  { "@id": "pkg:TypesettingApplication", "@type": "@id" },
 
-    "package":    { "@id": "pkg:package",                 "@package": "@list" },
+    "package":    { "@id": "pkg:package",                   "@package": "@list" },
     "dataset":    { "@id": "pkg:dataset",                   "@package": "@list" },
     "code":       { "@id": "pkg:code",                      "@package": "@list" },
     "figure":     { "@id": "pkg:figure",                    "@package": "@list" },
@@ -293,6 +293,8 @@ exports.context = {
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
 
+    "audio":          { "@id": "sch:audio",                          "@package": "@list" },
+    "video":          { "@id": "sch:video",                          "@package": "@list" },
     "keywords":       { "@id": "sch:keywords",                       "@package": "@list" },
     "about":          { "@id": "sch:about",                          "@package": "@list" },
     "requirements":   { "@id": "sch:requirements",   "@type": "@id", "@package": "@list" },
@@ -344,6 +346,8 @@ exports.context = {
     "TechArticle":             { "@id": "sch:TechArticle",             "@type": "@id" },
     "MediaObject":             { "@id": "sch:MediaObject",             "@type": "@id" },
     "ImageObject":             { "@id": "sch:ImageObject",             "@type": "@id" },
+    "AudioObject":             { "@id": "sch:AudioObject",             "@type": "@id" },
+    "VideoObject":             { "@id": "sch:VideoObject",             "@type": "@id" },
     "Person":                  { "@id": "sch:Person",                  "@type": "@id" },
     "Organization":            { "@id": "sch:Person",                  "@type": "@id" },
     "DataDownload":            { "@id": "sch:DataDownload",            "@type": "@id" },
