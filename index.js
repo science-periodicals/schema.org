@@ -334,6 +334,7 @@ exports.context = {
     "storageRequirements":   "sch:storageRequirements",
     "softwareVersion":       "sch:softwareVersion",
     "contentRating":         "sch:contentRating",
+    "duration":              "sch:duration",
 
     "Article":                 { "@id": "sch:Article",                 "@type": "@id" },
     "MedicalScholarlyArticle": { "@id": "sch:MedicalScholarlyArticle", "@type": "@id" },
@@ -535,6 +536,86 @@ exports.schema = {
       }
     },
 
+    audio: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          name:           { type: 'string' },
+          description:    { type: 'string' },
+          about:          { type: 'object' },
+          contentRating:  { type: 'string' },
+          caption:        { type: 'string' },
+          contentUrl:     { type: 'string' },
+          contentPath:    { type: 'string' },
+          contentSize:    { type: 'integer' },
+          hashAlgorithm:  { type: 'string' },
+          hashValue:      { type: 'string' },
+          encodingFormat: { type: 'string' },
+          uploadDate:     { type: 'string' },
+          isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
+          citation: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                url: { type: 'string' }
+              }
+            }
+          },
+          package: {
+            type: 'object',
+            properties: {
+              name:    { type: 'string' },
+              version: { type: 'string' },
+              url:     { type: 'string' }
+            }
+          }
+        }
+      }
+    },
+
+    video: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          name:           { type: 'string' },
+          description:    { type: 'string' },
+          about:          { type: 'object' },
+          contentRating:  { type: 'string' },
+          caption:        { type: 'string' },
+          thumbnail:      { type: 'object' },
+          contentUrl:     { type: 'string' },
+          contentPath:    { type: 'string' },
+          contentSize:    { type: 'integer' },
+          hashAlgorithm:  { type: 'string' },
+          hashValue:      { type: 'string' },
+          encodingFormat: { type: 'string' },
+          uploadDate:     { type: 'string' },
+          isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
+          citation: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                url: { type: 'string' }
+              }
+            }
+          },
+          package: {
+            type: 'object',
+            properties: {
+              name:    { type: 'string' },
+              version: { type: 'string' },
+              url:     { type: 'string' }
+            }
+          }
+        }
+      }
+    },
+
+
     figure: {
       type: 'array',
       items: {
@@ -577,6 +658,7 @@ exports.schema = {
         }
       }
     },
+
 
     article: {
       type: 'array',
@@ -702,6 +784,17 @@ exports.linkPackage = function(pkg, options){
     });
   }
 
+  if('audio' in pkg){
+    pkg.audio.forEach(function(r){
+      linkAudio(r, pkg.name, pkg.version);
+    });
+  }
+
+  if('video' in pkg){
+    pkg.video.forEach(function(r){
+      linkVideo(r, pkg.name, pkg.version);
+    });
+  }
 
   if('article' in pkg){
     pkg.article.forEach(function(r){
@@ -769,7 +862,6 @@ function linkCode(code, name, version){
 };
 exports.linkCode = linkCode;
 
-
 /**
  * modifies code in place to add @id, @type
  */
@@ -785,6 +877,38 @@ function linkFigure(figure, name, version){
   return figure;
 };
 exports.linkFigure = linkFigure;
+
+/**
+ * modifies code in place to add @id, @type
+ */
+function linkAudio(audio, name, version){
+  if('name' in audio){
+    audio['@id'] = name + '/' + version + '/audio/' + audio.name;
+  }
+
+  _addType(audio, 'AudioObject');
+
+  audio.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+
+  return audio;
+};
+exports.linkAudio = linkAudio;
+
+/**
+ * modifies code in place to add @id, @type
+ */
+function linkVideo(video, name, version){
+  if('name' in video){
+    video['@id'] = name + '/' + version + '/video/' + video.name;
+  }
+
+  _addType(video, 'ImageObject');
+
+  video.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+
+  return video;
+};
+exports.linkVideo = linkVideo;
 
 
 
@@ -848,6 +972,7 @@ exports.dataDependencies = function(isBasedOnUrl){
   return dataDependencies;
 };
 
+
 /**
  * make sure that link to pkg hosted on the registry respect the
  * versioning package used
@@ -898,8 +1023,8 @@ function _validateLink(uri, pkg, dataDependencies){
   if(parsed){ //uri from this doc, validate that there is a matching resource
     var type = parsed.splt[2];
 
-    if(['code', 'dataset', 'figure', 'article'].indexOf(type) === -1){
-      throw new Error(  uri + ' should contain /dataset/, /code/, /figure/ or /article/');
+    if(['code', 'dataset', 'figure', 'audio', 'video', 'article'].indexOf(type) === -1){
+      throw new Error(  uri + ' should contain /dataset/, /code/, /figure/, /audio/, /video/ or /article/');
     } else {
       var array = pkg[type] || [];
     }
@@ -931,7 +1056,7 @@ exports.validateRequire = function(pkg, dataDependencies){
 
   var dataDependencies = dataDependencies || exports.dataDependencies(pkg.isBasedOnUrl);
 
-  ['dataset', 'code', 'figure', 'article'].forEach(function(t){
+  ['code', 'dataset', 'figure', 'audio', 'video', 'article'].forEach(function(t){
 
     var resource = pkg[t] || [];
     resource.forEach(function(r){
@@ -977,7 +1102,7 @@ function validateName(name){
   if ( !n || n.charAt(0) === "."
        || !n.match(/^[a-zA-Z0-9]/)
        || n.match(/[\/\(\)&\?#\|<>@:%\s\\\*'"!~`]/)
-       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'package.jsonld', 'dataset', 'code', 'figure', 'about', 'ld_packages', 'favicon.ico', 'r'].indexOf(n.toLowerCase()) !== -1
+       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'package.jsonld', 'dataset', 'code', 'figure', 'audio', 'video', 'about', 'ld_packages', 'favicon.ico', 'r'].indexOf(n.toLowerCase()) !== -1
        || n !== encodeURIComponent(n) ) {
 
     throw new Error('invalid name');
