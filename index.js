@@ -360,15 +360,23 @@ exports.context = {
 
 exports.schema = {
   $schema: 'http://json-schema.org/draft-04/schema#',
-  type: 'object',
-  properties: {
 
-    name: { type: 'string' },
-    version: { type: 'string' },
-    private: { type: 'boolean' },
-    license: { type: 'string' },
-    description: { type: 'string' },
-    contentRating: { type: 'string' },
+  definitions: {
+    about: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        url: { type: 'string' }
+      }
+    },
+    width: {
+      type: 'object',
+      properties: {
+        description: { type: 'string' },
+        value:       { type: 'integer' },
+        unitCode:    { type: 'string' }
+      }
+    },
     citation: {
       type: 'array',
       items: {
@@ -378,33 +386,17 @@ exports.schema = {
         }
       }
     },
-    about: {
+    person: {
       type: 'object',
       properties: {
         name: { type: 'string' },
-        url: { type: 'string' }
-      }
-    },
-    author: {
-      type: 'object',
-      properties: {
-        name: { type: 'string' },
+        givenName: { type: 'string' },
+        familyName: { type: 'string' },
         email: { type: 'string' }
-      }
-    },
-    contributor: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          name: { type: 'string' },
-          email: { type: 'string' }
-        }
       }
     },
     keywords: { type: 'array', items: { type: 'string' } },
     isBasedOnUrl: { type: 'array', items: { type: 'string' } },
-    discussionUrl: { type: 'string' },
     encoding: { //env_.tar.gz
       type: 'object',
       properties: {
@@ -416,7 +408,34 @@ exports.schema = {
         uploadDate: { type: 'string' }
       }
     },
+    package: {
+      type: 'object',
+      properties: {
+        name:    { type: 'string' },
+        version: { type: 'string' },
+        url:     { type: 'string' }
+      }
+    }
+  },
 
+
+
+  type: 'object',
+  properties: {
+    name: { type: 'string' },
+    version: { type: 'string' },
+    private: { type: 'boolean' },
+    license: { type: 'string' },
+    description: { type: 'string' },
+    contentRating: { type: 'string' },
+    citation: { "$ref": "#/definitions/citation" },
+    about: { "$ref": "#/definitions/about" },
+    author: { "$ref": "#/definitions/person" },
+    contributor: { type: 'array', items: { "$ref": "#/definitions/person" } },
+    keywords: { "$ref": "#/definitions/keywords" },
+    isBasedOnUrl: { "$ref": "#/definitions/isBasedOnUrl" },
+    discussionUrl: { type: 'string' },
+    encoding: { "$ref": "#/definitions/encoding" },
     registry: {
       type: 'object',
       properties: {
@@ -433,39 +452,46 @@ exports.schema = {
         type: 'object',
         properties: {
           name: { type: 'string'},
+          license: { type: 'string' },
           description: { type: 'string'},
-          contentRating: { type: 'string' },
-          isBasedOnUrl: { type: 'array', items: { type: 'string' } },
-          discussionUrl: { type: 'string' },
-          about: { type: ['object', 'array'] },
-          distribution: {
-            type: 'object',
-            properties: {
-              contentUrl: { type: 'string' },
-              contentPath: { type: 'string' },
-              contentData: { type: ['string', 'object', 'array', 'number', 'boolean'] },
-              contentSize: { type: 'integer' },
-              encodingFormat: { type: 'string' },
-              hashAlgorithm: { type: 'string' },
-              hashValue: { type: 'string' },
-              uploadDate: { type: 'string' },
-              encoding: { //in case resource can be further compressed
-                type: 'object',
-                properties: {
-                  contentSize: { type: 'integer' },
-                  encodingFormat: { type: 'string' },
-                }
+          keywords: { "$ref": "#/definitions/keywords" },
+          about: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                name: { type: 'string' },
+                description: { type: 'string' },
+                valueType: { type: 'string' },
+                sameAs: { type: 'string' }
               }
             }
           },
-          catalog: {
-            type: 'object',
-            properties: {
-              name: { type: 'string' },
-              version: { type: 'string' },
-              url: { type: 'string' }
+          contentRating: { type: 'string' },
+          isBasedOnUrl: { "$ref": "#/definitions/isBasedOnUrl" },
+          citation: { "$ref": "#/definitions/citation" },
+          discussionUrl: { type: 'string' },
+          author: { "$ref": "#/definitions/person" },
+          contributor: { type: 'array', items: { "$ref": "#/definitions/person" } },
+          thumbnailUrl: { type: 'string' },
+          distribution: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                contentUrl: { type: 'string' },
+                contentPath: { type: 'string' },
+                contentData: { type: ['string', 'object', 'array', 'number', 'boolean'] },
+                contentSize: { type: 'integer' },
+                encodingFormat: { type: 'string' },
+                hashAlgorithm: { type: 'string' },
+                hashValue: { type: 'string' },
+                uploadDate: { type: 'string' },
+                encoding: { "$ref": "#/definitions/encoding" } //in case resource can be further compressed
+              }
             }
-          }
+          },
+          catalog: { "$ref": "#/definitions/package" }
         },
         required: [ 'name' ],
       }
@@ -477,9 +503,18 @@ exports.schema = {
         type: 'object',
         properties: {
           name: { type: 'string'},
+          license: { type: 'string' },
           description: { type: 'string'},
-          about: { type: 'object' },
+          keywords: { "$ref": "#/definitions/keywords" },
+          about: { "$ref": "#/definitions/about" },
           contentRating: { type: 'string' },
+          isBasedOnUrl: { "$ref": "#/definitions/isBasedOnUrl" },
+          citation: { "$ref": "#/definitions/citation" },
+          discussionUrl: { type: 'string' },
+          author: { "$ref": "#/definitions/person" },
+          contributor: { type: 'array', items: { "$ref": "#/definitions/person" } },
+          thumbnailUrl: { type: 'string' },
+
           programmingLanguage: {
             type: 'object',
             properties: {
@@ -488,53 +523,34 @@ exports.schema = {
             required: [ 'name' ]
           },
           runtime: { type: 'string' },
-          citation: {
+          sampleType: { type: 'string'}, //preview
+          codeRepository: { type: 'string'},
+
+          targetProduct: {
             type: 'array',
             items: {
               type: 'object',
               properties: {
-                url: { type: 'string' }
+                operatingSystem: { type: 'string' },
+                requirements:  { type: 'array', items: { type: 'string'} },
+                memoryRequirements: { type: 'string' },
+                processorRequirements: { type: 'string' },
+                storageRequirements: { type: 'string' },
+                bundlePath: { type: 'string' }, //non semantic, not defined in the ontology, just here for ref.
+                filePath: { type: 'string' },
+                downloadUrl: { type: 'string' },
+                fileSize: { type: 'integer' },
+                fileFormat: { type: 'string' },
+                hashAlgorithm: { type: 'string' },
+                hashValue: { type: 'string' },
+                input:  { type: 'array', items: { type: 'string'} },
+                encoding: { "$ref": "#/definitions/encoding" }, //in case resource can be further compressed,
+                softwareVersion: { type: 'string' }
               }
             }
           },
-          targetProduct: {
-            type: 'object',
-            properties: {
-              operatingSystem: { type: 'string' },
-              requirements:  { type: 'array', items: { type: 'string'} },
-              memoryRequirements: { type: 'string' },
-              processorRequirements: { type: 'string' },
-              storageRequirements: { type: 'string' },
-              bundlePath: { type: 'string' }, //non semantic, not defined in the ontology, just here for ref.
-              filePath: { type: 'string' },
-              downloadUrl: { type: 'string' },
-              fileSize: { type: 'integer' },
-              fileFormat: { type: 'string' },
-              hashAlgorithm: { type: 'string' },
-              hashValue: { type: 'string' },
-              input:  { type: 'array', items: { type: 'string'} },
-              encoding: { //in case resource can be further compressed
-                type: 'object',
-                properties: {
-                  contentSize: { type: 'integer' },
-                  encodingFormat: { type: 'string' },
-                }
-              },
-              softwareVersion: { type: 'string' }
-            }
-          },
-          sampleType: { type: 'string'},
-          codeRepository: { type: 'string'},
-          discussionUrl:  { type: 'string' },
-          isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
-          package: {
-            type: 'object',
-            properties: {
-              name:    { type: 'string' },
-              version: { type: 'string' },
-              url:     { type: 'string' }
-            }
-          }
+
+          package: { "$ref": "#/definitions/package" }
         },
         required: [ 'name' ]
       }
@@ -545,36 +561,39 @@ exports.schema = {
       items: {
         type: 'object',
         properties: {
-          name:           { type: 'string' },
-          description:    { type: 'string' },
-          about:          { type: 'object' },
-          contentRating:  { type: 'string' },
-          caption:        { type: 'string' },
-          contentUrl:     { type: 'string' },
-          contentPath:    { type: 'string' },
-          contentSize:    { type: 'integer' },
-          hashAlgorithm:  { type: 'string' },
-          hashValue:      { type: 'string' },
-          encodingFormat: { type: 'string' },
-          uploadDate:     { type: 'string' },
-          isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
-          citation: {
+          name: { type: 'string'},
+          license: { type: 'string' },
+          description: { type: 'string'},
+          keywords: { "$ref": "#/definitions/keywords" },
+          about: { "$ref": "#/definitions/about" },
+          contentRating: { type: 'string' },
+          isBasedOnUrl: { "$ref": "#/definitions/isBasedOnUrl" },
+          citation: { "$ref": "#/definitions/citation" },
+          discussionUrl: { type: 'string' },
+          author: { "$ref": "#/definitions/person" },
+          contributor: { type: 'array', items: { "$ref": "#/definitions/person" } },
+          thumbnailUrl: { type: 'string' },
+
+          transcript:        { type: 'string' },
+
+          audio: {
             type: 'array',
             items: {
               type: 'object',
               properties: {
-                url: { type: 'string' }
+                contentUrl:     { type: 'string' },
+                contentPath:    { type: 'string' },
+                contentSize:    { type: 'integer' },
+                hashAlgorithm:  { type: 'string' },
+                hashValue:      { type: 'string' },
+                encodingFormat: { type: 'string' },
+                uploadDate:     { type: 'string' },
+                encoding: { "$ref": "#/definitions/encoding" } //in case resource can be further compressed,
               }
             }
           },
-          package: {
-            type: 'object',
-            properties: {
-              name:    { type: 'string' },
-              version: { type: 'string' },
-              url:     { type: 'string' }
-            }
-          }
+
+          package: { "$ref": "#/definitions/package" }
         }
       }
     },
@@ -584,85 +603,89 @@ exports.schema = {
       items: {
         type: 'object',
         properties: {
-          name:           { type: 'string' },
-          description:    { type: 'string' },
-          about:          { type: 'object' },
-          contentRating:  { type: 'string' },
-          caption:        { type: 'string' },
-          thumbnail:      { type: 'object' },
-          contentUrl:     { type: 'string' },
-          contentPath:    { type: 'string' },
-          contentSize:    { type: 'integer' },
-          hashAlgorithm:  { type: 'string' },
-          hashValue:      { type: 'string' },
-          encodingFormat: { type: 'string' },
-          uploadDate:     { type: 'string' },
-          isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
-          citation: {
+          name: { type: 'string'},
+          license: { type: 'string' },
+          description: { type: 'string'},
+          keywords: { "$ref": "#/definitions/keywords" },
+          about: { "$ref": "#/definitions/about" },
+          contentRating: { type: 'string' },
+          isBasedOnUrl: { "$ref": "#/definitions/isBasedOnUrl" },
+          citation: { "$ref": "#/definitions/citation" },
+          discussionUrl: { type: 'string' },
+          author: { "$ref": "#/definitions/person" },
+          contributor: { type: 'array', items: { "$ref": "#/definitions/person" } },
+          thumbnailUrl: { type: 'string' },
+
+          caption: { type: 'string' },
+          width: { "$ref": "#/definitions/width" },
+          height: { "$ref": "#/definitions/width" },
+
+          video: {
             type: 'array',
             items: {
               type: 'object',
               properties: {
-                url: { type: 'string' }
+                contentUrl:     { type: 'string' },
+                contentPath:    { type: 'string' },
+                contentSize:    { type: 'integer' },
+                hashAlgorithm:  { type: 'string' },
+                hashValue:      { type: 'string' },
+                encodingFormat: { type: 'string' },
+                uploadDate:     { type: 'string' },
+                encoding: { "$ref": "#/definitions/encoding" } //in case resource can be further compressed,
               }
             }
           },
-          package: {
-            type: 'object',
-            properties: {
-              name:    { type: 'string' },
-              version: { type: 'string' },
-              url:     { type: 'string' }
-            }
-          }
+
+          package: { "$ref": "#/definitions/package" }
         }
       }
     },
-
 
     figure: {
       type: 'array',
       items: {
         type: 'object',
         properties: {
-          name:           { type: 'string' },
-          description:    { type: 'string' },
-          about:          { type: 'object' },
-          contentRating:  { type: 'string' },
+          name: { type: 'string'},
+          license: { type: 'string' },
+          description: { type: 'string'},
+          keywords: { "$ref": "#/definitions/keywords" },
+          about: { "$ref": "#/definitions/about" },
+          contentRating: { type: 'string' },
+          isBasedOnUrl: { "$ref": "#/definitions/isBasedOnUrl" },
+          citation: { "$ref": "#/definitions/citation" },
+          discussionUrl: { type: 'string' },
+          author: { "$ref": "#/definitions/person" },
+          contributor: { type: 'array', items: { "$ref": "#/definitions/person" } },
+          thumbnailUrl: { type: 'string' },
+
           caption:        { type: 'string' },
           exifData:       { type: 'string' },
-          width:          { type: 'string' }, //e.g "100px" ??
-          height:         { type: 'string' },
-          thumbnail:      { type: 'object' },
-          contentUrl:     { type: 'string' },
-          contentPath:    { type: 'string' },
-          contentSize:    { type: 'integer' },
-          hashAlgorithm:  { type: 'string' },
-          hashValue:      { type: 'string' },
-          encodingFormat: { type: 'string' },
-          uploadDate:     { type: 'string' },
-          isBasedOnUrl:   { type: 'array', items: { type: 'string' } },
-          citation: {
+          width: { "$ref": "#/definitions/width" },
+          height: { "$ref": "#/definitions/width" },
+
+          figure: {
             type: 'array',
             items: {
               type: 'object',
               properties: {
-                url: { type: 'string' }
+                contentUrl:     { type: 'string' },
+                contentPath:    { type: 'string' },
+                contentSize:    { type: 'integer' },
+                hashAlgorithm:  { type: 'string' },
+                hashValue:      { type: 'string' },
+                encodingFormat: { type: 'string' },
+                uploadDate:     { type: 'string' },
+                encoding: { "$ref": "#/definitions/encoding" } //in case resource can be further compressed,
               }
             }
           },
-          package: {
-            type: 'object',
-            properties: {
-              name:    { type: 'string' },
-              version: { type: 'string' },
-              url:     { type: 'string' }
-            }
-          }
+
+          package: { "$ref": "#/definitions/package" }
         }
       }
     },
-
 
     article: {
       type: 'array',
@@ -670,43 +693,39 @@ exports.schema = {
         type: 'object',
         properties: {
           name: { type: 'string'},
+          license: { type: 'string' },
           description: { type: 'string'},
-          isBasedOnUrl: { type: 'array', items: { type: 'string' } },
-          discussionUrl: { type: 'string' },
+          keywords: { "$ref": "#/definitions/keywords" },
+          about: { "$ref": "#/definitions/about" },
           contentRating: { type: 'string' },
-          about: { type: 'string' },
+          isBasedOnUrl: { "$ref": "#/definitions/isBasedOnUrl" },
+          citation: { "$ref": "#/definitions/citation" },
+          discussionUrl: { type: 'string' },
+          author: { "$ref": "#/definitions/person" },
+          contributor: { type: 'array', items: { "$ref": "#/definitions/person" } },
+          thumbnailUrl: { type: 'string' },
+
+          abstract: { type: 'string'},
+          articleBody: { type: 'string'},
+
           encoding: {
-            type: 'object',
-            properties: {
-              hashAlgorithm: { type: 'string' },
-              hashValue: { type: 'string' },
-              uploadDate: { type: 'string' },
-              contentUrl: { type: 'string' },
-              contentSize: { type: 'integer' },
-              contentPath:    { type: 'string' },
-              encodingFormat: { type: 'string' },
-              hashAlgorithm: { type: 'string' },
-              hashValue: { type: 'string' },
-              uploadDate: { type: 'string' }
-            }
-          },
-          citation: {
             type: 'array',
             items: {
               type: 'object',
               properties: {
-                url: { type: 'string' }
+                contentUrl:     { type: 'string' },
+                contentPath:    { type: 'string' },
+                contentSize:    { type: 'integer' },
+                hashAlgorithm:  { type: 'string' },
+                hashValue:      { type: 'string' },
+                encodingFormat: { type: 'string' },
+                uploadDate:     { type: 'string' },
+                encoding: { "$ref": "#/definitions/encoding" } //in case resource can be further compressed,
               }
             }
           },
-          package: {
-            type: 'object',
-            properties: {
-              name:    { type: 'string' },
-              version: { type: 'string' },
-              url:     { type: 'string' }
-            }
-          }
+
+          package: { "$ref": "#/definitions/package" }
         }
       }
     }
@@ -821,14 +840,17 @@ function linkDataset(dataset, name, version){
   }
 
   _addType(dataset, 'Dataset');
-  _addType(dataset.distribution, 'DataDownload');
+  if(dataset.distribution){
+    dataset.distribution.forEach(function(x){
+      _addType(x, 'DataDownload');
+    });
+  }
 
   dataset.catalog = { '@type': ['Package', 'DataCatalog'], name: name, version: version, url: name + '/' + version };
 
   return dataset;
 };
 exports.linkDataset = linkDataset;
-
 
 
 /**
@@ -840,7 +862,11 @@ function linkArticle(article, name, version){
   }
 
   _addType(article, 'Article');
-  _addType(article.encoding, 'MediaObject');
+  if(article.encoding){
+    article.encoding.forEach(function(x){
+      _addType(x, 'MediaObject');
+    });
+  }
 
   article.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 
@@ -858,7 +884,12 @@ function linkCode(code, name, version){
   }
 
   _addType(code, 'Code');
-  _addType(code.targetProduct, 'SoftwareApplication');
+
+  if(code.targetProduct){
+    code.targetProduct.forEach(function(x){
+      _addType(x, 'SoftwareApplication');
+    });
+  }
 
   code.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 
@@ -875,6 +906,13 @@ function linkFigure(figure, name, version){
   }
 
   _addType(figure, 'ImageObject');
+  _addType(figure.height, 'QuantitativeValue');
+  _addType(figure.width, 'QuantitativeValue');
+  if(figure.figure){
+    figure.figure.forEach(function(x){
+      _addType(x, 'ImageObject');
+    });
+  }
 
   figure.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 
@@ -891,6 +929,11 @@ function linkAudio(audio, name, version){
   }
 
   _addType(audio, 'AudioObject');
+  if(audio.audio){
+    audio.audio.forEach(function(x){
+      _addType(x, 'AudioObject');
+    });
+  }
 
   audio.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 
@@ -907,6 +950,13 @@ function linkVideo(video, name, version){
   }
 
   _addType(video, 'ImageObject');
+  _addType(video.height, 'QuantitativeValue');
+  _addType(video.width, 'QuantitativeValue');
+  if(video.video){
+    video.video.forEach(function(x){
+      _addType(x, 'VideoObject');
+    });
+  }
 
   video.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 

@@ -12,33 +12,33 @@
   "dataset": [
     {
       "name": "myurl",
-      "distribution": { "contentUrl" :"http://data.com" }
+      "distribution": [ { "contentUrl" :"http://data.com" } ]
     },
     {
       "name": "mycsv",
-      "distribution": { "contentPath" :"data/data.csv" }
+      "distribution": [ { "contentPath" :"data/data.csv" } ]
     },
     {
       "name": "mydata",
       "isBasedOnUrl": [ "mypkg/0.0.0/code/myanalytics" ],
-      "distribution": { "contentData": { "inline": "data" } }
+      "distribution": [ { "contentData": { "inline": "data" } } ]
     }
   ],
 
   "code": [
     {
       "name": "myanalytics",
-      "targetProduct": { 
+      "targetProduct": [{
         "operatingSystem": "Unix",
         "input": [ "mypkg/0.0.0/dataset/mycsv" ]
-      }
-    }   
+      }]
+    }
   ],
 
   "figure": [
     {
       "name": "myfig",
-      "contentPath": "figure/x.png",
+      "figure": [ { "contentPath": "figure/x.png" } ],
       "isBasedOnUrl": [ "mypkg/0.0.0/dataset/mydata",  "mypkg/0.0.0/code/myanalytics" ]
     }
   ],
@@ -46,10 +46,7 @@
   "article": [
     {
       "name": "myarticle",
-      "encoding": {
-        "contentPath": "article/article.pdf"
-      }
+      "encoding": [ { "contentPath": "article/article.pdf" } ]
     }
   ]
-
 }
