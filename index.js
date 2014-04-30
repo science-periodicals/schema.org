@@ -661,15 +661,17 @@ exports.schema = {
           thumbnailUrl: { type: 'string' },
 
           caption:        { type: 'string' },
-          exifData:       { type: 'string' },
-          width: { "$ref": "#/definitions/width" },
-          height: { "$ref": "#/definitions/width" },
 
           figure: {
             type: 'array',
             items: {
               type: 'object',
               properties: {
+                exifData: { type: 'string' },
+                width: { "$ref": "#/definitions/width" }, //pictures of different size are considered as different encoding of the resource
+                height: { "$ref": "#/definitions/width" },
+
+
                 contentUrl:     { type: 'string' },
                 contentPath:    { type: 'string' },
                 contentSize:    { type: 'integer' },
