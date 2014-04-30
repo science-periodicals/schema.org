@@ -31,7 +31,8 @@
   "homepage": "https://github.com/standard-analytics/package-jsonld",
   "devDependencies": {
     "mocha": "~1.15.1",
-    "clone": "~0.1.11"
+    "clone": "~0.1.11",
+    "tv4": "^1.0.18"
   },
   "dependencies": {
     "is-url": "~0.1.0",

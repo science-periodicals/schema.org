@@ -1,4 +1,5 @@
 var fs = require('fs')
+  , tv4 = require('tv4')
   , url = require('url')
   , assert = require('assert')
   , clone = require('clone')
@@ -165,6 +166,19 @@ describe('package-jsonld', function(){
       }, Error);
     });
 
+  });
+
+  describe('schema validation', function(){
+    it('should validate', function(){
+      var valid = tv4.validate(pkg, pjsonld.schema);
+      assert(valid);
+    });
+    it('should validate', function(){
+      var mypkg = clone(pkg);
+      mypkg.keywords = 'kw';
+      var valid = tv4.validate(mypkg, pjsonld.schema);
+      assert(!valid);
+    });
   });
 
 });
