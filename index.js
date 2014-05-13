@@ -36,12 +36,12 @@ exports.terms = {
     "subClassOf": {
       "@id": "rdfs:subClassOf",
       "@type": "@id",
-      "@package": "@set"
+      "@container": "@set"
     },
     "subPropertyOf": {
       "@id": "rdfs:subPropertyOf",
       "@type": "@id",
-      "@package": "@set"
+      "@container": "@set"
     },
     "seeAlso": {
       "@id": "rdfs:seeAlso",
@@ -290,12 +290,12 @@ exports.context = {
     "Configuration":  { "@id": "pkg:Configuration", "@type": "@id" },
     "TypesettingApplication":  { "@id": "pkg:TypesettingApplication", "@type": "@id" },
 
-    "package":    { "@id": "pkg:package",                   "@package": "@list" },
-    "annotation": { "@id": "pkg:annotation",                "@package": "@list" },
-    "dataset":    { "@id": "pkg:dataset",                   "@package": "@list" },
-    "code":       { "@id": "pkg:code",                      "@package": "@list" },
-    "figure":     { "@id": "pkg:figure",                    "@package": "@list" },
-    "input":      { "@id": "pkg:input",     "@type": "@id", "@package": "@set"  },
+    "package":    { "@id": "pkg:package",                   "@container": "@list" },
+    "annotation": { "@id": "pkg:annotation",                "@container": "@list" },
+    "dataset":    { "@id": "pkg:dataset",                   "@container": "@list" },
+    "code":       { "@id": "pkg:code",                      "@container": "@list" },
+    "figure":     { "@id": "pkg:figure",                    "@container": "@list" },
+    "input":      { "@id": "pkg:input",     "@type": "@id", "@container": "@set"  },
     "valueType":  { "@id": "pkg:valueType", "@type": "@id" },
     "contentPath": "pkg:contentPath",
     "contentData": "pkg:contentData",
@@ -311,14 +311,14 @@ exports.context = {
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
 
-    "audio":          { "@id": "sch:audio",                          "@package": "@list" },
-    "video":          { "@id": "sch:video",                          "@package": "@list" },
-    "keywords":       { "@id": "sch:keywords",                       "@package": "@list" },
-    "about":          { "@id": "sch:about",                          "@package": "@list" },
-    "requirements":   { "@id": "sch:requirements",   "@type": "@id", "@package": "@list" },
-    "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@package": "@list" }, //dataDependencies
-    "citation":       { "@id": "sch:citation",                       "@package": "@list" },
-    "contributor":    { "@id": "sch:contributor",                    "@package": "@list" },
+    "audio":          { "@id": "sch:audio",                          "@container": "@list" },
+    "video":          { "@id": "sch:video",                          "@container": "@list" },
+    "keywords":       { "@id": "sch:keywords",                       "@container": "@list" },
+    "about":          { "@id": "sch:about",                          "@container": "@list" },
+    "requirements":   { "@id": "sch:requirements",   "@type": "@id", "@container": "@list" },
+    "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@container": "@list" }, //dataDependencies
+    "citation":       { "@id": "sch:citation",                       "@container": "@list" },
+    "contributor":    { "@id": "sch:contributor",                    "@container": "@list" },
     "codeRepository": { "@id": "sch:codeRepository", "@type": "@id" },
     "discussionUrl":  { "@id": "sch:discussionUrl",  "@type": "@id" },
     "targetProduct":  { "@id": "sch:targetProduct",  "@type": "@id" },
@@ -393,8 +393,9 @@ exports.context = {
     "hasScope": { "@id": "oa:hasScope", "@type": "@id" },
     "conformsTo": { "@id": "dc:conformsTo", "@type": "@id" },
 
-    "hasBody": "oa:hasBody",
-    "hasTarget": "oa:hasTarget",
+    "hasBody": { "@id": "oa:hasBody", "@container": "@set" },
+    "hasTarget": { "@id": "oa:hasTarget", "@container": "@set" },
+
     "hasSelector": "oa:hasSelector",
     "chars": "cnt:chars",
     "format": "dc:format",
