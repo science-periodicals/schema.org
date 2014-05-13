@@ -17,6 +17,7 @@ exports.terms = {
     "schema": "http://schema.org/",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "oa": "http://www.w3.org/ns/oa#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "vs": "http://www.w3.org/2003/06/sw-vocab-status/ns#",
     "defines": {
@@ -91,6 +92,17 @@ exports.terms = {
       "status": "testing",
       "seeAlso": "http://schema.org/Article"
     },
+    {
+      "@id": "pkg:annotation",
+      "@type": "rdf:Property",
+      "label": "annotation",
+      "comment":"List of annotations following open annotation",
+      "range": "oa:Annotation",
+      "domain": "pkg:Package",
+      "status": "testing",
+      "seeAlso": "http://www.w3.org/ns/oa"
+    },
+
     {
       "@id": "pkg:registry",
       "@type": "rdf:Property",
@@ -266,14 +278,20 @@ exports.context = {
     "dc":   "http://purl.org/dc/terms/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "bibo": "http://purl.org/ontology/bibo/",
+    "cnt": "http://www.w3.org/2011/content#",
+    "oa": "http://www.w3.org/ns/oa#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
 
     "Package":  { "@id": "pkg:Package", "@type": "@id" },
+    "Prior":  { "@id": "pkg:Prior", "@type": "@id" },
+    "Analytics":  { "@id": "pkg:Analytics", "@type": "@id" },
     "EmpiricalDataset":  { "@id": "pkg:EmpiricalDataset", "@type": "@id" },
     "SimulatedDataset":  { "@id": "pkg:SimulatedDataset", "@type": "@id" },
     "Configuration":  { "@id": "pkg:Configuration", "@type": "@id" },
     "TypesettingApplication":  { "@id": "pkg:TypesettingApplication", "@type": "@id" },
 
     "package":    { "@id": "pkg:package",                   "@package": "@list" },
+    "annotation": { "@id": "pkg:annotation",                "@package": "@list" },
     "dataset":    { "@id": "pkg:dataset",                   "@package": "@list" },
     "code":       { "@id": "pkg:code",                      "@package": "@list" },
     "figure":     { "@id": "pkg:figure",                    "@package": "@list" },
@@ -306,6 +324,7 @@ exports.context = {
     "targetProduct":  { "@id": "sch:targetProduct",  "@type": "@id" },
     "url":            { "@id": "sch:url",            "@type": "@id" },
     "contentUrl":     { "@id": "sch:contentUrl",     "@type": "@id" },
+    "thumbnailUrl":   { "@id": "sch:thumbnailUrl",   "@type": "@id" },
     "downloadUrl":    { "@id": "sch:downloadUrl",    "@type": "@id" },
 
     "name":                  "sch:name",
@@ -354,9 +373,44 @@ exports.context = {
     "Dataset":                 { "@id": "sch:Dataset",                 "@type": "@id" },
     "DataCatalog":             { "@id": "sch:DataCatalog",             "@type": "@id" },
     "Code":                    { "@id": "sch:Code",                    "@type": "@id" },
-    "SoftwareApplication":     { "@id": "sch:SoftwareApplication",     "@type": "@id" }
+    "SoftwareApplication":     { "@id": "sch:SoftwareApplication",     "@type": "@id" },
+
+
+    //Open Annotation, for now, we support only a small subset of the spec
+    "Annotation": { "@id": "oa:Annotation", "@type": "@id" },
+    "ContentAsText": { "@id": "cnt:ContentAsText", "@type": "@id" },
+    "Tag": { "@id": "oa:Tag", "@type": "@id" },
+    "SemanticTag": { "@id": "oa:SemanticTag", "@type": "@id" },
+    "Motivation": { "@id": "oa:Motivation", "@type": "@id" },
+    "SpecificResource": { "@id": "oa:SpecificResource", "@type": "@id" },
+    "Selector": { "@id": "oa:Selector", "@type": "@id" },
+    "FragmentSelector": { "@id": "oa:FragmentSelector", "@type": "@id" },
+    "TextPositionSelector": { "@id": "oa:TextPositionSelector", "@type": "@id" },
+    "TextQuoteSelector": { "@id": "oa:TextQuoteSelector", "@type": "@id" },
+
+    "motivatedBy": { "@id": "oa:motivatedBy", "@type": "@id" }, //for the value use: oa:tagging, oa:linking,  oa:questioning, oa:replying
+    "hasSource": { "@id": "oa:hasSource", "@type": "@id" },
+    "hasScope": { "@id": "oa:hasScope", "@type": "@id" },
+    "conformsTo": { "@id": "dc:conformsTo", "@type": "@id" },
+
+    "hasBody": "oa:hasBody",
+    "hasTarget": "oa:hasTarget",
+    "hasSelector": "oa:hasSelector",
+    "chars": "cnt:chars",
+    "format": "dc:format",
+    "annotatedBy": "oa:annotatedBy",
+    "annotatedAt": "oa:annotatedAt",
+    "serializedBy": "oa:serializedBy",
+    "serializedAt": "oa:serializedAt",
+    "value": "rdf:value", // TODO: fix conflict with schema.org/value, maybe do not support oa:FragmentSelector and just oa:TextPositionSelector and co...
+    "start": "oa:start",
+    "end": "oa:end",
+    "exact": "oa:exact",
+    "prefix": "oa:prefix",
+    "suffix": "oa:suffix"
   }
 };
+
 
 exports.schema = {
   $schema: 'http://json-schema.org/draft-04/schema#',
@@ -668,9 +722,8 @@ exports.schema = {
               type: 'object',
               properties: {
                 exifData: { type: 'string' },
-                width: { "$ref": "#/definitions/width" }, //pictures of different size are considered as different encoding of the resource
+                width: { "$ref": "#/definitions/width" }, //pictures of different sizes are considered as different encoding of the resource
                 height: { "$ref": "#/definitions/width" },
-
 
                 contentUrl:     { type: 'string' },
                 contentPath:    { type: 'string' },

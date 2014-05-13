@@ -1,6 +1,6 @@
 {
   "name": "package-jsonld",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "a commonJS thingy in JSON-LD / schema.org because semantic web, linked data and hypermedia.",
   "main": "index.js",
   "directories": {
@@ -21,7 +21,9 @@
     "hypermedia",
     "schema.org",
     "data",
-    "DataCatalog"
+    "DataCatalog",
+    "annotation",
+    "open-annotation"
   ],
   "author": "Sebastien Ballesteros",
   "license": "MIT",
