@@ -403,6 +403,7 @@ exports.context = {
     "hasScope": { "@id": "oa:hasScope", "@type": "@id" },
     "conformsTo": { "@id": "dc:conformsTo", "@type": "@id" },
 
+    "item": { "@id": "oa:item", "@container": "@list" },
     "hasBody": { "@id": "oa:hasBody", "@container": "@set" },
     "hasTarget": { "@id": "oa:hasTarget", "@container": "@set" },
     "hasState": { "@id": "oa:hasState", "@container": "@set" },
