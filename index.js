@@ -276,6 +276,7 @@ exports.context = {
     "sch":  "http://schema.org/",
     "nfo":  "http://www.semanticdesktop.org/ontologies/nfo/#",
     "dc":   "http://purl.org/dc/terms/",
+    "dctypes": "http://purl.org/dc/dcmitype/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "bibo": "http://purl.org/ontology/bibo/",
     "cnt": "http://www.w3.org/2011/content#",
@@ -379,6 +380,7 @@ exports.context = {
     //Open Annotation, for now, we support only a small subset of the spec
     "Annotation": { "@id": "oa:Annotation", "@type": "@id" },
     "ContentAsText": { "@id": "cnt:ContentAsText", "@type": "@id" },
+    "Text": { "@id": "dctypes:Text", "@type": "@id" },
     "Tag": { "@id": "oa:Tag", "@type": "@id" },
     "SemanticTag": { "@id": "oa:SemanticTag", "@type": "@id" },
     "Motivation": { "@id": "oa:Motivation", "@type": "@id" },
@@ -387,6 +389,8 @@ exports.context = {
     "FragmentSelector": { "@id": "oa:FragmentSelector", "@type": "@id" },
     "TextPositionSelector": { "@id": "oa:TextPositionSelector", "@type": "@id" },
     "TextQuoteSelector": { "@id": "oa:TextQuoteSelector", "@type": "@id" },
+    "List": { "@id": "oa:List", "@type": "@id" },
+    "HttpRequestState": { "@id": "oa:HttpRequestState", "@type": "@id" },
 
     "motivatedBy": { "@id": "oa:motivatedBy", "@type": "@id" }, //for the value use: oa:tagging, oa:linking,  oa:questioning, oa:replying
     "hasSource": { "@id": "oa:hasSource", "@type": "@id" },
@@ -395,20 +399,22 @@ exports.context = {
 
     "hasBody": { "@id": "oa:hasBody", "@container": "@set" },
     "hasTarget": { "@id": "oa:hasTarget", "@container": "@set" },
+    "hasState": { "@id": "oa:hasState", "@container": "@set" },
 
     "hasSelector": "oa:hasSelector",
     "chars": "cnt:chars",
     "format": "dc:format",
-    "annotatedBy": "oa:annotatedBy",
+    "annotatedBy": "oa:annotatedBy", //TODO make a list
     "annotatedAt": "oa:annotatedAt",
     "serializedBy": "oa:serializedBy",
     "serializedAt": "oa:serializedAt",
-    "value": "rdf:value", // TODO: fix conflict with schema.org/value, maybe do not support oa:FragmentSelector and just oa:TextPositionSelector and co...
+    "value": "rdf:value", // TODO: fix conflict with schema.org/value, maybe simply comment this line and use rdf:value
     "start": "oa:start",
     "end": "oa:end",
     "exact": "oa:exact",
     "prefix": "oa:prefix",
     "suffix": "oa:suffix"
+
   }
 };
 
