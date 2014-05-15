@@ -308,6 +308,12 @@ exports.context = {
     "doi": "bibo:doi",
     "abstract": "bibo:abstract",
     "journal": "bibo:journal",
+    "volume": "bibo:volume",
+    "issue": "bibo:issue",
+    "pageStart": "bibo:pageStart",
+    "pageEnd": "bibo:pageEnd",
+    "pmid": "bibo:pmid",
+    "issn": "bibo:issn",
 
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
