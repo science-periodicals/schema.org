@@ -381,6 +381,7 @@ exports.context = {
     "Code":                    { "@id": "sch:Code",                    "@type": "@id" },
     "SoftwareApplication":     { "@id": "sch:SoftwareApplication",     "@type": "@id" },
 
+    "Journal": { "@id": "bibo:Journal",     "@type": "@id" },
 
     //Open Annotation, for now, we support only a small subset of the spec
     "Annotation": { "@id": "oa:Annotation", "@type": "@id" },
