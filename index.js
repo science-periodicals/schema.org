@@ -303,8 +303,6 @@ exports.context = {
     "filePath":    "pkg:filePath",
     "registry":    "pkg:registry",
 
-    "license": "dc:license",
-
     "doi": "bibo:doi",
     "abstract": "bibo:abstract",
     "journal": "bibo:journal",
@@ -335,6 +333,7 @@ exports.context = {
     "downloadUrl":    { "@id": "sch:downloadUrl",    "@type": "@id" },
 
     "name":                  "sch:name",
+    "license":               "sch:license",
     "email":                 "sch:email",
     "version":               "sch:version",
     "description":           "sch:description",
@@ -493,7 +492,7 @@ exports.schema = {
     name: { type: 'string' },
     version: { type: 'string' },
     private: { type: 'boolean' },
-    license: { type: 'string' },
+    license: { type: [ 'string', 'object' ] },
     description: { type: 'string' },
     contentRating: { type: 'string' },
     citation: { "$ref": "#/definitions/citation" },
@@ -520,7 +519,7 @@ exports.schema = {
         type: 'object',
         properties: {
           name: { type: 'string'},
-          license: { type: 'string' },
+          license: { type: [ 'string', 'object' ] },
           description: { type: 'string'},
           keywords: { "$ref": "#/definitions/keywords" },
           about: {
@@ -571,7 +570,7 @@ exports.schema = {
         type: 'object',
         properties: {
           name: { type: 'string'},
-          license: { type: 'string' },
+          license: { type: [ 'string', 'object' ] },
           description: { type: 'string'},
           keywords: { "$ref": "#/definitions/keywords" },
           about: { "$ref": "#/definitions/about" },
@@ -630,7 +629,7 @@ exports.schema = {
         type: 'object',
         properties: {
           name: { type: 'string'},
-          license: { type: 'string' },
+          license: { type: [ 'string', 'object' ] },
           description: { type: 'string'},
           keywords: { "$ref": "#/definitions/keywords" },
           about: { "$ref": "#/definitions/about" },
@@ -672,7 +671,7 @@ exports.schema = {
         type: 'object',
         properties: {
           name: { type: 'string'},
-          license: { type: 'string' },
+          license: { type: [ 'string', 'object' ] },
           description: { type: 'string'},
           keywords: { "$ref": "#/definitions/keywords" },
           about: { "$ref": "#/definitions/about" },
@@ -716,7 +715,7 @@ exports.schema = {
         type: 'object',
         properties: {
           name: { type: 'string'},
-          license: { type: 'string' },
+          license: { type: [ 'string', 'object' ] },
           description: { type: 'string'},
           keywords: { "$ref": "#/definitions/keywords" },
           about: { "$ref": "#/definitions/about" },
@@ -762,7 +761,7 @@ exports.schema = {
         type: 'object',
         properties: {
           name: { type: 'string'},
-          license: { type: 'string' },
+          license: { type: [ 'string', 'object' ] },
           description: { type: 'string'},
           keywords: { "$ref": "#/definitions/keywords" },
           about: { "$ref": "#/definitions/about" },
