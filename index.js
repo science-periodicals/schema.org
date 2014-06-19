@@ -643,7 +643,7 @@ exports.schema = {
 
           transcript:        { type: 'string' },
 
-          audio: {
+          encoding: {
             type: 'array',
             items: {
               type: 'object',
@@ -687,7 +687,7 @@ exports.schema = {
           width: { "$ref": "#/definitions/width" },
           height: { "$ref": "#/definitions/width" },
 
-          video: {
+          encoding: {
             type: 'array',
             items: {
               type: 'object',
@@ -729,7 +729,7 @@ exports.schema = {
 
           caption:        { type: 'string' },
 
-          figure: {
+          encoding: {
             type: 'array',
             items: {
               type: 'object',
@@ -976,8 +976,8 @@ function linkFigure(figure, name, version){
   _addType(figure, 'ImageObject');
   _addType(figure.height, 'QuantitativeValue');
   _addType(figure.width, 'QuantitativeValue');
-  if(figure.figure){
-    figure.figure.forEach(function(x){
+  if(figure.encoding){
+    figure.encoding.forEach(function(x){
       _addType(x, 'ImageObject');
     });
   }
@@ -997,8 +997,8 @@ function linkAudio(audio, name, version){
   }
 
   _addType(audio, 'AudioObject');
-  if(audio.audio){
-    audio.audio.forEach(function(x){
+  if(audio.encoding){
+    audio.encoding.forEach(function(x){
       _addType(x, 'AudioObject');
     });
   }
@@ -1020,8 +1020,8 @@ function linkVideo(video, name, version){
   _addType(video, 'ImageObject');
   _addType(video.height, 'QuantitativeValue');
   _addType(video.width, 'QuantitativeValue');
-  if(video.video){
-    video.video.forEach(function(x){
+  if(video.encoding){
+    video.encoding.forEach(function(x){
       _addType(x, 'VideoObject');
     });
   }

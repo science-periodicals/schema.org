@@ -38,7 +38,7 @@
   "figure": [
     {
       "name": "myfig",
-      "figure": [ { "contentPath": "figure/x.png" } ],
+      "encoding": [ { "contentPath": "figure/x.png" } ],
       "isBasedOnUrl": [ "mypkg/0.0.0/dataset/mydata",  "mypkg/0.0.0/code/myanalytics" ]
     }
   ],

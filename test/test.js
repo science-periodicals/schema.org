@@ -39,7 +39,7 @@ describe('package-jsonld', function(){
       package.figure.forEach(function(r){
         assert.equal(r['@type'], 'ImageObject');
         assert.equal(r['@id'], 'mypkg/0.0.0/figure/' + r.name);
-        assert.equal(r.figure[0]['@type'], 'ImageObject');
+        assert.equal(r.encoding[0]['@type'], 'ImageObject');
         assert.deepEqual(r.package, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
       });
       package.article.forEach(function(r){
