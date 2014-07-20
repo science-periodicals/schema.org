@@ -63,24 +63,14 @@ exports.terms = {
       "seeAlso": "http://schema.org/Dataset"
     },
     {
-      "@id": "pkg:code",
+      "@id": "pkg:sourceCode",
       "@type": "rdf:Property",
-      "label": "code",
-      "comment":"List of code resources used for analytics or views",
+      "label": "source code",
+      "comment":"List of source code resources used for analytics or views",
       "range": "schema:Code",
       "domain": "pkg:Package",
       "status": "testing",
       "seeAlso": "http://schema.org/Code"
-    },
-    {
-      "@id": "pkg:figure",
-      "@type": "rdf:Property",
-      "label": "figure",
-      "comment":"List of figures",
-      "range": "schema:ImageObject",
-      "domain": "pkg:Package",
-      "status": "testing",
-      "seeAlso": "http://schema.org/ImageObject"
     },
     {
       "@id": "pkg:article",
@@ -273,7 +263,7 @@ exports.context = {
     "@base": BASE,
 
     "pkg": "http://standardanalytics.io/package/",
-    "sch":  "http://schema.org/",
+    "schema": "http://schema.org/",
     "nfo":  "http://www.semanticdesktop.org/ontologies/nfo/#",
     "dc":   "http://purl.org/dc/terms/",
     "dctypes": "http://purl.org/dc/dcmitype/",
@@ -292,10 +282,8 @@ exports.context = {
     "TypesettingApplication":  { "@id": "pkg:TypesettingApplication", "@type": "@id" },
 
     "package":    { "@id": "pkg:package",                   "@container": "@list" },
+    "sourceCode": { "@id": "pkg:sourceCode",                "@container": "@list" },
     "annotation": { "@id": "pkg:annotation",                "@container": "@list" },
-    "dataset":    { "@id": "pkg:dataset",                   "@container": "@list" },
-    "code":       { "@id": "pkg:code",                      "@container": "@list" },
-    "figure":     { "@id": "pkg:figure",                    "@container": "@list" },
     "input":      { "@id": "pkg:input",     "@type": "@id", "@container": "@set"  },
     "valueType":  { "@id": "pkg:valueType", "@type": "@id" },
     "contentPath": "pkg:contentPath",
@@ -316,70 +304,72 @@ exports.context = {
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
 
-    "audio":          { "@id": "sch:audio",                          "@container": "@list" },
-    "video":          { "@id": "sch:video",                          "@container": "@list" },
-    "keywords":       { "@id": "sch:keywords",                       "@container": "@list" },
-    "about":          { "@id": "sch:about",                          "@container": "@list" },
-    "requirements":   { "@id": "sch:requirements",   "@type": "@id", "@container": "@list" },
-    "isBasedOnUrl":   { "@id": "sch:isBasedOnUrl",   "@type": "@id", "@container": "@list" }, //dataDependencies
-    "citation":       { "@id": "sch:citation",                       "@container": "@list" },
-    "contributor":    { "@id": "sch:contributor",                    "@container": "@list" },
-    "codeRepository": { "@id": "sch:codeRepository", "@type": "@id" },
-    "discussionUrl":  { "@id": "sch:discussionUrl",  "@type": "@id" },
-    "targetProduct":  { "@id": "sch:targetProduct",  "@type": "@id" },
-    "url":            { "@id": "sch:url",            "@type": "@id" },
-    "contentUrl":     { "@id": "sch:contentUrl",     "@type": "@id" },
-    "thumbnailUrl":   { "@id": "sch:thumbnailUrl",   "@type": "@id" },
-    "downloadUrl":    { "@id": "sch:downloadUrl",    "@type": "@id" },
+    "dataset":        { "@id": "schema:dataset",                        "@container": "@list" },
+    "image":          { "@id": "schema:image",                          "@container": "@list" },
+    "audio":          { "@id": "schema:audio",                          "@container": "@list" },
+    "video":          { "@id": "schema:video",                          "@container": "@list" },
+    "keywords":       { "@id": "schema:keywords",                       "@container": "@list" },
+    "about":          { "@id": "schema:about",                          "@container": "@list" },
+    "requirements":   { "@id": "schema:requirements",   "@type": "@id", "@container": "@list" },
+    "isBasedOnUrl":   { "@id": "schema:isBasedOnUrl",   "@type": "@id", "@container": "@list" }, //dataDependencies
+    "citation":       { "@id": "schema:citation",                       "@container": "@list" },
+    "contributor":    { "@id": "schema:contributor",                    "@container": "@list" },
+    "codeRepository": { "@id": "schema:codeRepository", "@type": "@id" },
+    "discussionUrl":  { "@id": "schema:discussionUrl",  "@type": "@id" },
+    "targetProduct":  { "@id": "schema:targetProduct",  "@type": "@id" },
+    "url":            { "@id": "schema:url",            "@type": "@id" },
+    "contentUrl":     { "@id": "schema:contentUrl",     "@type": "@id" },
+    "thumbnailUrl":   { "@id": "schema:thumbnailUrl",   "@type": "@id" },
+    "downloadUrl":    { "@id": "schema:downloadUrl",    "@type": "@id" },
 
-    "name":                  "sch:name",
-    "license":               "sch:license",
-    "email":                 "sch:email",
-    "version":               "sch:version",
-    "description":           "sch:description",
-    "distribution":          "sch:distribution",
-    "author":                "sch:author",
-    "encoding":              "sch:encoding",
-    "runtime":               "sch:runtime",
-    "programmingLanguage":   "sch:programmingLanguage",
-    "operatingSystem":       "sch:operatingSystem",
-    "sampleType":            "sch:sampleType", //executable script ready to be run
-    "contentSize":           "sch:contentSize",
-    "encodingFormat":        "sch:encodingFormat",
-    "catalog":               "sch:catalog",
-    "datePublished":         "sch:datePublished",
-    "uploadDate":            "sch:uploadDate",
-    "caption":               "sch:caption",
-    "thumbnail":             "sch:thumbnail",
-    "exifData":              "sch:exifData",
-    "height":                "sch:height",
-    "width":                 "sch:width",
-    "fileFormat":            "sch:fileFormat",
-    "fileSize":              "sch:fileSize",
-    "memoryRequirements":    "sch:memoryRequirements",
-    "processorRequirements": "sch:processorRequirements",
-    "storageRequirements":   "sch:storageRequirements",
-    "softwareVersion":       "sch:softwareVersion",
-    "contentRating":         "sch:contentRating",
-    "duration":              "sch:duration",
+    "name":                  "schema:name",
+    "license":               "schema:license",
+    "email":                 "schema:email",
+    "version":               "schema:version",
+    "description":           "schema:description",
+    "distribution":          "schema:distribution",
+    "author":                "schema:author",
+    "encoding":              "schema:encoding",
+    "runtime":               "schema:runtime",
+    "programmingLanguage":   "schema:programmingLanguage",
+    "operatingSystem":       "schema:operatingSystem",
+    "sampleType":            "schema:sampleType", //executable script ready to be run
+    "contentSize":           "schema:contentSize",
+    "encodingFormat":        "schema:encodingFormat",
+    "catalog":               "schema:catalog",
+    "datePublished":         "schema:datePublished",
+    "uploadDate":            "schema:uploadDate",
+    "caption":               "schema:caption",
+    "thumbnail":             "schema:thumbnail",
+    "exifData":              "schema:exifData",
+    "height":                "schema:height",
+    "width":                 "schema:width",
+    "fileFormat":            "schema:fileFormat",
+    "fileSize":              "schema:fileSize",
+    "memoryRequirements":    "schema:memoryRequirements",
+    "processorRequirements": "schema:processorRequirements",
+    "storageRequirements":   "schema:storageRequirements",
+    "softwareVersion":       "schema:softwareVersion",
+    "contentRating":         "schema:contentRating",
+    "duration":              "schema:duration",
 
-    "Article":                 { "@id": "sch:Article",                 "@type": "@id" },
-    "MedicalScholarlyArticle": { "@id": "sch:MedicalScholarlyArticle", "@type": "@id" },
-    "BlogPosting":             { "@id": "sch:BlogPosting",             "@type": "@id" },
-    "NewsArticle":             { "@id": "sch:NewsArticle",             "@type": "@id" },
-    "ScholarlyArticle":        { "@id": "sch:ScholarlyArticle",        "@type": "@id" },
-    "TechArticle":             { "@id": "sch:TechArticle",             "@type": "@id" },
-    "MediaObject":             { "@id": "sch:MediaObject",             "@type": "@id" },
-    "ImageObject":             { "@id": "sch:ImageObject",             "@type": "@id" },
-    "AudioObject":             { "@id": "sch:AudioObject",             "@type": "@id" },
-    "VideoObject":             { "@id": "sch:VideoObject",             "@type": "@id" },
-    "Person":                  { "@id": "sch:Person",                  "@type": "@id" },
-    "Organization":            { "@id": "sch:Person",                  "@type": "@id" },
-    "DataDownload":            { "@id": "sch:DataDownload",            "@type": "@id" },
-    "Dataset":                 { "@id": "sch:Dataset",                 "@type": "@id" },
-    "DataCatalog":             { "@id": "sch:DataCatalog",             "@type": "@id" },
-    "Code":                    { "@id": "sch:Code",                    "@type": "@id" },
-    "SoftwareApplication":     { "@id": "sch:SoftwareApplication",     "@type": "@id" },
+    "Article":                 { "@id": "schema:Article",                 "@type": "@id" },
+    "MedicalScholarlyArticle": { "@id": "schema:MedicalScholarlyArticle", "@type": "@id" },
+    "BlogPosting":             { "@id": "schema:BlogPosting",             "@type": "@id" },
+    "NewsArticle":             { "@id": "schema:NewsArticle",             "@type": "@id" },
+    "ScholarlyArticle":        { "@id": "schema:ScholarlyArticle",        "@type": "@id" },
+    "TechArticle":             { "@id": "schema:TechArticle",             "@type": "@id" },
+    "MediaObject":             { "@id": "schema:MediaObject",             "@type": "@id" },
+    "ImageObject":             { "@id": "schema:ImageObject",             "@type": "@id" },
+    "AudioObject":             { "@id": "schema:AudioObject",             "@type": "@id" },
+    "VideoObject":             { "@id": "schema:VideoObject",             "@type": "@id" },
+    "Person":                  { "@id": "schema:Person",                  "@type": "@id" },
+    "Organization":            { "@id": "schema:Person",                  "@type": "@id" },
+    "DataDownload":            { "@id": "schema:DataDownload",            "@type": "@id" },
+    "Dataset":                 { "@id": "schema:Dataset",                 "@type": "@id" },
+    "DataCatalog":             { "@id": "schema:DataCatalog",             "@type": "@id" },
+    "Code":                    { "@id": "schema:Code",                    "@type": "@id" },
+    "SoftwareApplication":     { "@id": "schema:SoftwareApplication",     "@type": "@id" },
 
     "Journal": { "@id": "bibo:Journal",     "@type": "@id" },
 
@@ -564,7 +554,7 @@ exports.schema = {
       }
     },
 
-    code: {
+    sourceCode: {
       type: 'array',
       items: {
         type: 'object',
@@ -709,7 +699,7 @@ exports.schema = {
       }
     },
 
-    figure: {
+    image: {
       type: 'array',
       items: {
         type: 'object',
@@ -863,15 +853,15 @@ exports.linkPackage = function(pkg, options){
     });
   }
 
-  if('code' in pkg){
-    pkg.code.forEach(function(r){
-      linkCode(r, pkg.name, pkg.version);
+  if('sourceCode' in pkg){
+    pkg.sourceCode.forEach(function(r){
+      linkSourceCode(r, pkg.name, pkg.version);
     });
   }
 
-  if('figure' in pkg){
-    pkg.figure.forEach(function(r){
-      linkFigure(r, pkg.name, pkg.version);
+  if('image' in pkg){
+    pkg.image.forEach(function(r){
+      linkImage(r, pkg.name, pkg.version);
     });
   }
 
@@ -944,52 +934,52 @@ exports.linkArticle = linkArticle;
 
 
 /**
- * modifies code in place to add @id, @type
+ * modifies sourceCode in place to add @id, @type
  */
-function linkCode(code, name, version){
-  if('name' in code){
-    code['@id'] = name + '/' + version + '/code/' + code.name;
+function linkSourceCode(sourceCode, name, version){
+  if('name' in sourceCode){
+    sourceCode['@id'] = name + '/' + version + '/sourceCode/' + sourceCode.name;
   }
 
-  _addType(code, 'Code');
+  _addType(sourceCode, 'Code');
 
-  if(code.targetProduct){
-    code.targetProduct.forEach(function(x){
+  if(sourceCode.targetProduct){
+    sourceCode.targetProduct.forEach(function(x){
       _addType(x, 'SoftwareApplication');
     });
   }
 
-  code.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+  sourceCode.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 
-  return code;
+  return sourceCode;
 };
-exports.linkCode = linkCode;
+exports.linkSourceCode = linkSourceCode;
 
 /**
- * modifies code in place to add @id, @type
+ * modifies image in place to add @id, @type
  */
-function linkFigure(figure, name, version){
-  if('name' in figure){
-    figure['@id'] = name + '/' + version + '/figure/' + figure.name;
+function linkImage(image, name, version){
+  if('name' in image){
+    image['@id'] = name + '/' + version + '/image/' + image.name;
   }
 
-  _addType(figure, 'ImageObject');
-  _addType(figure.height, 'QuantitativeValue');
-  _addType(figure.width, 'QuantitativeValue');
-  if(figure.encoding){
-    figure.encoding.forEach(function(x){
+  _addType(image, 'ImageObject');
+  _addType(image.height, 'QuantitativeValue');
+  _addType(image.width, 'QuantitativeValue');
+  if(image.encoding){
+    image.encoding.forEach(function(x){
       _addType(x, 'ImageObject');
     });
   }
 
-  figure.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+  image.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 
-  return figure;
+  return image;
 };
-exports.linkFigure = linkFigure;
+exports.linkImage = linkImage;
 
 /**
- * modifies code in place to add @id, @type
+ * modifies audio in place to add @id, @type
  */
 function linkAudio(audio, name, version){
   if('name' in audio){
@@ -1010,7 +1000,7 @@ function linkAudio(audio, name, version){
 exports.linkAudio = linkAudio;
 
 /**
- * modifies code in place to add @id, @type
+ * modifies video in place to add @id, @type
  */
 function linkVideo(video, name, version){
   if('name' in video){
@@ -1137,7 +1127,7 @@ exports.validateRequiredUri = validateRequiredUri;
 /**
  * validate uri and in case it's an uri pointing to the current doc,
  * check that the resource pointed to exists and if it does return it.
- * If a resource points to code, check that the code list it as it inputs
+ * If a resource points to sourceCode, check that the sourceCode list it as it inputs
  */
 function _validateLink(uri, pkg, dataDependencies){
 
@@ -1145,8 +1135,8 @@ function _validateLink(uri, pkg, dataDependencies){
   if(parsed){ //uri from this doc, validate that there is a matching resource
     var type = parsed.splt[2];
 
-    if(['code', 'dataset', 'figure', 'audio', 'video', 'article'].indexOf(type) === -1){
-      throw new Error(  uri + ' should contain /dataset/, /code/, /figure/, /audio/, /video/ or /article/');
+    if(['sourceCode', 'dataset', 'image', 'audio', 'video', 'article'].indexOf(type) === -1){
+      throw new Error(  uri + ' should contain /dataset/, /sourceCode/, /image/, /audio/, /video/ or /article/');
     } else {
       var array = pkg[type] || [];
     }
@@ -1178,7 +1168,7 @@ exports.validateRequire = function(pkg, dataDependencies){
 
   var dataDependencies = dataDependencies || exports.dataDependencies(pkg.isBasedOnUrl);
 
-  ['code', 'dataset', 'figure', 'audio', 'video', 'article'].forEach(function(t){
+  ['sourceCode', 'dataset', 'image', 'audio', 'video', 'article'].forEach(function(t){
 
     var resource = pkg[t] || [];
     resource.forEach(function(r){
@@ -1224,7 +1214,7 @@ function validateName(name){
   if ( !n || n.charAt(0) === "."
        || !n.match(/^[a-zA-Z0-9]/)
        || n.match(/[\/\(\)&\?#\|<>@:%\s\\\*'"!~`]/)
-       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'package.jsonld', 'dataset', 'code', 'figure', 'audio', 'video', 'about', 'ld_packages', 'favicon.ico', 'r'].indexOf(n.toLowerCase()) !== -1
+       || ['auth', 'rmuser', 'adduser', 'owner', 'search', 'package.jsonld', 'dataset', 'sourceCode', 'image', 'audio', 'video', 'about', 'ld_packages', 'favicon.ico', 'r'].indexOf(n.toLowerCase()) !== -1
        || n !== encodeURIComponent(n) ) {
 
     throw new Error('invalid name');

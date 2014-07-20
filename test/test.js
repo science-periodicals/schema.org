@@ -30,15 +30,15 @@ describe('package-jsonld', function(){
         assert.equal(r.distribution[0]['@type'], 'DataDownload');
         assert.deepEqual(r.catalog, { '@type': ['Package', 'DataCatalog'], name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
       });
-      package.code.forEach(function(r){
+      package.sourceCode.forEach(function(r){
         assert.equal(r['@type'], 'Code');
-        assert.equal(r['@id'], 'mypkg/0.0.0/code/' + r.name);
+        assert.equal(r['@id'], 'mypkg/0.0.0/sourceCode/' + r.name);
         assert.equal(r.targetProduct[0]['@type'], 'SoftwareApplication');
         assert.deepEqual(r.package, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
       });
-      package.figure.forEach(function(r){
+      package.image.forEach(function(r){
         assert.equal(r['@type'], 'ImageObject');
-        assert.equal(r['@id'], 'mypkg/0.0.0/figure/' + r.name);
+        assert.equal(r['@id'], 'mypkg/0.0.0/image/' + r.name);
         assert.equal(r.encoding[0]['@type'], 'ImageObject');
         assert.deepEqual(r.package, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
       });
@@ -50,18 +50,18 @@ describe('package-jsonld', function(){
       });
     });
 
-    it('should respect pre-existing figure or code @type', function(){
+    it('should respect pre-existing ImageObject or Code @type', function(){
       var mypkg = clone(pkg);
-      mypkg.code[0]['@type'] = 'CodeType';
+      mypkg.sourceCode[0]['@type'] = 'CodeType';
       var package = pjsonld.linkPackage(mypkg);
-      assert.deepEqual(['CodeType', 'Code'], package.code[0]['@type']);
+      assert.deepEqual(['CodeType', 'Code'], package.sourceCode[0]['@type']);
     });
 
-    it('should respect pre-existing figure or code @type array', function(){
+    it('should respect pre-existing ImageObject or Code @type array', function(){
       var mypkg = clone(pkg);
-      mypkg.figure[0]['@type'] = ['FigType', 'FigType2'];
+      mypkg.image[0]['@type'] = ['FigType', 'FigType2'];
       var package = pjsonld.linkPackage(mypkg);
-      assert.deepEqual(['FigType', 'FigType2', 'ImageObject'], package.figure[0]['@type']);
+      assert.deepEqual(['FigType', 'FigType2', 'ImageObject'], package.image[0]['@type']);
     });
 
   });
@@ -150,18 +150,18 @@ describe('package-jsonld', function(){
       assert(!pjsonld.validateRequire(pkg));
     });
 
-    it('should throw an error when a code has invalid require links', function(){
+    it('should throw an error when a sourceCode has invalid require links', function(){
       assert.throws( function(){
         var mypkg = clone(pkg);
-        mypkg.code = [ { targetProduct: { input: ['pkg5/0.0.0'] } } ];
+        mypkg.sourceCode = [ { targetProduct: { input: ['pkg5/0.0.0'] } } ];
         pjsonld.validateRequire(mypkg)
       }, Error);
     });
 
-    it('should throw an error when a code list as input a local dataset that does not exists', function(){
+    it('should throw an error when a sourceCode list as input a local dataset that does not exists', function(){
       assert.throws( function(){
         var mypkg = clone(pkg);
-        mypkg.code[0].targetProduct.input = [ 'mypkg/0.0.0/dataset/donotexists' ];
+        mypkg.sourceCode[0].targetProduct.input = [ 'mypkg/0.0.0/dataset/donotexists' ];
         pjsonld.validateRequire(mypkg)
       }, Error);
     });

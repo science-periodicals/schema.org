@@ -20,12 +20,12 @@
     },
     {
       "name": "mydata",
-      "isBasedOnUrl": [ "mypkg/0.0.0/code/myanalytics" ],
+      "isBasedOnUrl": [ "mypkg/0.0.0/sourceCode/myanalytics" ],
       "distribution": [ { "contentData": { "inline": "data" } } ]
     }
   ],
 
-  "code": [
+  "sourceCode": [
     {
       "name": "myanalytics",
       "targetProduct": [{
@@ -35,11 +35,11 @@
     }
   ],
 
-  "figure": [
+  "image": [
     {
       "name": "myfig",
-      "encoding": [ { "contentPath": "figure/x.png" } ],
-      "isBasedOnUrl": [ "mypkg/0.0.0/dataset/mydata",  "mypkg/0.0.0/code/myanalytics" ]
+      "encoding": [ { "contentPath": "image/x.png" } ],
+      "isBasedOnUrl": [ "mypkg/0.0.0/dataset/mydata",  "mypkg/0.0.0/sourceCode/myanalytics" ]
     }
   ],
 
