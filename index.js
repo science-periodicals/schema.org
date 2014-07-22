@@ -296,6 +296,7 @@ exports.context = {
     "journal": "bibo:journal",
     "volume": "bibo:volume",
     "issue": "bibo:issue",
+    "pages": "bibo:pages",
     "pageStart": "bibo:pageStart",
     "pageEnd": "bibo:pageEnd",
     "pmid": "bibo:pmid",
@@ -364,7 +365,7 @@ exports.context = {
     "AudioObject":             { "@id": "schema:AudioObject",             "@type": "@id" },
     "VideoObject":             { "@id": "schema:VideoObject",             "@type": "@id" },
     "Person":                  { "@id": "schema:Person",                  "@type": "@id" },
-    "Organization":            { "@id": "schema:Person",                  "@type": "@id" },
+    "Organization":            { "@id": "schema:Organization",            "@type": "@id" },
     "DataDownload":            { "@id": "schema:DataDownload",            "@type": "@id" },
     "Dataset":                 { "@id": "schema:Dataset",                 "@type": "@id" },
     "DataCatalog":             { "@id": "schema:DataCatalog",             "@type": "@id" },
@@ -373,7 +374,7 @@ exports.context = {
 
     "Journal": { "@id": "bibo:Journal",     "@type": "@id" },
 
-    //Open Annotation, for now, we support only a small subset of the spec
+    //Open Annotation, for now, we support only a small subset of the spec: see http://www.openannotation.org/spec/core/
     "Annotation": { "@id": "oa:Annotation", "@type": "@id" },
     "ContentAsText": { "@id": "cnt:ContentAsText", "@type": "@id" },
     "Text": { "@id": "dctypes:Text", "@type": "@id" },
