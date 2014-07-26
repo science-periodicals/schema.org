@@ -291,16 +291,29 @@ exports.context = {
     "filePath":    "pkg:filePath",
     "registry":    "pkg:registry",
 
-    "doi": "bibo:doi",
-    "abstract": "bibo:abstract",
-    "journal": "bibo:journal",
-    "volume": "bibo:volume",
-    "issue": "bibo:issue",
-    "pages": "bibo:pages",
+
+    //Cf http://www.w3.org/wiki/WebSchemas/Collection
+    "hasPart": { "@id": "dc:hasPart", "@container": "@list" },    
+    "isPartOf": { "@id": "dc:isPartOf", "@container": "@list" },    
+
+    //Cf http://www.w3.org/wiki/WebSchemas/Periodicals,_Articles_and_Multi-volume_Works
+    "volumeNumber": "bibo:volume",
+    "issueNumber": "bibo:issue",
+    "pagination": "bibo:pages",
     "pageStart": "bibo:pageStart",
     "pageEnd": "bibo:pageEnd",
-    "pmid": "bibo:pmid",
     "issn": "bibo:issn",
+    "isbn": "bibo:isbn",
+    "Periodical": { "@id": "schema:Periodical", "@type": "@id" }, //replace     "Journal": { "@id": "bibo:Journal",     "@type": "@id" },
+    "PublicationVolume": { "@id": "schema:PublicationVolume", "@type": "@id" },
+    "PublicationIssue": { "@id": "schema:PublicationIssue", "@type": "@id" },
+
+    //TODO make a proposal for the following properties
+    "doi": "bibo:doi",
+    "pmid": "bibo:pmid",
+
+    //TODO...
+    //"abstract": "bibo:abstract",
 
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
@@ -372,7 +385,6 @@ exports.context = {
     "Code":                    { "@id": "schema:Code",                    "@type": "@id" },
     "SoftwareApplication":     { "@id": "schema:SoftwareApplication",     "@type": "@id" },
 
-    "Journal": { "@id": "bibo:Journal",     "@type": "@id" },
 
     //Open Annotation, for now, we support only a small subset of the spec: see http://www.openannotation.org/spec/core/
     "Annotation": { "@id": "oa:Annotation", "@type": "@id" },
@@ -764,7 +776,7 @@ exports.schema = {
           contributor: { type: 'array', items: { "$ref": "#/definitions/person" } },
           thumbnailUrl: { type: 'string' },
 
-          abstract: { type: 'string'},
+          isPartOf: { type: 'array'},
           articleBody: { type: 'string'},
 
           encoding: {
