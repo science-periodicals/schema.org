@@ -168,11 +168,45 @@ exports.terms = {
     },
 
     {
+      "@id": "pkg:abstract",
+      "@type": "rdf:Property",
+      "label": "abstract",
+      "comment":"A brief summary of an article",
+      "range": "pkg:Abstract",
+      "domain": "schema:Article",
+      "status": "testing",
+      "seeAlso": "http://en.wikipedia.org/wiki/Abstract_(summary)"
+    },
+
+    {
+      "@id": "pkg:abstractBody",
+      "@type": "rdf:Property",
+      "label": "abstract body",
+      "comment":"The actual body of the abstract",
+      "range": "xsd:string",
+      "domain": "pkg:Abstract",
+      "status": "testing",
+      "seeAlso": "http://en.wikipedia.org/wiki/Abstract_(summary)"
+    },
+
+    {
       "@id": "pkg:Package",
       "@type": "rdfs:Class",
       "label": "Package",
       "comment": "A collection of resources associated with structured metadata describing their content and relationships", //TODO improve definition
       "seeAlso": "http://schema.org/DataCatalog",
+      "subClassOf": [
+        "schema:CreativeWork"
+      ],
+      "status": "testing"
+    },
+
+    {
+      "@id": "pkg:Abstract",
+      "@type": "rdfs:Class",
+      "label": "Abstract",
+      "comment": "A summary of the resource.",
+      "seeAlso": "http://en.wikipedia.org/wiki/Abstract_(summary)",
       "subClassOf": [
         "schema:CreativeWork"
       ],
@@ -312,9 +346,9 @@ exports.context = {
     "doi": "bibo:doi",
     "pmid": "bibo:pmid",
 
-    //TODO...
-    //"abstract": "bibo:abstract",
-
+    "abstract": "pkg:abstract",
+    "abstractBody": "pkg:abstractBody",
+    
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
 
@@ -778,6 +812,7 @@ exports.schema = {
 
           isPartOf: { type: 'array'},
           articleBody: { type: 'string'},
+          abstract: { type: 'object' },
 
           encoding: {
             type: 'array',
