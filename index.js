@@ -810,7 +810,7 @@ exports.schema = {
           contributor: { type: 'array', items: { "$ref": "#/definitions/person" } },
           thumbnailUrl: { type: 'string' },
 
-          isPartOf: { type: 'array'},
+          isPartOf: { type: ['array', 'object'] },
           articleBody: { type: 'string'},
           abstract: { type: 'object' },
 
