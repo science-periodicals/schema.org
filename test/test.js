@@ -50,18 +50,18 @@ describe('package-jsonld', function(){
       });
     });
 
-    it('should respect pre-existing ImageObject or Code @type', function(){
+    it('should respect pre-existing @type', function(){
       var mypkg = clone(pkg);
       mypkg.sourceCode[0]['@type'] = 'CodeType';
       var package = pjsonld.linkPackage(mypkg);
-      assert.deepEqual(['CodeType', 'Code'], package.sourceCode[0]['@type']);
+      assert.deepEqual('CodeType', package.sourceCode[0]['@type']);
     });
 
-    it('should respect pre-existing ImageObject or Code @type array', function(){
+    it('should respect pre-existing @type array', function(){
       var mypkg = clone(pkg);
       mypkg.image[0]['@type'] = ['FigType', 'FigType2'];
       var package = pjsonld.linkPackage(mypkg);
-      assert.deepEqual(['FigType', 'FigType2', 'ImageObject'], package.image[0]['@type']);
+      assert.deepEqual(['FigType', 'FigType2'], package.image[0]['@type']);
     });
 
   });

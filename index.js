@@ -945,7 +945,7 @@ function linkDataset(dataset, name, version){
     dataset['@id'] = name + '/' + version + '/dataset/' + dataset.name;
   }
 
-  _addType(dataset, 'Dataset');
+  _addType(dataset, 'Dataset', true);
   if(dataset.distribution){
     dataset.distribution.forEach(function(x){
       _addType(x, 'DataDownload');
@@ -967,7 +967,7 @@ function linkArticle(article, name, version){
     article['@id'] = name + '/' + version + '/article/' + article.name;
   }
 
-  _addType(article, 'Article');
+  _addType(article, 'Article', true);
   if(article.encoding){
     article.encoding.forEach(function(x){
       _addType(x, 'MediaObject');
@@ -989,7 +989,7 @@ function linkSourceCode(sourceCode, name, version){
     sourceCode['@id'] = name + '/' + version + '/sourceCode/' + sourceCode.name;
   }
 
-  _addType(sourceCode, 'Code');
+  _addType(sourceCode, 'Code', true);
 
   if(sourceCode.targetProduct){
     sourceCode.targetProduct.forEach(function(x){
@@ -1011,7 +1011,7 @@ function linkImage(image, name, version){
     image['@id'] = name + '/' + version + '/image/' + image.name;
   }
 
-  _addType(image, 'ImageObject');
+  _addType(image, 'ImageObject', true);
   _addType(image.height, 'QuantitativeValue');
   _addType(image.width, 'QuantitativeValue');
   if(image.encoding){
@@ -1034,7 +1034,7 @@ function linkAudio(audio, name, version){
     audio['@id'] = name + '/' + version + '/audio/' + audio.name;
   }
 
-  _addType(audio, 'AudioObject');
+  _addType(audio, 'AudioObject', true);
   if(audio.encoding){
     audio.encoding.forEach(function(x){
       _addType(x, 'AudioObject');
@@ -1055,7 +1055,7 @@ function linkVideo(video, name, version){
     video['@id'] = name + '/' + version + '/video/' + video.name;
   }
 
-  _addType(video, 'ImageObject');
+  _addType(video, 'VideoObject', true);
   _addType(video.height, 'QuantitativeValue');
   _addType(video.width, 'QuantitativeValue');
   if(video.encoding){
