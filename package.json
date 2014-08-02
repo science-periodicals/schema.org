@@ -1,6 +1,6 @@
 {
   "name": "package-jsonld",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "a commonJS thingy in JSON-LD / schema.org because semantic web, linked data and hypermedia.",
   "main": "index.js",
   "directories": {
@@ -26,7 +26,7 @@
     "open-annotation"
   ],
   "author": "Sebastien Ballesteros",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/standard-analytics/package-jsonld/issues"
   },

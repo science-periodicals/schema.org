@@ -94,28 +94,6 @@ exports.terms = {
     },
 
     {
-      "@id": "pkg:registry",
-      "@type": "rdf:Property",
-      "label": "registry",
-      "comment":"registry hosting resource of type Package",
-      "range": "schema:Thing",
-      "domain": "pkg:Package",
-      "status": "testing",
-      "seeAlso": "http://en.wikipedia.org/wiki/Metadata_registry"
-    },
-
-    {
-      "@id": "pkg:package",
-      "@type": "rdf:Property",
-      "label": "package",
-      "comment":"package hosting the resource",
-      "range": "schema:Thing",
-      "domain": "schema:CreativeWork",
-      "status": "testing",
-      "seeAlso": "http://www.schema.org/catalog"
-    },
-
-    {
       "@id": "pkg:input",
       "@type": "rdf:Property",
       "label": "input",
@@ -287,8 +265,8 @@ exports.terms = {
 
   ],
   "@type": "owl:Ontology",
-  "comment": "A lightweight vocabulary for terms of the data package spec",
-  "label": "The data package Vocabulary"
+  "comment": "A lightweight vocabulary for terms of the linked data package spec",
+  "label": "The linked data package Vocabulary"
 };
 
 
@@ -315,7 +293,6 @@ exports.context = {
     "Configuration":  { "@id": "pkg:Configuration", "@type": "@id" },
     "TypesettingApplication":  { "@id": "pkg:TypesettingApplication", "@type": "@id" },
 
-    "package":    { "@id": "pkg:package",                   "@container": "@list" },
     "sourceCode": { "@id": "pkg:sourceCode",                "@container": "@list" },
     "annotation": { "@id": "pkg:annotation",                "@container": "@list" },
     "input":      { "@id": "pkg:input",     "@type": "@id", "@container": "@set"  },
@@ -323,12 +300,11 @@ exports.context = {
     "contentPath": "pkg:contentPath",
     "contentData": "pkg:contentData",
     "filePath":    "pkg:filePath",
-    "registry":    "pkg:registry",
 
 
+    "isPartOf": { "@id": "dc:isPartOf", "@container": "@list" },
     //Cf http://www.w3.org/wiki/WebSchemas/Collection
-    "hasPart": { "@id": "dc:hasPart", "@container": "@list" },    
-    "isPartOf": { "@id": "dc:isPartOf", "@container": "@list" },    
+    "hasPart": { "@id": "dc:hasPart", "@container": "@list" },
 
     //Cf http://www.w3.org/wiki/WebSchemas/Periodicals,_Articles_and_Multi-volume_Works
     "volumeNumber": "bibo:volume",
@@ -348,7 +324,7 @@ exports.context = {
 
     "abstract": "pkg:abstract",
     "abstractBody": "pkg:abstractBody",
-    
+
     "hashAlgorithm": "nfo:hashAlgorithm",
     "hashValue": "nfo:hashValue",
 
@@ -512,7 +488,7 @@ exports.schema = {
         uploadDate: { type: 'string' }
       }
     },
-    package: {
+    isPartOf: {
       type: 'object',
       properties: {
         name:    { type: 'string' },
@@ -540,14 +516,7 @@ exports.schema = {
     isBasedOnUrl: { "$ref": "#/definitions/isBasedOnUrl" },
     discussionUrl: { type: 'string' },
     encoding: { "$ref": "#/definitions/encoding" },
-    registry: {
-      type: 'object',
-      properties: {
-        name: { type: 'string' },
-        url: { type: 'string' }
-      }
-    },
-
+    isPartOf: { "$ref": "#/definitions/isPartOf" },
     datePublished: { type: 'string' },
 
     dataset: {
@@ -595,7 +564,7 @@ exports.schema = {
               }
             }
           },
-          catalog: { "$ref": "#/definitions/package" }
+          catalog: { "$ref": "#/definitions/isPartOf" }
         },
         required: [ 'name' ],
       }
@@ -654,7 +623,7 @@ exports.schema = {
             }
           },
 
-          package: { "$ref": "#/definitions/package" }
+          isPartOf: { "$ref": "#/definitions/isPartOf" }
         },
         required: [ 'name' ]
       }
@@ -697,7 +666,7 @@ exports.schema = {
             }
           },
 
-          package: { "$ref": "#/definitions/package" }
+          isPartOf: { "$ref": "#/definitions/isPartOf" }
         }
       }
     },
@@ -741,7 +710,7 @@ exports.schema = {
             }
           },
 
-          package: { "$ref": "#/definitions/package" }
+          isPartOf: { "$ref": "#/definitions/isPartOf" }
         }
       }
     },
@@ -787,7 +756,7 @@ exports.schema = {
             }
           },
 
-          package: { "$ref": "#/definitions/package" }
+          isPartOf: { "$ref": "#/definitions/isPartOf" }
         }
       }
     },
@@ -831,7 +800,7 @@ exports.schema = {
             }
           },
 
-          package: { "$ref": "#/definitions/package" }
+          isPartOf: { "$ref": "#/definitions/isPartOf" }
         }
       }
     }
@@ -931,7 +900,7 @@ exports.linkPackage = function(pkg, options){
     });
   }
 
-  pkg.registry = { name: "Standard Analytics IO", url: BASE };
+  pkg.isPartOf = { name: "Standard Analytics IO", url: BASE };
 
   return pkg;
 };
@@ -974,7 +943,7 @@ function linkArticle(article, name, version){
     });
   }
 
-  article.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+  article.isPartOf = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 
   return article;
 };
@@ -997,7 +966,7 @@ function linkSourceCode(sourceCode, name, version){
     });
   }
 
-  sourceCode.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+  sourceCode.isPartOf = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 
   return sourceCode;
 };
@@ -1020,7 +989,7 @@ function linkImage(image, name, version){
     });
   }
 
-  image.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+  image.isPartOf = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 
   return image;
 };
@@ -1041,7 +1010,7 @@ function linkAudio(audio, name, version){
     });
   }
 
-  audio.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+  audio.isPartOf = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 
   return audio;
 };
@@ -1064,7 +1033,7 @@ function linkVideo(video, name, version){
     });
   }
 
-  video.package = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
+  video.isPartOf = { '@type': 'Package', name: name, version: version, url: name + '/' + version };
 
   return video;
 };

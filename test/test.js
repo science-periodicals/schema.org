@@ -17,51 +17,51 @@ describe('package-jsonld', function(){
 
     it('should add @type and @id', function(){
 
-      var package = pjsonld.linkPackage(clone(pkg));
+      var mypkg = pjsonld.linkPackage(clone(pkg));
 
-      assert.equal(package['@context'], pjsonld.contextUrl);
-      assert.equal(package['@id'], 'mypkg/0.0.0');
-      assert.deepEqual(package['@type'], ['Package', 'DataCatalog']);
-      assert.equal(package.author['@type'], 'Person');
-      assert.deepEqual(package.registry, { name: 'Standard Analytics IO', url:'https://registry.standardanalytics.io/' } );
-      package.dataset.forEach(function(r){
+      assert.equal(mypkg['@context'], pjsonld.contextUrl);
+      assert.equal(mypkg['@id'], 'mypkg/0.0.0');
+      assert.deepEqual(mypkg['@type'], ['Package', 'DataCatalog']);
+      assert.equal(mypkg.author['@type'], 'Person');
+      assert.deepEqual(mypkg.isPartOf, { name: 'Standard Analytics IO', url:'https://registry.standardanalytics.io/' } );
+      mypkg.dataset.forEach(function(r){
         assert.equal(r['@type'], 'Dataset');
         assert.equal(r['@id'], 'mypkg/0.0.0/dataset/' + r.name);
         assert.equal(r.distribution[0]['@type'], 'DataDownload');
         assert.deepEqual(r.catalog, { '@type': ['Package', 'DataCatalog'], name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
       });
-      package.sourceCode.forEach(function(r){
+      mypkg.sourceCode.forEach(function(r){
         assert.equal(r['@type'], 'Code');
         assert.equal(r['@id'], 'mypkg/0.0.0/sourceCode/' + r.name);
         assert.equal(r.targetProduct[0]['@type'], 'SoftwareApplication');
-        assert.deepEqual(r.package, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
+        assert.deepEqual(r.isPartOf, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
       });
-      package.image.forEach(function(r){
+      mypkg.image.forEach(function(r){
         assert.equal(r['@type'], 'ImageObject');
         assert.equal(r['@id'], 'mypkg/0.0.0/image/' + r.name);
         assert.equal(r.encoding[0]['@type'], 'ImageObject');
-        assert.deepEqual(r.package, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
+        assert.deepEqual(r.isPartOf, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
       });
-      package.article.forEach(function(r){
+      mypkg.article.forEach(function(r){
         assert.equal(r['@type'], 'Article');
         assert.equal(r['@id'], 'mypkg/0.0.0/article/' + r.name);
         assert.equal(r.encoding[0]['@type'], 'MediaObject');
-        assert.deepEqual(r.package, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
+        assert.deepEqual(r.isPartOf, { '@type': 'Package', name: 'mypkg', version: '0.0.0', url: 'mypkg/0.0.0' } );
       });
     });
 
     it('should respect pre-existing @type', function(){
       var mypkg = clone(pkg);
       mypkg.sourceCode[0]['@type'] = 'CodeType';
-      var package = pjsonld.linkPackage(mypkg);
-      assert.deepEqual('CodeType', package.sourceCode[0]['@type']);
+      mypkg = pjsonld.linkPackage(mypkg);
+      assert.deepEqual('CodeType', mypkg.sourceCode[0]['@type']);
     });
 
     it('should respect pre-existing @type array', function(){
       var mypkg = clone(pkg);
       mypkg.image[0]['@type'] = ['FigType', 'FigType2'];
-      var package = pjsonld.linkPackage(mypkg);
-      assert.deepEqual(['FigType', 'FigType2'], package.image[0]['@type']);
+      mypkg = pjsonld.linkPackage(mypkg);
+      assert.deepEqual(['FigType', 'FigType2'], mypkg.image[0]['@type']);
     });
 
   });
