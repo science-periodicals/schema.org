@@ -9,11 +9,11 @@
   "isBasedOnUrl": [ "sa:cw", "sa:cw2/0.0.4", "sa:cw3/latest?range=%3E2.0.0" ],
   "author": {
     "givenName": "Jon",
-    "familyName":  "Markup",
+    "familyName": "Markup",
     "email": "jonmarkup@standardanalytics.io"
   },
   "encoding": {
-    "contentPath": "article/article.pdf",
+    "contentPath": "article/article.pdf"
   },
   "hasPart": [
     {
@@ -30,14 +30,14 @@
       "name": "Absolute humidity NYC",
       "distribution": [
         { "contentPath": "data/ah.csv" },
-        { "contentPath": "data/ah.xlsx" },
+        { "contentPath": "data/ah.xlsx" }
       ]
     },
     {
       "@id": "wave",
       "@type": "Dataset",
       "name": "wave height",
-      "isBasedOnUrl": "analytics",
+      "isBasedOnUrl": "prog",
       "distribution": {
         "contentData": { "height": 8 }
       }

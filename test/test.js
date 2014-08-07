@@ -2,6 +2,7 @@ var fs = require('fs')
   , url = require('url')
   , assert = require('assert')
   , clone = require('clone')
+  , jsonld = require('jsonld')
   , pjsonld = require('..')
   , path = require('path');
 
@@ -39,5 +40,15 @@ describe('package-jsonld', function(){
       assert.equal(typeInferrer.type(obj, typeInferrer.getRanges('encoding')), 'VideoObject');
     });
   });
+
+  describe('jsonld context', function(){
+    var pkg = JSON.parse(fs.readFileSync(path.resolve(root, 'fixture', 'package.jsonld')));
+
+    it('should example a package.jsonld with the vanilla context', function(){
+
+    });
+
+  });
+
 
 });
