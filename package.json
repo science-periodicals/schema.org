@@ -1,7 +1,7 @@
 {
   "name": "package-jsonld",
-  "version": "0.16.0",
-  "description": "a commonJS thingy in JSON-LD / schema.org because semantic web, linked data and hypermedia.",
+  "version": "1.0.0-alpha",
+  "description": "Standard Analytics IO main JSON-LD context",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -34,7 +34,7 @@
   "devDependencies": {
     "mocha": "~1.15.1",
     "clone": "~0.1.11",
-    "tv4": "^1.0.18"
+    "jsonld": "~0.3.1"
   },
   "dependencies": {
     "is-url": "~0.1.0",
