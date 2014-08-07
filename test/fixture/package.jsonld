@@ -1,52 +1,79 @@
 {
-  "name": "mypkg",
+  "@context": "https://registry.standardanalytics.io/{name}/context.jsonld",
+  "@id": "",
+  "@type": "ScholarlyArticle",
+  "name": "Jon Markup (2020)",
   "version": "0.0.0",
-  "description": "a description",
-  "keywords": ["hyperdata", "json-ld", "test"],
-  "isBasedOnUrl": ["pkg1/0.0.1", "pkg2/0.2.1", "http://data.com/"],
+  "description": "A scholarly article in JSON-LD/schema.org",
+  "keywords": [ "hypermedia", "json-ld", "schema.org" ],
+  "isBasedOnUrl": [ "sa:cw", "sa:cw2/0.0.4", "sa:cw3/latest?range=%3E2.0.0" ],
   "author": {
-    "name": "Sebastien Ballesteros",
-    "email": "sebastien@standardanalytics.io"
+    "givenName": "Jon",
+    "familyName":  "Markup",
+    "email": "jonmarkup@standardanalytics.io"
   },
-
-  "dataset": [
+  "encoding": {
+    "contentPath": "article/article.pdf",
+  },
+  "hasPart": [
     {
-      "name": "myurl",
-      "distribution": [ { "contentUrl" :"http://data.com" } ]
+      "@id": "swell",
+      "@type": "Dataset",
+      "name": "NYC swell",
+      "distribution": {
+        "contentUrl": "http://example.com/nyc/swell"
+      }
     },
     {
-      "name": "mycsv",
-      "distribution": [ { "contentPath" :"data/data.csv" } ]
+      "@id": "ah",
+      "@type": "Dataset",
+      "name": "Absolute humidity NYC",
+      "distribution": [
+        { "contentPath": "data/ah.csv" },
+        { "contentPath": "data/ah.xlsx" },
+      ]
     },
     {
-      "name": "mydata",
-      "isBasedOnUrl": [ "mypkg/0.0.0/sourceCode/myanalytics" ],
-      "distribution": [ { "contentData": { "inline": "data" } } ]
-    }
-  ],
-
-  "sourceCode": [
+      "@id": "wave",
+      "@type": "Dataset",
+      "name": "wave height",
+      "isBasedOnUrl": "analytics",
+      "distribution": {
+        "contentData": { "height": 8 }
+      }
+    },
     {
-      "name": "myanalytics",
-      "targetProduct": [{
+      "@id": "prog",
+      "@type": "Code",
+      "name": "wave analytics",
+      "programmingLanguage": { "@id": "http://www.r-project.org/", "name": "R" },
+      "targetProduct": {
+        "@type": "SoftwareApplication",
         "operatingSystem": "Unix",
-        "input": [ "mypkg/0.0.0/dataset/mycsv" ]
-      }]
-    }
-  ],
-
-  "image": [
+        "downloadUrl": "http://example.com/script.r",
+        "input": ["swell", "ah"]
+      }
+    },
     {
-      "name": "myfig",
-      "encoding": [ { "contentPath": "image/x.png" } ],
-      "isBasedOnUrl": [ "mypkg/0.0.0/dataset/mydata",  "mypkg/0.0.0/sourceCode/myanalytics" ]
-    }
-  ],
-
-  "article": [
+      "@id": "d3",
+      "@type": "WebApplication",
+      "name": "d3 wave viz",
+      "browserRequirements": "SVG",
+      "downloadUrl": "http://example.com/d3wave.js",
+      "input": ["swell", "ah"],
+      "sourceCode": {
+        "codeRepository": "http://github.com/sa/d3wave"
+      }
+    },
     {
-      "name": "myarticle",
-      "encoding": [ { "contentPath": "article/article.pdf" } ]
+      "@id": "fig",
+      "@type": "ImageObject",
+      "name": "wave height",
+      "encoding": [
+        { "contentPath": "image/x.png" },
+        { "contentPath": "image/x.jpg" }
+      ],
+      "isBasedOnUrl": [ "swell", "ah",  "prog" ]
     }
   ]
 }
