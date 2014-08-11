@@ -3,13 +3,13 @@
  */
 
 var fs = require('fs')
-  , pjsonld = require('..')
+  , saTerms = require('../lib/terms')
   , jsonld = require('jsonld')();
 
 jsonld.use('request'); //needed to parse RDFa
 
 //get context from SA ontologie
-var ctx = pjsonld.terms()['@context'];
+var ctx = saTerms()['@context'];
 
 //patch for schema.org specific convention
 ctx["domainIncludes"] = {

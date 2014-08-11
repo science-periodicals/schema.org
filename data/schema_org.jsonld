@@ -1,15 +1,15 @@
 {
   "@context": {
-    "sa": "https://standardanalytics.io/ns/",
+    "saterms": "https://standardanalytics.io/ns/",
     "schema": "http://schema.org/",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "oa": "http://www.w3.org/ns/oa#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "vs": "http://www.w3.org/2003/06/sw-vocab-status/ns#",
     "dc": "http://purl.org/dc/terms/",
     "dctypes": "http://purl.org/dc/dcmitype/",
     "foaf": "http://xmlns.com/foaf/0.1/",
+    "owl": "http://www.w3.org/2002/07/owl#",
     "defines": {
       "@reverse": "rdfs:isDefinedBy"
     },
@@ -39,6 +39,10 @@
     },
     "source": {
       "@id": "dc:source",
+      "@type": "@id"
+    },
+    "sameAs": {
+      "@id": "owl:sameAs",
       "@type": "@id"
     },
     "status": "vs:term_status",
@@ -1384,7 +1388,7 @@
       "subClassOf": [
         "schema:CreativeWork"
       ],
-      "http://www.w3.org/2002/07/owl#equivalentClass": {
+      "owl:equivalentClass": {
         "@id": "dcat:DataCatalog"
       }
     },
@@ -1397,7 +1401,7 @@
       "subClassOf": [
         "schema:MediaObject"
       ],
-      "http://www.w3.org/2002/07/owl#equivalentClass": {
+      "owl:equivalentClass": {
         "@id": "dcat:Distribution"
       }
     },
@@ -1416,7 +1420,7 @@
       "subClassOf": [
         "schema:CreativeWork"
       ],
-      "http://www.w3.org/2002/07/owl#equivalentClass": [
+      "owl:equivalentClass": [
         {
           "@id": "dcat:Dataset"
         },
@@ -1999,7 +2003,7 @@
       "subClassOf": [
         "schema:Thing"
       ],
-      "http://www.w3.org/2002/07/owl#equivalentClass": {
+      "owl:equivalentClass": {
         "@id": "dc:Event"
       }
     },
@@ -2653,7 +2657,7 @@
       "subClassOf": [
         "schema:MediaObject"
       ],
-      "http://www.w3.org/2002/07/owl#equivalentClass": {
+      "owl:equivalentClass": {
         "@id": "dc:Image"
       }
     },
@@ -4435,7 +4439,7 @@
       "subClassOf": [
         "schema:Thing"
       ],
-      "http://www.w3.org/2002/07/owl#equivalentClass": {
+      "owl:equivalentClass": {
         "@id": "foaf:Person"
       }
     },

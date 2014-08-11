@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "is-url": "~0.1.0",
-    "semver": "~2.2.1"
+    "semver": "~2.2.1",
+    "node-uuid": "~1.4.1"
   }
 }

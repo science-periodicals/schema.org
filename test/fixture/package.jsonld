@@ -1,9 +1,100 @@
 {
-  "@context": "https://registry.standardanalytics.io/{name}/context.jsonld",
-  "@id": "",
+  "@context": "https://registry.standardanalytics.io/context.jsonld",
+  "@id": "sa:cw",
   "@type": "ScholarlyArticle",
-  "name": "Jon Markup (2020)",
+  "sameAs": "http://dx.doi.org/adoi",
   "version": "0.0.0",
+  "potentialAction": [
+    {
+      "@type": "UpdateAction",
+      "description": "update the document by creating a new version",
+      "target": {
+        "@type": "EntryPoint",
+        "httpMethod": "PUT",
+        "urlTemplate": "sa:cw%40{version}",
+        "encodingType": "application/ld+json",
+        "contentType": "application/ld+json"
+      }
+    },
+    {
+      "@type": "DeleteAction",
+      "description": "delete a specific version of the document",
+      "target": {
+        "@type": "EntryPoint",
+        "httpMethod": "DELETE",
+        "urlTemplate": "sa:cw%40{version}",
+        "encodingType": "application/ld+json",
+        "contentType": "application/ld+json"
+      }
+    },
+    {
+      "@type": "DeleteAction",
+      "description": "delete all versions of the document",
+      "target": {
+        "@type": "EntryPoint",
+        "httpMethod": "DELETE",
+        "urlTemplate": "sa:cw",
+        "encodingType": "application/ld+json",
+        "contentType": "application/ld+json"
+      }
+    },
+    {
+      "@type": "RegisterAction",
+      "description": "Register a maintainer to the document",
+      "target": {
+        "@type": "EntryPoint",
+        "httpMethod": "POST",
+        "urlTemplate": "sa:maintainers/add",
+        "encodingType": "application/ld+json",
+        "contentType": "application/ld+json"
+      }
+    },
+    {
+      "@type": "UnRegisterAction",
+      "description": "Unregister a maintainer to the document",
+      "target": {
+        "@type": "EntryPoint",
+        "httpMethod": "POST",
+        "urlTemplate": "sa:maintainers/rm",
+        "encodingType": "application/ld+json",
+        "contentType": "application/ld+json"
+      }
+    },
+    {
+      "@type": "SearchAction",
+      "description": "retrieve a list of all the maintainers of the document",
+      "target": {
+        "@type": "EntryPoint",
+        "httpMethod": "GET",
+        "urlTemplate": "sa:maintainers/ls/cw",
+        "encodingType": "application/ld+json",
+        "contentType": "application/ld+json"
+      }
+    }
+    {
+      "@type": "SearchAction",
+      "description": "retrieve a list of all the versions of the document",
+      "target": {
+        "@type": "EntryPoint",
+        "httpMethod": "GET",
+        "urlTemplate": "sa:cw?revs_info=true",
+        "encodingType": "application/ld+json",
+        "contentType": "application/ld+json"
+      }
+    },
+    {
+      "@type": "ReviewAction",
+      "description": "publish a balanced opinion about the document for an audience",
+      "target": {
+        "@type": "EntryPoint",
+        "httpMethod": "PUT",
+        "urlTemplate": "sa:reviews/cw%400.0.0/{name}",
+        "encodingType": "application/ld+json",
+        "contentType": "application/ld+json"
+      }
+    }
+  ],
+  "name": "Jon Markup (2020)",
   "description": "A scholarly article in JSON-LD/schema.org",
   "keywords": [ "hypermedia", "json-ld", "schema.org" ],
   "isBasedOnUrl": [ "sa:cw", "sa:cw2/0.0.4", "sa:cw3/latest?range=%3E2.0.0" ],
@@ -17,7 +108,7 @@
   },
   "hasPart": [
     {
-      "@id": "swell",
+      "@id": "sa:cw/swell",
       "@type": "Dataset",
       "name": "NYC swell",
       "distribution": {
@@ -25,55 +116,49 @@
       }
     },
     {
-      "@id": "ah",
+      "@id": "sa:cw/wave",
       "@type": "Dataset",
-      "name": "Absolute humidity NYC",
+      "name": "Wave heights in NYC",
       "distribution": [
-        { "contentPath": "data/ah.csv" },
-        { "contentPath": "data/ah.xlsx" }
+        { "contentPath": "data/wave.csv" },
+        { "contentPath": "data/wave.xlsx" }
       ]
-    },
+    }
     {
-      "@id": "wave",
-      "@type": "Dataset",
-      "name": "wave height",
-      "isBasedOnUrl": "prog",
-      "distribution": {
-        "contentData": { "height": 8 }
-      }
-    },
-    {
-      "@id": "prog",
+      "@id": "sa:cw/prog",
       "@type": "Code",
       "name": "wave analytics",
-      "programmingLanguage": { "@id": "http://www.r-project.org/", "name": "R" },
+      "programmingLanguage": {
+        "@id": "http://www.r-project.org/",
+        "name": "R"
+      },
       "targetProduct": {
         "@type": "SoftwareApplication",
         "operatingSystem": "Unix",
         "downloadUrl": "http://example.com/script.r",
-        "input": ["swell", "ah"]
+        "requirements": [ "sa:cw/swell", "sa:cw/wave" ]
       }
     },
     {
-      "@id": "d3",
+      "@id": "sa:cw/d3",
       "@type": "WebApplication",
       "name": "d3 wave viz",
       "browserRequirements": "SVG",
       "downloadUrl": "http://example.com/d3wave.js",
-      "input": ["swell", "ah"],
+      "requirements": [ "sa:cw/swell", "sa:cw/wave" ],
       "sourceCode": {
-        "codeRepository": "http://github.com/sa/d3wave"
+        "codeRepository": "github:sa/d3wave"
       }
     },
     {
-      "@id": "fig",
+      "@id": "sa:cw/fig",
       "@type": "ImageObject",
       "name": "wave height",
       "encoding": [
         { "contentPath": "image/x.png" },
         { "contentPath": "image/x.jpg" }
       ],
-      "isBasedOnUrl": [ "swell", "ah",  "prog" ]
+      "isBasedOnUrl": [ "sa:cw/swell", "sa:cw/wave",  "sa:cw/prog" ]
     }
   ]
 }
