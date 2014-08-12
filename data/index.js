@@ -11,7 +11,7 @@ jsonld.use('request'); //needed to parse RDFa
 //get context from SA ontologie
 var ctx = saTerms()['@context'];
 
-//patch for schema.org specific convention
+//patch for schema.org specific conventions
 ctx["domainIncludes"] = {
   "@id": "schema:domainIncludes",
   "@type": "@id"

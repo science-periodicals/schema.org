@@ -2,98 +2,8 @@
   "@context": "https://registry.standardanalytics.io/context.jsonld",
   "@id": "sa:cw",
   "@type": "ScholarlyArticle",
-  "sameAs": "http://dx.doi.org/adoi",
+  "sameAs": "http://dx.doi.org/mydoi",
   "version": "0.0.0",
-  "potentialAction": [
-    {
-      "@type": "UpdateAction",
-      "description": "update the document by creating a new version",
-      "target": {
-        "@type": "EntryPoint",
-        "httpMethod": "PUT",
-        "urlTemplate": "sa:cw%40{version}",
-        "encodingType": "application/ld+json",
-        "contentType": "application/ld+json"
-      }
-    },
-    {
-      "@type": "DeleteAction",
-      "description": "delete a specific version of the document",
-      "target": {
-        "@type": "EntryPoint",
-        "httpMethod": "DELETE",
-        "urlTemplate": "sa:cw%40{version}",
-        "encodingType": "application/ld+json",
-        "contentType": "application/ld+json"
-      }
-    },
-    {
-      "@type": "DeleteAction",
-      "description": "delete all versions of the document",
-      "target": {
-        "@type": "EntryPoint",
-        "httpMethod": "DELETE",
-        "urlTemplate": "sa:cw",
-        "encodingType": "application/ld+json",
-        "contentType": "application/ld+json"
-      }
-    },
-    {
-      "@type": "RegisterAction",
-      "description": "Register a maintainer to the document",
-      "target": {
-        "@type": "EntryPoint",
-        "httpMethod": "POST",
-        "urlTemplate": "sa:maintainers/add",
-        "encodingType": "application/ld+json",
-        "contentType": "application/ld+json"
-      }
-    },
-    {
-      "@type": "UnRegisterAction",
-      "description": "Unregister a maintainer to the document",
-      "target": {
-        "@type": "EntryPoint",
-        "httpMethod": "POST",
-        "urlTemplate": "sa:maintainers/rm",
-        "encodingType": "application/ld+json",
-        "contentType": "application/ld+json"
-      }
-    },
-    {
-      "@type": "SearchAction",
-      "description": "retrieve a list of all the maintainers of the document",
-      "target": {
-        "@type": "EntryPoint",
-        "httpMethod": "GET",
-        "urlTemplate": "sa:maintainers/ls/cw",
-        "encodingType": "application/ld+json",
-        "contentType": "application/ld+json"
-      }
-    }
-    {
-      "@type": "SearchAction",
-      "description": "retrieve a list of all the versions of the document",
-      "target": {
-        "@type": "EntryPoint",
-        "httpMethod": "GET",
-        "urlTemplate": "sa:cw?revs_info=true",
-        "encodingType": "application/ld+json",
-        "contentType": "application/ld+json"
-      }
-    },
-    {
-      "@type": "ReviewAction",
-      "description": "publish a balanced opinion about the document for an audience",
-      "target": {
-        "@type": "EntryPoint",
-        "httpMethod": "PUT",
-        "urlTemplate": "sa:reviews/cw%400.0.0/{name}",
-        "encodingType": "application/ld+json",
-        "contentType": "application/ld+json"
-      }
-    }
-  ],
   "name": "Jon Markup (2020)",
   "description": "A scholarly article in JSON-LD/schema.org",
   "keywords": [ "hypermedia", "json-ld", "schema.org" ],
@@ -123,7 +33,7 @@
         { "contentPath": "data/wave.csv" },
         { "contentPath": "data/wave.xlsx" }
       ]
-    }
+    },
     {
       "@id": "sa:cw/prog",
       "@type": "Code",

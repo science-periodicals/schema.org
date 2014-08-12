@@ -1,10 +1,10 @@
 var fs = require('fs')
+  , path = require('path')
   , url = require('url')
   , assert = require('assert')
   , clone = require('clone')
   , jsonld = require('jsonld')
-  , Packager = require('..')
-  , path = require('path');
+  , Packager = require('..');
 
 var root = path.dirname(__filename);
 
@@ -141,7 +141,16 @@ describe('package-jsonld', function(){
       assert.equal(mdoc['@type'], 'Article');
       assert.equal(mdoc.author['@type'], 'Person');
       assert.equal(mdoc.hasPart[0]['@type'], 'CreativeWork');
+    });
 
+
+    it('should add potential actions to a document', function(){
+      var doc = JSON.parse(fs.readFileSync(path.join(root, 'fixture', 'package.jsonld')));
+      packager.potentialAction(doc);
+      assert(Array.isArray(doc.potentialAction))
+      doc.hasPart.forEach(function(part){
+        assert(! ('potentialAction' in part))
+      });
     });
 
   });

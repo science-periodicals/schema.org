@@ -3,7 +3,6 @@
 var fs = require('fs')
   , path = require('path')
   , url = require('url')
-  , semver = require('semver')
   , isUrl = require('is-url')
   , schemaOrg = JSON.parse(fs.readFileSync(path.join(path.dirname(__filename), 'data', 'schema_org.jsonld')))
   , saTerms = require('./lib/terms')
@@ -359,10 +358,6 @@ Packager.prototype.validate = function(cdoc){
     throw new Error('document must have a @context set to ' + Packager.contextUrl);
   }
 
-  if (!semver.valid(cdoc.version)) {
-    throw new Error('document must have a version property following Semantic Visioning (see http://semver.org)');
-  }
-
   if (! ('@id' in cdoc)) {
     throw new Error('document must have an @id');
   } else {
@@ -391,7 +386,7 @@ Packager.prototype.setIds = function(cdoc, opts, env) {
   opts = opts || {};
   env = env || {};
 
-  if (!opts.nameSpace) { opts.nameSpace = (isUrl(cdoc['@id'])) ? url.parse(cdoc['@id']).pathname.replace(/^\//, '').replace(/\/$/, '') : cdoc['@id'].split(':')[1].replace(/\/$/, ''); }
+  if (!opts.nameSpace) { opts.nameSpace = this.validateId(cdoc['@id']).split(':')[1]; }
   if (!opts.ignoredProps) { opts.ignoredProps = []; }
   if (!opts.restrictToClasses) { opts.restrictToClasses = [ 'Thing' ]; }
   if (!opts.preExistingIds) { opts.preExistingIds = this.validate(cdoc); }
@@ -413,6 +408,124 @@ Packager.prototype.setIds = function(cdoc, opts, env) {
     if(~opts.ignoredProps.indexOf(prop)) return;
     env.classesChain = this.getClassesChain(prop, node['@type']);
     this.setIds(node, opts, env);
+  }, this);
+
+  return cdoc;
+};
+
+/**
+ * potentialAction for a CreativeWork hosted on SA
+ */
+Packager.prototype.cwPotentialAction = function (nameSpace) {
+  var potentialAction =  [
+    {
+      "@type": "UpdateAction",
+      description: 'update the document by creating a new version',
+      target: {
+        '@type': 'EntryPoint',
+        httpMethod: 'PUT',
+        urlTemplate: 'sa:' + nameSpace + '%40{version}'
+      }
+    },
+    {
+      '@type': 'DeleteAction',
+      description: 'delete a specific version of the document',
+      target: {
+        '@type': 'EntryPoint',
+        httpMethod: 'DELETE',
+        urlTemplate: 'sa:' + nameSpace + '%40{version}'
+      }
+    },
+    {
+      '@type': 'DeleteAction',
+      description: 'delete all versions of the document',
+      target: {
+        '@type': 'EntryPoint',
+        httpMethod: 'DELETE',
+        urlTemplate: 'sa:' + nameSpace
+      }
+    },
+    {
+      '@type': 'RegisterAction',
+      description: 'Register a maintainer to the document',
+      target: {
+        '@type': 'EntryPoint',
+        httpMethod: 'POST',
+        urlTemplate: 'sa:maintainers/add'
+      }
+    },
+    {
+      '@type': 'UnRegisterAction',
+      description: 'Unregister a maintainer to the document',
+      target: {
+        '@type': 'EntryPoint',
+        httpMethod: 'POST',
+        urlTemplate: 'sa:maintainers/rm'
+      }
+    },
+    {
+      '@type': 'SearchAction',
+      description: 'retrieve a list of all the maintainers of the document',
+      target: {
+        '@type': 'EntryPoint',
+        httpMethod: 'GET',
+        urlTemplate: 'sa:maintainers/ls/' + nameSpace
+      }
+    },
+    {
+      '@type': 'SearchAction',
+      description: 'retrieve a list of all the versions of the document',
+      target: {
+        '@type': 'EntryPoint',
+        httpMethod: 'GET',
+        urlTemplate: 'sa:' + nameSpace + '?revs_info=true'
+      }
+    }
+    //    {
+    //      '@type': 'ReviewAction',
+    //      description: 'publish a balanced opinion about the document for an audience',
+    //      target: {
+    //        '@type': 'EntryPoint',
+    //        httpMethod: 'PUT',
+    //        urlTemplate: 'sa:reviews/' + nameSpace + '%40' + version + '/{name}'
+    //      }
+    //    }
+  ];
+
+  potentialAction.forEach(function(action){
+    action.target.encodingType = 'application/ld+json';
+    action.target.contentType = 'application/ld+json';
+  });
+
+  return potentialAction;
+};
+
+
+/**
+ * add potentialAction for all the CreativeWork (and subclasses)
+ * hosted on SA.
+ */
+Packager.prototype.potentialAction = function (cdoc) {
+
+  var nameSpace = this.validateId(cdoc['@id']).split(':')[1];
+  if (!cdoc.potentialAction) {
+    cdoc.potentialAction = this.cwPotentialAction(nameSpace);
+  }
+
+  _forEachNode(cdoc, function(prop, node){
+    if(!node.potentialAction && node['@id']){
+      var curie;
+      try {
+        curie = this.validateId(node['@id'], {isNameSpace: true})
+      } catch(e){ }
+
+      if (/^sa:/.test(curie) &&
+          ~this.getClassesChain(prop, node['@type']).indexOf('CreativeWork')
+         ) {
+        node.potentialAction = this.cwPotentialAction(curie.split(':')[1]);
+      }
+    }
+
   }, this);
 
   return cdoc;
