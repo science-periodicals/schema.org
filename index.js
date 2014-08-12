@@ -25,24 +25,8 @@ function Packager(graph, prefixList) {
       isUrl(_saCtx[key]);
   });
 
-  //defined as @reverse in context, but we put them here to help with type inference...
-  var saTermsFaked = [
-    {
-      "@id": "saterms:hasPart",
-      "@type": "rdf:Property",
-      "range": "schema:CreativeWork",
-      "domain": "schema:CreativeWork"
-    },
-    {
-      "@id": "saterms:sourceCode",
-      "@type": "rdf:Property",
-      "range": "schema:Code",
-      "domain": "schema:SoftwareApplication"
-    }
-  ];
-
-  this.graph = schemaOrg['@graph'].concat(saTerms().defines, saTermsFaked);
-  this.prefixList = ['schema', 'saterms'];
+  this.graph = graph || schemaOrg['@graph'].concat(saTerms().defines);
+  this.prefixList = prefixList || ['schema', 'saterms'];
   this.propMap = {};
   this.classMap = {};
 
@@ -154,15 +138,23 @@ Packager.prototype.getRanges = function(prop) {
  * the ranges of ```prop``, itself combined with ```type``` and the
  * subClassesChain of ```type```.
  */
-Packager.prototype.getClassesChain = function(prop, type) {
+Packager.prototype.getClassesChain = function(prop, node) {
   var ranges = this.getRanges(prop) || [];
   var classesChain = ranges.slice();
 
+  var type = this._type(node);
+
   if (type) {
-    ranges.push(type);
-    if (!~classesChain.indexOf(type)) {
-      classesChain.push(type);
-    }
+    type = Array.isArray(type)? type: [type];
+
+    type.forEach(function(t){
+      if (!~ranges.indexOf(t)) {
+        ranges.push(t);
+      }
+      if (!~classesChain.indexOf(t)) {
+        classesChain.push(t);
+      }
+    });
   }
 
   ranges.forEach(function(range){
@@ -184,8 +176,9 @@ Packager.prototype.getClassesChain = function(prop, type) {
  * TODO relax ?
  */
 Packager.prototype._type = function(obj, ranges) {
+  if(obj['@type']) return obj['@type'];
 
-  if (!ranges) return;
+  ranges = ranges || [];
 
   var domains = [];
   for (var key in obj) {
@@ -199,15 +192,20 @@ Packager.prototype._type = function(obj, ranges) {
   }
 
   var canditates = [];
-  //filter domains to keep only the one more specific or equal to the ranges
-  domains.forEach(function(d) {
-    for (var i=0; i<ranges.length; i++) {
-      var r = ranges[i];
-      if (this._isMoreSpecific(d, r)) {
-        canditates.push(d);
+
+  if(!ranges.length){
+    canditates = domains.slice();
+  } else {
+    //filter domains to keep only the one more specific or equal to the ranges
+    domains.forEach(function(d) {
+      for (var i=0; i<ranges.length; i++) {
+        var r = ranges[i];
+        if (this._isMoreSpecific(d, r)) {
+          canditates.push(d);
+        }
       }
-    }
-  }, this);
+    }, this);
+  }
 
   ranges.forEach(function(r) {
     if (! ~canditates.indexOf(r)) {
@@ -388,14 +386,13 @@ Packager.prototype.setIds = function(cdoc, opts, env) {
 
   if (!opts.nameSpace) { opts.nameSpace = this.validateId(cdoc['@id']).split(':')[1]; }
   if (!opts.ignoredProps) { opts.ignoredProps = []; }
-  if (!opts.restrictToClasses) { opts.restrictToClasses = [ 'Thing' ]; }
   if (!opts.preExistingIds) { opts.preExistingIds = this.validate(cdoc); }
 
   if (!env.counter) { env.counter = 0; }
   if (!env.classesChain) { env.classesChain = []; }
 
   //set @id and increment counter if not blankId
-  if (!('@id' in cdoc) && _intersect(env.classesChain, opts.restrictToClasses)) {
+  if (!('@id' in cdoc) && (!opts.restrictToClasses || _intersect(env.classesChain, opts.restrictToClasses))) {
     var id = 'sa:' + opts.nameSpace + '/n' + env.counter++;
     while(id in opts.preExistingIds){
       id = 'sa:' + opts.nameSpace + '/n' + env.counter++;
@@ -406,7 +403,7 @@ Packager.prototype.setIds = function(cdoc, opts, env) {
   //traverse
   _forEachNode(cdoc, function(prop, node){
     if(~opts.ignoredProps.indexOf(prop)) return;
-    env.classesChain = this.getClassesChain(prop, node['@type']);
+    env.classesChain = this.getClassesChain(prop, node);
     this.setIds(node, opts, env);
   }, this);
 
@@ -414,31 +411,22 @@ Packager.prototype.setIds = function(cdoc, opts, env) {
 };
 
 /**
- * potentialAction for a CreativeWork hosted on SA
+ * potentialAction for doc hosted on SA
  */
-Packager.prototype.cwPotentialAction = function (nameSpace) {
+Packager.prototype._potentialAction = function (nameSpace, version) {
   var potentialAction =  [
     {
       "@type": "UpdateAction",
-      description: 'update the document by creating a new version',
+      description: 'update the document',
       target: {
         '@type': 'EntryPoint',
         httpMethod: 'PUT',
-        urlTemplate: 'sa:' + nameSpace + '%40{version}'
+        urlTemplate: 'sa:' + nameSpace
       }
     },
     {
       '@type': 'DeleteAction',
-      description: 'delete a specific version of the document',
-      target: {
-        '@type': 'EntryPoint',
-        httpMethod: 'DELETE',
-        urlTemplate: 'sa:' + nameSpace + '%40{version}'
-      }
-    },
-    {
-      '@type': 'DeleteAction',
-      description: 'delete all versions of the document',
+      description: 'delete the document (and all versions if the document was versionned)',
       target: {
         '@type': 'EntryPoint',
         httpMethod: 'DELETE',
@@ -471,26 +459,31 @@ Packager.prototype.cwPotentialAction = function (nameSpace) {
         httpMethod: 'GET',
         urlTemplate: 'sa:maintainers/ls/' + nameSpace
       }
-    },
-    {
-      '@type': 'SearchAction',
-      description: 'retrieve a list of all the versions of the document',
-      target: {
-        '@type': 'EntryPoint',
-        httpMethod: 'GET',
-        urlTemplate: 'sa:' + nameSpace + '?revs_info=true'
-      }
     }
-    //    {
-    //      '@type': 'ReviewAction',
-    //      description: 'publish a balanced opinion about the document for an audience',
-    //      target: {
-    //        '@type': 'EntryPoint',
-    //        httpMethod: 'PUT',
-    //        urlTemplate: 'sa:reviews/' + nameSpace + '%40' + version + '/{name}'
-    //      }
-    //    }
   ];
+
+  if(version !== undefined){
+    potentialAction.push(
+      {
+        '@type': 'DeleteAction',
+        description: 'delete a specific version of the document',
+        target: {
+          '@type': 'EntryPoint',
+          httpMethod: 'DELETE',
+          urlTemplate: 'sa:' + nameSpace + '/{version}'
+        }
+      },
+      {
+        '@type': 'SearchAction',
+        description: 'retrieve a list of all the versions of the document',
+        target: {
+          '@type': 'EntryPoint',
+          httpMethod: 'GET',
+          urlTemplate: 'sa:' + nameSpace + '?revs_info=true'
+        }
+      }
+    );
+  }
 
   potentialAction.forEach(function(action){
     action.target.encodingType = 'application/ld+json';
@@ -502,14 +495,13 @@ Packager.prototype.cwPotentialAction = function (nameSpace) {
 
 
 /**
- * add potentialAction for all the CreativeWork (and subclasses)
- * hosted on SA.
+ * add potentialAction to the doc hosted on SA.
  */
 Packager.prototype.potentialAction = function (cdoc) {
 
   var nameSpace = this.validateId(cdoc['@id']).split(':')[1];
   if (!cdoc.potentialAction) {
-    cdoc.potentialAction = this.cwPotentialAction(nameSpace);
+    cdoc.potentialAction = this._potentialAction(nameSpace, cdoc.version);
   }
 
   _forEachNode(cdoc, function(prop, node){
@@ -519,13 +511,10 @@ Packager.prototype.potentialAction = function (cdoc) {
         curie = this.validateId(node['@id'], {isNameSpace: true})
       } catch(e){ }
 
-      if (/^sa:/.test(curie) &&
-          ~this.getClassesChain(prop, node['@type']).indexOf('CreativeWork')
-         ) {
-        node.potentialAction = this.cwPotentialAction(curie.split(':')[1]);
+      if (/^sa:/.test(curie)) {
+        node.potentialAction = this._potentialAction(curie.split(':')[1], node.version);
       }
     }
-
   }, this);
 
   return cdoc;

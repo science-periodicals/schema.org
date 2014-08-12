@@ -45,6 +45,10 @@
       "@id": "owl:sameAs",
       "@type": "@id"
     },
+    "inverseOf": {
+      "@id": "owl:inverseOf",
+      "@type": "@id"
+    },
     "status": "vs:term_status",
     "domainIncludes": {
       "@id": "schema:domainIncludes",
