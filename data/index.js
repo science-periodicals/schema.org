@@ -4,6 +4,7 @@
 
 var fs = require('fs')
   , saTerms = require('../lib/terms')
+  , request = require('request')
   , jsonld = require('jsonld')();
 
 jsonld.use('request'); //needed to parse RDFa
@@ -27,4 +28,10 @@ jsonld.request("http://schema.org/docs/schema_org_rdfa.html", function(err, res,
   jsonld.compact(dataRdfa, ctx, function(err, dataJsonld) {
     fs.writeFileSync('schema_org.jsonld', JSON.stringify(dataJsonld, null, 2));
   });
+});
+
+
+//cache schema.org context
+request({url:'http://schema.org', headers: {'Accept': 'application/ld+json'}}, function(err, resp, body){
+  fs.writeFileSync('schema_org_context.jsonld', body);
 });

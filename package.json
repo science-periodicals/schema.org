@@ -34,7 +34,8 @@
   "devDependencies": {
     "mocha": "~1.15.1",
     "clone": "~0.1.11",
-    "jsonld": "~0.3.1"
+    "jsonld": "~0.3.1",
+    "request": "~2.40.0"
   },
   "dependencies": {
     "is-url": "~0.1.0"

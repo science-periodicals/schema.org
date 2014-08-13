@@ -13,10 +13,7 @@ describe('package-jsonld', function(){
   describe('jsonld context', function(){
     it('should standardize a package.jsonld with the vanilla context', function(done){
       var doc = {
-        "@context": [
-          {'@vocab': 'http://schema.org/'},
-          Packager.context()['@context'][1] //avoid having to fetch schema.org context so that it works offline
-        ],
+        "@context": Packager.context(),
         "@id": "myNameSpace",
         encoding: {contentUrl: 'http://example.com/data'},
         distribution: {name: "name"},

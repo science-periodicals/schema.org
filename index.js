@@ -15,6 +15,45 @@ Packager.terms = saTerms;
 Packager.contextUrl = 'https://registry.standardanalytics.io/context.jsonld';
 Packager.contextLink = '<https://registry.standardanalytics.io/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
+Packager.forEachNode = function _forEachNode(doc, callback, _this){
+  for (var prop in doc) {
+    if (prop === '@context' || !doc.hasOwnProperty(prop)) continue;
+
+    if (Array.isArray(doc[prop])) {
+      for (var i=0; i<doc[prop].length; i++) {
+        if (typeof doc[prop][i] === 'object') {
+          callback.call(_this || this, prop, doc[prop][i]);
+          _forEachNode(doc[prop][i], callback, _this);
+        }
+      }
+    } else if (typeof doc[prop] === 'object') {
+      callback.call(_this || this, prop, doc[prop]);
+      _forEachNode(doc[prop], callback, _this);
+    }
+  }
+};
+
+Packager.getSha1 = function(uri){
+  var pathName;
+  var splt = uri.split(':');
+
+  if (splt.length === 2 && splt[0] === 'sa') {
+    pathName = splt[1];
+  } else if (isUrl(uri)) {
+    purl = url.parse(uri);
+    if (purl.hostname === 'registry.standardanalytics.io') {
+      pathname =  purl.pathname;
+    }
+  }
+
+  if (pathName) {
+    var spn = pathName.replace(/^\/|\/$/g, '').split('/');
+    if (spn.length === 2 && spn[0] === 'r') {
+      return spn[1];
+    }
+  }
+};
+
 function Packager(graph, prefixList) {
 
   var _saCtx = saContext()['@context'][1];
@@ -260,7 +299,7 @@ Packager.prototype.type = function(cdoc, ranges) {
     cdoc['@type'] = type;
   }
 
-  _forEachNode(cdoc, function(prop, node){
+  Packager.forEachNode(cdoc, function(prop, node){
     var type = this._type(node, this.getRanges(prop));
     if(!node['@type'] && type){
       node['@type'] = type;
@@ -305,7 +344,7 @@ Packager.prototype.validateId = function validateId(id, opts) {
 
   if (saPathname) { //SA specific rules
 
-    var parts = saPathname.replace(/^\//, '').replace(/\/$/, '').split('/');
+    var parts = saPathname.replace(/^\/|\/$/g, '').split('/');
 
     if (!parts.length) {
 
@@ -349,11 +388,12 @@ Packager.prototype.validateId = function validateId(id, opts) {
  * !! cdoc is a compacted doc, compacted with SA @context.
  * return a hash of @id (useful for automatic unique @id generation)
  */
-Packager.prototype.validate = function(cdoc){
+Packager.prototype.validate = function(cdoc, contextUrl){
+  contextUrl = contextUrl || Packager.contextUrl;
   var ids = {};
 
-  if (cdoc['@context'] !== Packager.contextUrl) {
-    throw new Error('document must have a @context set to ' + Packager.contextUrl);
+  if (cdoc['@context'] !== contextUrl) {
+    throw new Error('document must have a @context set to ' + contextUrl);
   }
 
   if (! ('@id' in cdoc)) {
@@ -363,7 +403,7 @@ Packager.prototype.validate = function(cdoc){
   }
 
   //validate (and collect) all the @id.
-  _forEachNode(cdoc, function(key, node){
+  Packager.forEachNode(cdoc, function(key, node){
     if ('@id' in node) {
       ids[node['@id']] = this.validateId(node['@id']);
     }
@@ -401,7 +441,7 @@ Packager.prototype.setIds = function(cdoc, opts, env) {
   }
 
   //traverse
-  _forEachNode(cdoc, function(prop, node){
+  Packager.forEachNode(cdoc, function(prop, node){
     if(~opts.ignoredProps.indexOf(prop)) return;
     env.classesChain = this.getClassesChain(prop, node);
     this.setIds(node, opts, env);
@@ -504,7 +544,7 @@ Packager.prototype.potentialAction = function (cdoc) {
     cdoc.potentialAction = this._potentialAction(nameSpace, cdoc.version);
   }
 
-  _forEachNode(cdoc, function(prop, node){
+  Packager.forEachNode(cdoc, function(prop, node){
     if(!node.potentialAction && node['@id']){
       var curie;
       try {
@@ -530,20 +570,4 @@ function _intersect(arrA, arrB) {
     }
   }
   return false;
-};
-
-function _forEachNode(doc, callback, _this){
-  for (var prop in doc) {
-    if (prop === '@context' || !doc.hasOwnProperty(prop)) continue;
-
-    if (Array.isArray(doc[prop])) {
-      for (var i=0; i<doc[prop].length; i++) {
-        if (typeof doc[prop][i] === 'object') {
-          callback.call(_this || this, prop, doc[prop][i]);
-        }
-      }
-    } else if (typeof doc[prop] === 'object') {
-      callback.call(_this || this, prop, doc[prop]);
-    }
-  }
 };
