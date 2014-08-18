@@ -139,7 +139,7 @@ function Packager(graph, prefixList) {
 
   //add subClassesChain to this.classMap
   Object.keys(this.classMap).forEach(function(key) {
-    var subClassesChain = this._getParentClasses(key);
+    var subClassesChain = this.getParentClasses(key);
     if (subClassesChain) {
       this.classMap[key].subClassesChain = subClassesChain;
     }
@@ -147,13 +147,13 @@ function Packager(graph, prefixList) {
 
 };
 
-Packager.prototype._getParentClasses = function(className) {
+Packager.prototype.getParentClasses = function(className) {
 
   var subClassesChain;
   if (this.classMap[className] && this.classMap[className].subClasses) {
     subClassesChain = this.classMap[className].subClasses.slice();
     this.classMap[className].subClasses.forEach(function(c) {
-      var gsubClassesChain = this._getParentClasses(c);
+      var gsubClassesChain = this.getParentClasses(c);
       if (gsubClassesChain) {
         gsubClassesChain.forEach(function(p) {
           if (!~subClassesChain.indexOf(p)) {
@@ -383,6 +383,8 @@ Packager.prototype.validateId = function validateId(id, opts) {
   return id;
 
 };
+
+//TODO validate that all the contentPath / filePath are unique!!!
 
 /**
  * !! cdoc is a compacted doc, compacted with SA @context.
