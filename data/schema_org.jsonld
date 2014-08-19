@@ -33,6 +33,14 @@
       "@type": "@id",
       "@container": "@set"
     },
+    "equivalentClass": {
+      "@id": "owl:equivalentClass",
+      "@type": "@id"
+    },
+    "equivalentProperty": {
+      "@id": "owl:equivalentProperty",
+      "@type": "@id"
+    },
     "seeAlso": {
       "@id": "rdfs:seeAlso",
       "@type": "@id"
@@ -1389,9 +1397,7 @@
       "subClassOf": [
         "schema:CreativeWork"
       ],
-      "owl:equivalentClass": {
-        "@id": "http://www.w3.org/ns/dcat#DataCatalog"
-      }
+      "equivalentClass": "http://www.w3.org/ns/dcat#DataCatalog"
     },
     {
       "@id": "schema:DataDownload",
@@ -1402,9 +1408,7 @@
       "subClassOf": [
         "schema:MediaObject"
       ],
-      "owl:equivalentClass": {
-        "@id": "http://www.w3.org/ns/dcat#Distribution"
-      }
+      "equivalentClass": "http://www.w3.org/ns/dcat#Distribution"
     },
     {
       "@id": "schema:DataType",
@@ -1421,16 +1425,10 @@
       "subClassOf": [
         "schema:CreativeWork"
       ],
-      "owl:equivalentClass": [
-        {
-          "@id": "http://www.w3.org/ns/dcat#Dataset"
-        },
-        {
-          "@id": "http://rdfs.org/ns/void#Dataset"
-        },
-        {
-          "@id": "dctypes:Dataset"
-        }
+      "equivalentClass": [
+        "http://www.w3.org/ns/dcat#Dataset",
+        "http://rdfs.org/ns/void#Dataset",
+        "dctypes:Dataset"
       ]
     },
     {
@@ -2004,9 +2002,7 @@
       "subClassOf": [
         "schema:Thing"
       ],
-      "owl:equivalentClass": {
-        "@id": "dctypes:Event"
-      }
+      "equivalentClass": "dctypes:Event"
     },
     {
       "@id": "schema:EventCancelled",
@@ -2658,9 +2654,7 @@
       "subClassOf": [
         "schema:MediaObject"
       ],
-      "owl:equivalentClass": {
-        "@id": "dctypes:Image"
-      }
+      "equivalentClass": "dctypes:Image"
     },
     {
       "@id": "schema:ImagingTest",
@@ -4432,9 +4426,7 @@
       "subClassOf": [
         "schema:CreativeWork"
       ],
-      "owl:equivalentClass": {
-        "@id": "http://purl.org/ontology/bibo/Periodical"
-      }
+      "equivalentClass": "http://purl.org/ontology/bibo/Periodical"
     },
     {
       "@id": "schema:Permit",
@@ -4454,9 +4446,7 @@
       "subClassOf": [
         "schema:Thing"
       ],
-      "owl:equivalentClass": {
-        "@id": "foaf:Person"
-      }
+      "equivalentClass": "foaf:Person"
     },
     {
       "@id": "schema:PetStore",
@@ -4856,9 +4846,7 @@
       "subClassOf": [
         "schema:CreativeWork"
       ],
-      "owl:equivalentClass": {
-        "@id": "http://purl.org/ontology/bibo/Issue"
-      }
+      "equivalentClass": "http://purl.org/ontology/bibo/Issue"
     },
     {
       "@id": "schema:PublicationVolume",
@@ -8646,9 +8634,7 @@
       "rangeIncludes": "schema:Text",
       "comment": "A short description of the item.",
       "label": "description",
-      "owl:equivalentProperty": {
-        "@id": "dc:description"
-      }
+      "equivalentProperty": "dc:description"
     },
     {
       "@id": "schema:device",
@@ -10339,9 +10325,7 @@
       "rangeIncludes": "schema:Text",
       "comment": "The ISBN of the book.",
       "label": "isbn",
-      "owl:equivalentProperty": {
-        "@id": "http://purl.org/ontology/bibo/isbn"
-      }
+      "equivalentProperty": "http://purl.org/ontology/bibo/isbn"
     },
     {
       "@id": "schema:isicV4",
@@ -10363,9 +10347,7 @@
       "rangeIncludes": "schema:Text",
       "comment": "The International Standard Serial Number (ISSN) that identifies this periodical. You can repeat this property to (for example) identify different formats of this periodical.",
       "label": "issn",
-      "owl:equivalentProperty": {
-        "@id": "http://purl.org/ontology/bibo/issn"
-      }
+      "equivalentProperty": "http://purl.org/ontology/bibo/issn"
     },
     {
       "@id": "schema:issueNumber",
@@ -10381,9 +10363,7 @@
       "subPropertyOf": [
         "schema:position"
       ],
-      "owl:equivalentProperty": {
-        "@id": "http://purl.org/ontology/bibo/issue"
-      }
+      "equivalentProperty": "http://purl.org/ontology/bibo/issue"
     },
     {
       "@id": "schema:issuedBy",
@@ -11430,9 +11410,7 @@
       ],
       "comment": "The page on which the work ends; for example \"138\" or \"xvi\".",
       "label": "pageEnd",
-      "owl:equivalentProperty": {
-        "@id": "http://purl.org/ontology/bibo/pageEnd"
-      }
+      "equivalentProperty": "http://purl.org/ontology/bibo/pageEnd"
     },
     {
       "@id": "schema:pageStart",
@@ -11449,9 +11427,7 @@
       ],
       "comment": "The page on which the work starts; for example \"135\" or \"xiii\".",
       "label": "pageStart",
-      "owl:equivalentProperty": {
-        "@id": "http://purl.org/ontology/bibo/pageStart"
-      }
+      "equivalentProperty": "http://purl.org/ontology/bibo/pageStart"
     },
     {
       "@id": "schema:pagination",
@@ -11465,9 +11441,7 @@
       "rangeIncludes": "schema:Text",
       "comment": "Any description of pages that is not separated into pageStart and pageEnd; for example, \"1-6, 9, 55\" or \"10-12, 46-49\".",
       "label": "pagination",
-      "owl:equivalentProperty": {
-        "@id": "http://purl.org/ontology/bibo/pages"
-      }
+      "equivalentProperty": "http://purl.org/ontology/bibo/pages"
     },
     {
       "@id": "schema:parent",
@@ -14243,9 +14217,7 @@
       "subPropertyOf": [
         "schema:position"
       ],
-      "owl:equivalentProperty": {
-        "@id": "http://purl.org/ontology/bibo/volume"
-      }
+      "equivalentProperty": "http://purl.org/ontology/bibo/volume"
     },
     {
       "@id": "schema:warning",
