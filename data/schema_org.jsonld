@@ -621,10 +621,7 @@
       "@id": "schema:Blog",
       "@type": "rdfs:Class",
       "comment": "A blog",
-      "label": "Blog",
-      "subClassOf": [
-        "schema:CreativeWork"
-      ]
+      "label": "Blog"
     },
     {
       "@id": "schema:BlogPosting",
@@ -1393,7 +1390,7 @@
         "schema:CreativeWork"
       ],
       "owl:equivalentClass": {
-        "@id": "dcat:DataCatalog"
+        "@id": "http://www.w3.org/ns/dcat#DataCatalog"
       }
     },
     {
@@ -1406,7 +1403,7 @@
         "schema:MediaObject"
       ],
       "owl:equivalentClass": {
-        "@id": "dcat:Distribution"
+        "@id": "http://www.w3.org/ns/dcat#Distribution"
       }
     },
     {
@@ -1426,13 +1423,13 @@
       ],
       "owl:equivalentClass": [
         {
-          "@id": "dcat:Dataset"
+          "@id": "http://www.w3.org/ns/dcat#Dataset"
         },
         {
-          "@id": "void:Dataset"
+          "@id": "http://rdfs.org/ns/void#Dataset"
         },
         {
-          "@id": "dc:Dataset"
+          "@id": "dctypes:Dataset"
         }
       ]
     },
@@ -2008,25 +2005,25 @@
         "schema:Thing"
       ],
       "owl:equivalentClass": {
-        "@id": "dc:Event"
+        "@id": "dctypes:Event"
       }
     },
     {
       "@id": "schema:EventCancelled",
       "@type": "schema:EventStatusType",
-      "comment": "The event has been cancelled. If the event has multiple startDate values, all are assumed to be cancelled. Either startDate or previousStartDate may be used to specify the event’s cancelled date(s).",
+      "comment": "The event has been cancelled. If the event has multiple startDate values, all are assumed to be cancelled. Either startDate or previousStartDate may be used to specify the event's cancelled date(s).",
       "label": "EventCancelled"
     },
     {
       "@id": "schema:EventPostponed",
       "@type": "schema:EventStatusType",
-      "comment": "The event has been postponed and no new date has been set. The event’s previousStartDate should be set.",
+      "comment": "The event has been postponed and no new date has been set. The event's previousStartDate should be set.",
       "label": "EventPostponed"
     },
     {
       "@id": "schema:EventRescheduled",
       "@type": "schema:EventStatusType",
-      "comment": "The event has been rescheduled. The event’s previousStartDate should be set to the old date and the startDate should be set to the event’s new date. (If the event has been rescheduled multiple times, the previousStartDate property may be repeated.)",
+      "comment": "The event has been rescheduled. The event's previousStartDate should be set to the old date and the startDate should be set to the event's new date. (If the event has been rescheduled multiple times, the previousStartDate property may be repeated.)",
       "label": "EventRescheduled"
     },
     {
@@ -2469,7 +2466,7 @@
     {
       "@id": "schema:HVACBusiness",
       "@type": "rdfs:Class",
-      "comment": "An HVAC service.",
+      "comment": "A business that provide Heating, Ventilation and Air Conditioning services.",
       "label": "HVACBusiness",
       "subClassOf": [
         "schema:HomeAndConstructionBusiness"
@@ -2557,7 +2554,7 @@
     {
       "@id": "schema:HobbyShop",
       "@type": "rdfs:Class",
-      "comment": "A hobby store.",
+      "comment": "A store that sells materials useful or necessary for various hobbies.",
       "label": "HobbyShop",
       "subClassOf": [
         "schema:Store"
@@ -2601,7 +2598,7 @@
     {
       "@id": "schema:Hostel",
       "@type": "rdfs:Class",
-      "comment": "A hostel.",
+      "comment": "A hostel - cheap accommodation, often in shared dormitories.",
       "label": "Hostel",
       "subClassOf": [
         "schema:LodgingBusiness"
@@ -2662,7 +2659,7 @@
         "schema:MediaObject"
       ],
       "owl:equivalentClass": {
-        "@id": "dc:Image"
+        "@id": "dctypes:Image"
       }
     },
     {
@@ -2754,7 +2751,7 @@
     {
       "@id": "schema:InsuranceAgency",
       "@type": "rdfs:Class",
-      "comment": "Insurance agency.",
+      "comment": "An Insurance agency.",
       "label": "InsuranceAgency",
       "subClassOf": [
         "schema:FinancialService"
@@ -2997,7 +2994,7 @@
     {
       "@id": "schema:LiquorStore",
       "@type": "rdfs:Class",
-      "comment": "A liquor store.",
+      "comment": "A shop that sells alcoholic drinks such as wine, beer, whisky and other spirits.",
       "label": "LiquorStore",
       "subClassOf": [
         "schema:Store"
@@ -3594,7 +3591,7 @@
     {
       "@id": "schema:MiddleSchool",
       "@type": "rdfs:Class",
-      "comment": "A middle school.",
+      "comment": "A middle school (typically for children aged around 11-14, although this varies somewhat).",
       "label": "MiddleSchool",
       "subClassOf": [
         "schema:EducationalOrganization"
@@ -3609,7 +3606,7 @@
     {
       "@id": "schema:MobileApplication",
       "@type": "rdfs:Class",
-      "comment": "A mobile software application.",
+      "comment": "A software application designed specifically to work well on a mobile device such as a telephone.",
       "label": "MobileApplication",
       "subClassOf": [
         "schema:SoftwareApplication"
@@ -3618,7 +3615,7 @@
     {
       "@id": "schema:MobilePhoneStore",
       "@type": "rdfs:Class",
-      "comment": "A mobile-phone store.",
+      "comment": "A store that sells mobile phones and related accessories.",
       "label": "MobilePhoneStore",
       "subClassOf": [
         "schema:Store"
@@ -4065,7 +4062,7 @@
     {
       "@id": "schema:Optician",
       "@type": "rdfs:Class",
-      "comment": "An optician's store.",
+      "comment": "A store that sells reading glasses and similar devices for improving vision.",
       "label": "Optician",
       "subClassOf": [
         "schema:MedicalOrganization"
@@ -4305,6 +4302,7 @@
     },
     {
       "@id": "schema:ParkingMap",
+      "@type": "schema:MapCategoryType",
       "comment": "A parking map.",
       "label": "ParkingMap"
     },
@@ -4333,7 +4331,7 @@
     {
       "@id": "schema:PawnShop",
       "@type": "rdfs:Class",
-      "comment": "A pawn store.",
+      "comment": "A shop that will buy, or lend money against the security of, personal possessions.",
       "label": "PawnShop",
       "subClassOf": [
         "schema:Store"
@@ -4424,6 +4422,19 @@
       "subClassOf": [
         "schema:Organization"
       ]
+    },
+    {
+      "@id": "schema:Periodical",
+      "@type": "rdfs:Class",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "comment": "A publication in any medium issued in successive parts bearing numerical or chronological designations and intended, such as a magazine, scholarly journal, or newspaper to continue indefinitely.",
+      "label": "Periodical",
+      "subClassOf": [
+        "schema:CreativeWork"
+      ],
+      "owl:equivalentClass": {
+        "@id": "http://purl.org/ontology/bibo/Periodical"
+      }
     },
     {
       "@id": "schema:Permit",
@@ -4837,6 +4848,29 @@
       ]
     },
     {
+      "@id": "schema:PublicationIssue",
+      "@type": "rdfs:Class",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "comment": "A part of a successively published publication such as a periodical or publication volume, often numbered, usually containing a grouping of works such as articles.",
+      "label": "PublicationIssue",
+      "subClassOf": [
+        "schema:CreativeWork"
+      ],
+      "owl:equivalentClass": {
+        "@id": "http://purl.org/ontology/bibo/Issue"
+      }
+    },
+    {
+      "@id": "schema:PublicationVolume",
+      "@type": "rdfs:Class",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "comment": "A part of a successively published publication such as a periodical or multi-volume work, often numbered. It may represent a time span, such as a year.",
+      "label": "PublicationVolume",
+      "subClassOf": [
+        "schema:CreativeWork"
+      ]
+    },
+    {
       "@id": "schema:Pulmonary",
       "@type": "schema:MedicalSpecialty",
       "comment": "A specific branch of medical science that pertains to the study of the respiratory system and its respective disease states.",
@@ -4902,7 +4936,7 @@
     {
       "@id": "schema:RVPark",
       "@type": "rdfs:Class",
-      "comment": "An RV park.",
+      "comment": "A place offering space for \"Recreational Vehicles\", Caravans, mobile homes and the like.",
       "label": "RVPark",
       "subClassOf": [
         "schema:CivicStructure"
@@ -5209,7 +5243,7 @@
     {
       "@id": "schema:Reservoir",
       "@type": "rdfs:Class",
-      "comment": "A reservoir, like the Lake Kariba reservoir.",
+      "comment": "A reservoir of water, typically an artificially created lake, like the Lake Kariba reservoir.",
       "label": "Reservoir",
       "subClassOf": [
         "schema:BodyOfWater"
@@ -5269,7 +5303,7 @@
     {
       "@id": "schema:Review",
       "@type": "rdfs:Class",
-      "comment": "A review of an item - for example, a restaurant, movie, or store.",
+      "comment": "A review of an item - for example, of a restaurant, movie, or store.",
       "label": "Review",
       "subClassOf": [
         "schema:CreativeWork"
@@ -5419,13 +5453,14 @@
     },
     {
       "@id": "schema:SeatingMap",
+      "@type": "schema:MapCategoryType",
       "comment": "A seating map.",
       "label": "SeatingMap"
     },
     {
       "@id": "schema:SelfStorage",
       "@type": "rdfs:Class",
-      "comment": "Self-storage facility.",
+      "comment": "A self-storage facility.",
       "label": "SelfStorage",
       "subClassOf": [
         "schema:LocalBusiness"
@@ -5655,7 +5690,7 @@
     {
       "@id": "schema:State",
       "@type": "rdfs:Class",
-      "comment": "A state or province.",
+      "comment": "A state or province of a country.",
       "label": "State",
       "subClassOf": [
         "schema:AdministrativeArea"
@@ -5781,7 +5816,7 @@
     {
       "@id": "schema:Table",
       "@type": "rdfs:Class",
-      "comment": "A table on the page.",
+      "comment": "A table on a Web page.",
       "label": "Table",
       "subClassOf": [
         "schema:WebPageElement"
@@ -5886,7 +5921,7 @@
     {
       "@id": "schema:TheaterGroup",
       "@type": "rdfs:Class",
-      "comment": "A theater group or company&#x2014;for example, the Royal Shakespeare Company or Druid Theatre.",
+      "comment": "A theater group or company, for example, the Royal Shakespeare Company or Druid Theatre.",
       "label": "TheaterGroup",
       "subClassOf": [
         "schema:PerformingGroup"
@@ -6067,6 +6102,7 @@
     },
     {
       "@id": "schema:TransitMap",
+      "@type": "schema:MapCategoryType",
       "comment": "A transit map.",
       "label": "TransitMap"
     },
@@ -6299,6 +6335,7 @@
     },
     {
       "@id": "schema:VenueMap",
+      "@type": "schema:MapCategoryType",
       "comment": "A venue map (e.g. for malls, auditoriums, museums, etc.).",
       "label": "VenueMap"
     },
@@ -7636,7 +7673,10 @@
         "schema:Person",
         "schema:Organization"
       ],
-      "comment": "If the reservation was not booked directly through the provider, the third-party booking agent can be recorded through this property.",
+      "schema:supercededBy": {
+        "@id": "schema:broker"
+      },
+      "comment": "'bookingAgent' is an out-dated term indicating a 'broker' that serves as a booking agent.",
       "label": "bookingAgent"
     },
     {
@@ -7723,6 +7763,20 @@
       "rangeIncludes": "schema:Organization",
       "comment": "The organization owning or operating the broadcast service.",
       "label": "broadcaster"
+    },
+    {
+      "@id": "schema:broker",
+      "@type": "rdf:Property",
+      "domainIncludes": [
+        "schema:Reservation",
+        "schema:Order"
+      ],
+      "rangeIncludes": [
+        "schema:Person",
+        "schema:Organization"
+      ],
+      "comment": "An entity that arranges for an exchange between a buyer and a seller.  In most cases a broker never acquires or releases ownership of a product or service involved in an exchange.  If it is not clear whether an entity is a broker, seller, or buyer, the latter two terms are preferred.",
+      "label": "broker"
     },
     {
       "@id": "schema:browserRequirements",
@@ -7828,7 +7882,10 @@
         "schema:Flight"
       ],
       "rangeIncludes": "schema:Organization",
-      "comment": "The party responsible for the parcel delivery.",
+      "schema:supercededBy": {
+        "@id": "schema:provider"
+      },
+      "comment": "'carrier' is an out-dated term indicating the 'provider' for parcel delivery and flights.",
       "label": "carrier"
     },
     {
@@ -7968,9 +8025,15 @@
       "@id": "schema:clipNumber",
       "@type": "rdf:Property",
       "domainIncludes": "schema:Clip",
-      "rangeIncludes": "schema:Integer",
+      "rangeIncludes": [
+        "schema:Integer",
+        "schema:Text"
+      ],
       "comment": "Position of the clip within an ordered group of clips.",
-      "label": "clipNumber"
+      "label": "clipNumber",
+      "subPropertyOf": [
+        "schema:position"
+      ]
     },
     {
       "@id": "schema:closes",
@@ -8582,7 +8645,10 @@
       "domainIncludes": "schema:Thing",
       "rangeIncludes": "schema:Text",
       "comment": "A short description of the item.",
-      "label": "description"
+      "label": "description",
+      "owl:equivalentProperty": {
+        "@id": "dc:description"
+      }
     },
     {
       "@id": "schema:device",
@@ -9212,9 +9278,15 @@
       "@id": "schema:episodeNumber",
       "@type": "rdf:Property",
       "domainIncludes": "schema:Episode",
-      "rangeIncludes": "schema:Integer",
+      "rangeIncludes": [
+        "schema:Integer",
+        "schema:Text"
+      ],
       "comment": "Position of the episode within an ordered group of episodes.",
-      "label": "episodeNumber"
+      "label": "episodeNumber",
+      "subPropertyOf": [
+        "schema:position"
+      ]
     },
     {
       "@id": "schema:episodes",
@@ -9314,6 +9386,18 @@
       "rangeIncludes": "schema:Text",
       "comment": "Source of the data used to formulate the guidance, e.g. RCT, consensus opinion, etc.",
       "label": "evidenceOrigin"
+    },
+    {
+      "@id": "schema:exampleOfWork",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "domainIncludes": "schema:CreativeWork",
+      "schema:inverseOf": {
+        "@id": "schema:workExample"
+      },
+      "rangeIncludes": "schema:CreativeWork",
+      "comment": "A creative work that this work is an example/instance/realization/derivation of.",
+      "label": "exampleOfWork"
     },
     {
       "@id": "schema:exercisePlan",
@@ -9473,7 +9557,7 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Flight",
       "rangeIncludes": "schema:Text",
-      "comment": "The unique identifier for a flight, not including the airline IATA code. For example, if describing United flight 110, the flightNumber is '110'. The IATA code can be set on the Airline.",
+      "comment": "The unique identifier for a flight including the airline IATA code. For example, if describing United flight 110, where the IATA code for United is 'UA', the flightNumber is 'UA110'.",
       "label": "flightNumber"
     },
     {
@@ -9779,6 +9863,18 @@
       "rangeIncludes": "schema:Place",
       "comment": "Points-of-Sales operated by the organization or person.",
       "label": "hasPOS"
+    },
+    {
+      "@id": "schema:hasPart",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "domainIncludes": "schema:CreativeWork",
+      "schema:inverseOf": {
+        "@id": "schema:isPartOf"
+      },
+      "rangeIncludes": "schema:CreativeWork",
+      "comment": "Indicates a CreativeWork that is (in some sense) a part of this CreativeWork.",
+      "label": "hasPart"
     },
     {
       "@id": "schema:headline",
@@ -10194,6 +10290,9 @@
       "@id": "schema:isPartOf",
       "@type": "rdf:Property",
       "domainIncludes": "schema:CreativeWork",
+      "schema:inverseOf": {
+        "@id": "schema:hasPart"
+      },
       "rangeIncludes": "schema:CreativeWork",
       "comment": "Indicates a CreativeWork that this CreativeWork is (in some sense) part of.",
       "label": "isPartOf"
@@ -10239,7 +10338,10 @@
       "domainIncludes": "schema:Book",
       "rangeIncludes": "schema:Text",
       "comment": "The ISBN of the book.",
-      "label": "isbn"
+      "label": "isbn",
+      "owl:equivalentProperty": {
+        "@id": "http://purl.org/ontology/bibo/isbn"
+      }
     },
     {
       "@id": "schema:isicV4",
@@ -10252,6 +10354,36 @@
       "rangeIncludes": "schema:Text",
       "comment": "The International Standard of Industrial Classification of All Economic Activities (ISIC), Revision 4 code for a particular organization, business person, or place.",
       "label": "isicV4"
+    },
+    {
+      "@id": "schema:issn",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "domainIncludes": "schema:Periodical",
+      "rangeIncludes": "schema:Text",
+      "comment": "The International Standard Serial Number (ISSN) that identifies this periodical. You can repeat this property to (for example) identify different formats of this periodical.",
+      "label": "issn",
+      "owl:equivalentProperty": {
+        "@id": "http://purl.org/ontology/bibo/issn"
+      }
+    },
+    {
+      "@id": "schema:issueNumber",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "domainIncludes": "schema:PublicationIssue",
+      "rangeIncludes": [
+        "schema:Integer",
+        "schema:Text"
+      ],
+      "comment": "Identifies the issue of publication; for example, \"iii\" or \"2\".",
+      "label": "issueNumber",
+      "subPropertyOf": [
+        "schema:position"
+      ],
+      "owl:equivalentProperty": {
+        "@id": "http://purl.org/ontology/bibo/issue"
+      }
     },
     {
       "@id": "schema:issuedBy",
@@ -10797,7 +10929,10 @@
         "schema:Organization",
         "schema:Person"
       ],
-      "comment": "The party taking the order (e.g. Amazon.com is a merchant for many sellers).",
+      "schema:supercededBy": {
+        "@id": "schema:seller"
+      },
+      "comment": "'merchant' is an out-dated term for 'seller'.",
       "label": "merchant"
     },
     {
@@ -11281,6 +11416,60 @@
       "label": "owns"
     },
     {
+      "@id": "schema:pageEnd",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "domainIncludes": [
+        "schema:PublicationVolume",
+        "schema:PublicationIssue",
+        "schema:Article"
+      ],
+      "rangeIncludes": [
+        "schema:Integer",
+        "schema:Text"
+      ],
+      "comment": "The page on which the work ends; for example \"138\" or \"xvi\".",
+      "label": "pageEnd",
+      "owl:equivalentProperty": {
+        "@id": "http://purl.org/ontology/bibo/pageEnd"
+      }
+    },
+    {
+      "@id": "schema:pageStart",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "domainIncludes": [
+        "schema:PublicationVolume",
+        "schema:PublicationIssue",
+        "schema:Article"
+      ],
+      "rangeIncludes": [
+        "schema:Integer",
+        "schema:Text"
+      ],
+      "comment": "The page on which the work starts; for example \"135\" or \"xiii\".",
+      "label": "pageStart",
+      "owl:equivalentProperty": {
+        "@id": "http://purl.org/ontology/bibo/pageStart"
+      }
+    },
+    {
+      "@id": "schema:pagination",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "domainIncludes": [
+        "schema:PublicationVolume",
+        "schema:PublicationIssue",
+        "schema:Article"
+      ],
+      "rangeIncludes": "schema:Text",
+      "comment": "Any description of pages that is not separated into pageStart and pageEnd; for example, \"1-6, 9, 55\" or \"10-12, 46-49\".",
+      "label": "pagination",
+      "owl:equivalentProperty": {
+        "@id": "http://purl.org/ontology/bibo/pages"
+      }
+    },
+    {
       "@id": "schema:parent",
       "@type": "rdf:Property",
       "domainIncludes": "schema:Person",
@@ -11605,13 +11794,12 @@
     {
       "@id": "schema:position",
       "@type": "rdf:Property",
-      "domainIncludes": [
-        "schema:Episode",
-        "schema:Season",
-        "schema:Clip"
+      "domainIncludes": "schema:CreativeWork",
+      "rangeIncludes": [
+        "schema:Text",
+        "schema:Integer"
       ],
-      "rangeIncludes": "schema:Text",
-      "comment": "Free text to define other than pure numerical ranking of an episode or a season in an ordered list of items (further formatting restrictions may apply within particular user groups).",
+      "comment": "The position of the creative work within a series or other ordered collection of works.",
       "label": "position"
     },
     {
@@ -12007,6 +12195,7 @@
         "schema:Service",
         "schema:Reservation",
         "schema:Flight",
+        "schema:ParcelDelivery",
         "schema:TrainTrip",
         "schema:BusTrip"
       ],
@@ -12014,7 +12203,7 @@
         "schema:Person",
         "schema:Organization"
       ],
-      "comment": "The person or organization providing the service, reservation, or creative work. The provider may subcontract out the service.",
+      "comment": "The service provider, service operator, or service performer; the goods producer. Another party (a seller) may offer those services or goods on behalf of the provider. A provider may also serve as the seller.",
       "label": "provider"
     },
     {
@@ -12702,9 +12891,15 @@
         "schema:Season",
         "schema:TVSeason"
       ],
-      "rangeIncludes": "schema:Integer",
+      "rangeIncludes": [
+        "schema:Integer",
+        "schema:Text"
+      ],
       "comment": "Position of the season within an ordered group of seasons.",
-      "label": "seasonNumber"
+      "label": "seasonNumber",
+      "subPropertyOf": [
+        "schema:position"
+      ]
     },
     {
       "@id": "schema:seasons",
@@ -12779,15 +12974,21 @@
       "@id": "schema:seller",
       "@type": "rdf:Property",
       "domainIncludes": [
+        "schema:Order",
+        "schema:BuyAction",
         "schema:Offer",
-        "schema:Demand"
+        "schema:Demand",
+        "schema:Flight"
       ],
       "rangeIncludes": [
         "schema:Organization",
         "schema:Person"
       ],
-      "comment": "The organization or person making the offer.",
-      "label": "seller"
+      "comment": "An entity which offers (sells / leases / lends / loans) the services / goods.  A seller may also be a provider.",
+      "label": "seller",
+      "subPropertyOf": [
+        "schema:participant"
+      ]
     },
     {
       "@id": "schema:sender",
@@ -13987,7 +14188,10 @@
         "schema:Organization",
         "schema:Person"
       ],
-      "comment": "A sub property of participant. The seller. The participant/person/organization that sold the object.",
+      "schema:supercededBy": {
+        "@id": "schema:seller"
+      },
+      "comment": "'vendor' is an earlier term for 'seller'.",
       "label": "vendor",
       "subPropertyOf": [
         "schema:participant"
@@ -14024,6 +14228,24 @@
       "rangeIncludes": "schema:Text",
       "comment": "The quality of the video.",
       "label": "videoQuality"
+    },
+    {
+      "@id": "schema:volumeNumber",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "domainIncludes": "schema:PublicationVolume",
+      "rangeIncludes": [
+        "schema:Integer",
+        "schema:Text"
+      ],
+      "comment": "Identifies the volume of publication or multi-part work; for example, \"iii\" or \"2\".",
+      "label": "volumeNumber",
+      "subPropertyOf": [
+        "schema:position"
+      ],
+      "owl:equivalentProperty": {
+        "@id": "http://purl.org/ontology/bibo/volume"
+      }
     },
     {
       "@id": "schema:warning",
@@ -14114,6 +14336,18 @@
       "rangeIncludes": "schema:Integer",
       "comment": "The number of words in the text of the Article.",
       "label": "wordCount"
+    },
+    {
+      "@id": "schema:workExample",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "domainIncludes": "schema:CreativeWork",
+      "schema:inverseOf": {
+        "@id": "schema:exampleOfWork"
+      },
+      "rangeIncludes": "schema:CreativeWork",
+      "comment": "Example/instance/realization/derivation of the concept of this creative work. eg. The paperback edition, first edition, or eBook.",
+      "label": "workExample"
     },
     {
       "@id": "schema:workHours",
@@ -14226,6 +14460,12 @@
       "@type": "schema:Organization",
       "comment": "This class contains information contributed by <a href=http://wikidoc.org>WikiDoc</a>.",
       "label": "WikiDoc"
+    },
+    {
+      "@id": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
+      "@type": "schema:Organization",
+      "comment": "The W3C <a href=\"http://www.w3.org/community/schemabibex/\">Schema Bib Extend</a> (BibEx) group led the work to improve schema.org for bibliographic information, including terms for periodicals, articles and multi-volume works. The design was inspired in places (e.g. pageStart, pageEnd, pagination) by the <a href=\"http://bibliontology.com/\">Bibliographic Ontology</a>, 'bibo'.",
+      "label": "BibExTerm"
     },
     {
       "@id": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_rNews",

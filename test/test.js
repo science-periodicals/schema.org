@@ -120,7 +120,7 @@ describe('package-jsonld', function(){
         "videoQuality": "bad",
         "transcript": "a transcript"
       };
-      assert.equal(packager._type(obj), 'VideoObject');
+      assert.equal(packager.getType(obj), 'VideoObject');
     });
 
     it('should add types to a document', function(){

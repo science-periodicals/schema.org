@@ -147,6 +147,22 @@ function Packager(graph, prefixList) {
 
 };
 
+/**
+ * is any of the type === className or a subclass of className
+ */
+Packager.prototype.isClassOrSubClassOf = function(type, className) {
+  var typeList = Array.isArray(type)? type : [type];
+
+  for (var i=0; i<typeList.length; i++) {
+    var mytype = typeList[i];
+    if (mytype === className || ~this.getParentClasses(mytype).indexOf(className)) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 Packager.prototype.getParentClasses = function(className) {
 
   var subClassesChain;
@@ -181,7 +197,7 @@ Packager.prototype.getClassesChain = function(prop, node) {
   var ranges = this.getRanges(prop) || [];
   var classesChain = ranges.slice();
 
-  var type = this._type(node);
+  var type = this.getType(node);
 
   if (type) {
     type = Array.isArray(type)? type: [type];
@@ -214,7 +230,7 @@ Packager.prototype.getClassesChain = function(prop, node) {
  * we don't inferr if ranges is not present
  * TODO relax ?
  */
-Packager.prototype._type = function(obj, ranges) {
+Packager.prototype.getType = function(obj, ranges) {
   if(obj['@type']) return obj['@type'];
 
   ranges = ranges || [];
@@ -294,13 +310,13 @@ Packager.prototype._type = function(obj, ranges) {
 
 Packager.prototype.type = function(cdoc, ranges) {
 
-  var type = this._type(cdoc, ranges);
+  var type = this.getType(cdoc, ranges);
   if(!cdoc['@type'] && type){
     cdoc['@type'] = type;
   }
 
   Packager.forEachNode(cdoc, function(prop, node){
-    var type = this._type(node, this.getRanges(prop));
+    var type = this.getType(node, this.getRanges(prop));
     if(!node['@type'] && type){
       node['@type'] = type;
     }
