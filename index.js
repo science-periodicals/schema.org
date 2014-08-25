@@ -8,14 +8,14 @@ var fs = require('fs')
   , saTerms = require('./lib/terms')
   , saContext = require('./lib/context');
 
-module.exports = Packager;
+module.exports = SaSchemaOrg;
 
-Packager.context = saContext;
-Packager.terms = saTerms;
-Packager.contextUrl = 'https://registry.standardanalytics.io/context.jsonld';
-Packager.contextLink = '<https://registry.standardanalytics.io/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
+SaSchemaOrg.context = saContext;
+SaSchemaOrg.terms = saTerms;
+SaSchemaOrg.contextUrl = 'https://registry.standardanalytics.io/context.jsonld';
+SaSchemaOrg.contextLink = '<https://registry.standardanalytics.io/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
-Packager.forEachNode = function _forEachNode(doc, callback, _this){
+SaSchemaOrg.forEachNode = function _forEachNode(doc, callback, _this){
   for (var prop in doc) {
     if (prop === '@context' || !doc.hasOwnProperty(prop)) continue;
 
@@ -33,7 +33,7 @@ Packager.forEachNode = function _forEachNode(doc, callback, _this){
   }
 };
 
-Packager.getSha1 = function(uri){
+SaSchemaOrg.getSha1 = function(uri){
   var pathName;
   var splt = uri.split(':');
 
@@ -54,7 +54,7 @@ Packager.getSha1 = function(uri){
   }
 };
 
-function Packager(graph, prefixList) {
+function SaSchemaOrg(graph, prefixList) {
 
   var _saCtx = saContext()['@context'][1];
 
@@ -150,7 +150,7 @@ function Packager(graph, prefixList) {
 /**
  * is any of the type === className or a subclass of className
  */
-Packager.prototype.isClassOrSubClassOf = function(type, className) {
+SaSchemaOrg.prototype.isClassOrSubClassOf = function(type, className) {
   var typeList = Array.isArray(type)? type : [type];
 
   for (var i=0; i<typeList.length; i++) {
@@ -163,7 +163,7 @@ Packager.prototype.isClassOrSubClassOf = function(type, className) {
   return false;
 };
 
-Packager.prototype.getParentClasses = function(className) {
+SaSchemaOrg.prototype.getParentClasses = function(className) {
 
   var subClassesChain;
   if (this.classMap[className] && this.classMap[className].subClasses) {
@@ -184,7 +184,7 @@ Packager.prototype.getParentClasses = function(className) {
 
 };
 
-Packager.prototype.getRanges = function(prop) {
+SaSchemaOrg.prototype.getRanges = function(prop) {
   return this.propMap[prop] && this.propMap[prop].ranges.slice();
 };
 
@@ -193,7 +193,7 @@ Packager.prototype.getRanges = function(prop) {
  * the ranges of ```prop``, itself combined with ```type``` and the
  * subClassesChain of ```type```.
  */
-Packager.prototype.getClassesChain = function(prop, node) {
+SaSchemaOrg.prototype.getClassesChain = function(prop, node) {
   var ranges = this.getRanges(prop) || [];
   var classesChain = ranges.slice();
 
@@ -230,7 +230,7 @@ Packager.prototype.getClassesChain = function(prop, node) {
  * we don't inferr if ranges is not present
  * TODO relax ?
  */
-Packager.prototype.getType = function(obj, ranges) {
+SaSchemaOrg.prototype.getType = function(obj, ranges) {
   if(obj['@type']) return obj['@type'];
 
   ranges = ranges || [];
@@ -308,14 +308,14 @@ Packager.prototype.getType = function(obj, ranges) {
 };
 
 
-Packager.prototype.type = function(cdoc, ranges) {
+SaSchemaOrg.prototype.type = function(cdoc, ranges) {
 
   var type = this.getType(cdoc, ranges);
   if(!cdoc['@type'] && type){
     cdoc['@type'] = type;
   }
 
-  Packager.forEachNode(cdoc, function(prop, node){
+  SaSchemaOrg.forEachNode(cdoc, function(prop, node){
     var type = this.getType(node, this.getRanges(prop));
     if(!node['@type'] && type){
       node['@type'] = type;
@@ -326,14 +326,14 @@ Packager.prototype.type = function(cdoc, ranges) {
 };
 
 
-Packager.prototype._isMoreSpecific = function(typea, typeb) {
+SaSchemaOrg.prototype._isMoreSpecific = function(typea, typeb) {
   if (!(this.classMap[typea] && this.classMap[typea].subClassesChain)) return false;
 
   return !! ~this.classMap[typea].subClassesChain.indexOf(typeb);
 };
 
 
-Packager.prototype.validateId = function validateId(id, opts) {
+SaSchemaOrg.prototype.validateId = function validateId(id, opts) {
   opts = opts || {};
 
   if (!id) throw new Error('invalid @id'); // '' cannot be a valid @id for SA.
@@ -406,8 +406,8 @@ Packager.prototype.validateId = function validateId(id, opts) {
  * !! cdoc is a compacted doc, compacted with SA @context.
  * return a hash of @id (useful for automatic unique @id generation)
  */
-Packager.prototype.validate = function(cdoc, contextUrl){
-  contextUrl = contextUrl || Packager.contextUrl;
+SaSchemaOrg.prototype.validate = function(cdoc, contextUrl){
+  contextUrl = contextUrl || SaSchemaOrg.contextUrl;
   var ids = {};
 
   if (cdoc['@context'] !== contextUrl) {
@@ -421,7 +421,7 @@ Packager.prototype.validate = function(cdoc, contextUrl){
   }
 
   //validate (and collect) all the @id.
-  Packager.forEachNode(cdoc, function(key, node){
+  SaSchemaOrg.forEachNode(cdoc, function(key, node){
     if ('@id' in node) {
       ids[node['@id']] = this.validateId(node['@id']);
     }
@@ -438,7 +438,7 @@ Packager.prototype.validate = function(cdoc, contextUrl){
  * http://www.w3.org/TR/json-ld-api/#generate-blank-node-identifier
  */
 
-Packager.prototype.setIds = function(cdoc, opts, env) {
+SaSchemaOrg.prototype.setIds = function(cdoc, opts, env) {
   opts = opts || {};
   env = env || {};
 
@@ -459,7 +459,7 @@ Packager.prototype.setIds = function(cdoc, opts, env) {
   }
 
   //traverse
-  Packager.forEachNode(cdoc, function(prop, node){
+  SaSchemaOrg.forEachNode(cdoc, function(prop, node){
     if(~opts.ignoredProps.indexOf(prop)) return;
     env.classesChain = this.getClassesChain(prop, node);
     this.setIds(node, opts, env);
@@ -471,7 +471,7 @@ Packager.prototype.setIds = function(cdoc, opts, env) {
 /**
  * potentialAction for doc hosted on SA
  */
-Packager.prototype._potentialAction = function (nameSpace, version) {
+SaSchemaOrg.prototype._potentialAction = function (nameSpace, version) {
   var potentialAction =  [
     {
       "@type": "UpdateAction",
@@ -555,14 +555,14 @@ Packager.prototype._potentialAction = function (nameSpace, version) {
 /**
  * add potentialAction to the doc hosted on SA.
  */
-Packager.prototype.potentialAction = function (cdoc) {
+SaSchemaOrg.prototype.potentialAction = function (cdoc) {
 
   var nameSpace = this.validateId(cdoc['@id']).split(':')[1];
   if (!cdoc.potentialAction) {
     cdoc.potentialAction = this._potentialAction(nameSpace, cdoc.version);
   }
 
-  Packager.forEachNode(cdoc, function(prop, node){
+  SaSchemaOrg.forEachNode(cdoc, function(prop, node){
     if(!node.potentialAction && node['@id']){
       var curie;
       try {

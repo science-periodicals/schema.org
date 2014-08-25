@@ -1,6 +1,6 @@
 {
-  "name": "package-jsonld",
-  "version": "1.0.0-alpha",
+  "name": "sa-schema-org",
+  "version": "0.0.0",
   "description": "Standard Analytics IO main JSON-LD context",
   "main": "index.js",
   "directories": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/standard-analytics/package-jsonld.git"
+    "url": "git://github.com/standard-analytics/schema.org.git"
   },
   "keywords": [
     "hyperdata",
@@ -28,9 +28,9 @@
   "author": "Sebastien Ballesteros",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/standard-analytics/package-jsonld/issues"
+    "url": "https://github.com/standard-analytics/schema.org/issues"
   },
-  "homepage": "https://github.com/standard-analytics/package-jsonld",
+  "homepage": "https://github.com/standard-analytics/schema.org",
   "devDependencies": {
     "mocha": "~1.15.1",
     "clone": "~0.1.11",

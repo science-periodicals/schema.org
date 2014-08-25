@@ -4,7 +4,7 @@ var fs = require('fs')
   , assert = require('assert')
   , clone = require('clone')
   , jsonld = require('jsonld')
-  , Packager = require('..');
+  , SaSchemaOrg = require('..');
 
 var root = path.dirname(__filename);
 
@@ -13,7 +13,7 @@ describe('package-jsonld', function(){
   describe('jsonld context', function(){
     it('should standardize a package.jsonld with the vanilla context', function(done){
       var doc = {
-        "@context": Packager.context(),
+        "@context": SaSchemaOrg.context(),
         "@id": "myNameSpace",
         encoding: {contentUrl: 'http://example.com/data'},
         distribution: {name: "name"},
@@ -30,10 +30,10 @@ describe('package-jsonld', function(){
     });
   });
 
-  describe('Packager', function(){
+  describe('SaSchemaOrg', function(){
     var packager;
     before(function(){
-      packager = new Packager();
+      packager = new SaSchemaOrg();
     });
 
     it('should have well initialized this.propMap', function(){
