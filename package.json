@@ -1,6 +1,6 @@
 {
   "name": "sa-schema-org",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Standard Analytics IO main JSON-LD context",
   "main": "index.js",
   "directories": {

@@ -140,16 +140,6 @@ describe('package-jsonld', function(){
       assert.equal(mdoc.hasPart[0]['@type'], 'CreativeWork');
     });
 
-
-    it('should add potential actions to a document', function(){
-      var doc = JSON.parse(fs.readFileSync(path.join(root, 'fixture', 'package.jsonld')));
-      packager.potentialAction(doc);
-      assert(Array.isArray(doc.potentialAction))
-      doc.hasPart.forEach(function(part){
-        assert(! ('potentialAction' in part))
-      });
-    });
-
   });
 
 });
