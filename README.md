@@ -1,20 +1,17 @@
-package-jsonld
+schema.org I/O
 ==============
 
+I/O for schema.org
 
-a [commonJS](http://wiki.commonjs.org/wiki/Packages/1.1) thingy in
-[JSON-LD](http://json-ld.org/) / [schema.org](http://schema.org)
-because semantic web, linked data and hypermedia.
-
-[![NPM](https://nodei.co/npm/package-jsonld.png)](https://nodei.co/npm/package-jsonld/)
+[![NPM](https://nodei.co/npm/package-jsonld.png)](https://nodei.co/npm/schema-org-io/)
 
 Tests
 =====
 
     npm test
-    
+
 
 License
 =======
 
-MIT
+Apache 2.0
