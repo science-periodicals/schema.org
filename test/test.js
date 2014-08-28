@@ -4,16 +4,16 @@ var fs = require('fs')
   , assert = require('assert')
   , clone = require('clone')
   , jsonld = require('jsonld')
-  , SaSchemaOrg = require('..');
+  , SchemaOrgIo = require('..');
 
 var root = path.dirname(__filename);
 
-describe('package-jsonld', function(){
+describe('schema-org-io', function(){
 
   describe('jsonld context', function(){
-    it('should standardize a package.jsonld with the vanilla context', function(done){
+    it('should standardize a JSONLD doc with the vanilla context', function(done){
       var doc = {
-        "@context": SaSchemaOrg.context(),
+        "@context": SchemaOrgIo.context(),
         "@id": "myNameSpace",
         encoding: {contentUrl: 'http://example.com/data'},
         distribution: {name: "name"},
@@ -21,7 +21,7 @@ describe('package-jsonld', function(){
       };
 
       jsonld.compact(doc, doc['@context'], function(err, cdoc){
-        assert.equal(cdoc['@id'], 'sa:myNameSpace');
+        assert.equal(cdoc['@id'], 'io:myNameSpace');
         assert.deepEqual(cdoc.encoding, [doc.encoding]);
         assert.deepEqual(cdoc.distribution, [doc.distribution]);
         assert.deepEqual(cdoc.hasPart, [doc.hasPart['@id']]);
@@ -30,10 +30,10 @@ describe('package-jsonld', function(){
     });
   });
 
-  describe('SaSchemaOrg', function(){
+  describe('SchemaOrgIo', function(){
     var packager;
     before(function(){
-      packager = new SaSchemaOrg();
+      packager = new SchemaOrgIo();
     });
 
     it('should have well initialized this.propMap', function(){
@@ -43,7 +43,7 @@ describe('package-jsonld', function(){
       });
     });
 
-    it('should have well initialized this.propMap with extra :saterms', function(){
+    it('should have well initialized this.propMap with extra :ioterms', function(){
       assert.deepEqual(packager.propMap['hasPart'], {
         domains: [ 'CreativeWork' ],
         ranges: [ 'CreativeWork' ]
@@ -58,34 +58,34 @@ describe('package-jsonld', function(){
     });
 
     it('should throw an error for invalid @id', function(){
-      ['nobase', '.a', 'wrongprefix:a', 'sa:/../', '../', 'sa:/ns@version', 'sa:ns%40version'].forEach(function(invalidId){
+      ['nobase', '.a', 'wrongprefix:a', 'io:/../', '../', 'io:/ns@version', 'io:cw%40version'].forEach(function(invalidId){
         assert.throws( function(){ packager.validateId(invalidId); }, Error );
       });
     });
 
     it('should throw an error for an invalid namespace @id', function(){
-      ['sa:ns/nons', 'https://registry.standardanalytics.io/ns/nons'].forEach(function(invalidId){
+      ['io:cw/nons', 'https://dcat.io/cw/nons'].forEach(function(invalidId){
         assert.throws( function(){ packager.validateId(invalidId, {isNameSpace: true}); }, Error );
       });
     });
 
     it('should validate @id and return a normalized version', function(){
-      assert.equal(packager.validateId('https://registry.standardanalytics.io/ns'), 'sa:ns');
-      assert.equal(packager.validateId('sa:ns'), 'sa:ns');
-      assert.equal(packager.validateId('https://registry.standardanalytics.io/ns/a'), 'sa:ns/a');
-      assert.equal(packager.validateId('sa:ns/a'), 'sa:ns/a');
+      assert.equal(packager.validateId('https://dcat.io/cw'), 'io:cw');
+      assert.equal(packager.validateId('io:cw'), 'io:cw');
+      assert.equal(packager.validateId('https://dcat.io/cw/a'), 'io:cw/a');
+      assert.equal(packager.validateId('io:cw/a'), 'io:cw/a');
     });
 
     it('should add @id', function(){
       var doc = {
-        "@context": "https://registry.standardanalytics.io/context.jsonld",
-        "@id": "sa:ns",
+        "@context": "https://dcat.io",
+        "@id": "io:cw",
         "version": "0.0.0",
         "name": 'myname',
         "author": { "name": "peter" },
         "encoding": { "name": "enc" },
         "hasPart": [
-          { "@id": "sa:ns/n1",  "name": "part a" },
+          { "@id": "io:cw/n1",  "name": "part a" },
           { "name": "part b" },
           { "name": "part c" }
         ]
@@ -93,18 +93,18 @@ describe('package-jsonld', function(){
 
       packager.setIds(doc);
 
-      assert.equal(doc['@id'], 'sa:ns');
-      assert.equal(doc.author['@id'], 'sa:ns/n0');
-      assert.equal(doc.encoding['@id'], 'sa:ns/n2');
-      assert.equal(doc.hasPart[0]['@id'], 'sa:ns/n1');
-      assert.equal(doc.hasPart[1]['@id'], 'sa:ns/n3');
-      assert.equal(doc.hasPart[2]['@id'], 'sa:ns/n4');
+      assert.equal(doc['@id'], 'io:cw');
+      assert.equal(doc.author['@id'], 'io:cw/n0');
+      assert.equal(doc.encoding['@id'], 'io:cw/n2');
+      assert.equal(doc.hasPart[0]['@id'], 'io:cw/n1');
+      assert.equal(doc.hasPart[1]['@id'], 'io:cw/n3');
+      assert.equal(doc.hasPart[2]['@id'], 'io:cw/n4');
     });
 
     it('should add @id and respect options', function(){
       var doc = {
-        "@context": "https://registry.standardanalytics.io/context.jsonld",
-        "@id": "sa:ns",
+        "@context": "https://dcat.io",
+        "@id": "io:cw",
         "version": "0.0.0",
         "author": { "name": "peter" },
         "encoding": { "name": "enc" },

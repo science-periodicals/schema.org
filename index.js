@@ -5,17 +5,17 @@ var fs = require('fs')
   , url = require('url')
   , isUrl = require('is-url')
   , schemaOrg = JSON.parse(fs.readFileSync(path.join(path.dirname(__filename), 'data', 'schema_org.jsonld')))
-  , saTerms = require('./lib/terms')
-  , saContext = require('./lib/context');
+  , ioTerms = require('./lib/terms')
+  , ioContext = require('./lib/context');
 
-module.exports = SaSchemaOrg;
+module.exports = SchemaOrgIo;
 
-SaSchemaOrg.context = saContext;
-SaSchemaOrg.terms = saTerms;
-SaSchemaOrg.contextUrl = 'https://registry.standardanalytics.io/context.jsonld';
-SaSchemaOrg.contextLink = '<https://registry.standardanalytics.io/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
+SchemaOrgIo.context = ioContext;
+SchemaOrgIo.terms = ioTerms;
+SchemaOrgIo.contextUrl = 'https://dcat.io';
+SchemaOrgIo.contextLink = '<https://dcat.io>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
-SaSchemaOrg.forEachNode = function _forEachNode(doc, callback, _this){
+SchemaOrgIo.forEachNode = function _forEachNode(doc, callback, _this){
   for (var prop in doc) {
     if (prop === '@context' || !doc.hasOwnProperty(prop)) continue;
 
@@ -33,15 +33,15 @@ SaSchemaOrg.forEachNode = function _forEachNode(doc, callback, _this){
   }
 };
 
-SaSchemaOrg.getSha1 = function(uri){
+SchemaOrgIo.getSha1 = function(uri){
   var pathName;
   var splt = uri.split(':');
 
-  if (splt.length === 2 && splt[0] === 'sa') {
+  if (splt.length === 2 && splt[0] === 'io') {
     pathName = splt[1];
   } else if (isUrl(uri)) {
     purl = url.parse(uri);
-    if (purl.hostname === 'registry.standardanalytics.io') {
+    if (purl.hostname === 'dcat.io') {
       pathname =  purl.pathname;
     }
   }
@@ -54,18 +54,18 @@ SaSchemaOrg.getSha1 = function(uri){
   }
 };
 
-function SaSchemaOrg(graph, prefixList) {
+function SchemaOrgIo(graph, prefixList) {
 
-  var _saCtx = saContext()['@context'][1];
+  var _ioCtx = ioContext()['@context'][1];
 
-  this.validIdPrefix = Object.keys(_saCtx).filter(function(key){
+  this.validIdPrefix = Object.keys(_ioCtx).filter(function(key){
     return key.charAt(0) !== '@' &&
-      typeof _saCtx[key] === 'string' &&
-      isUrl(_saCtx[key]);
+      typeof _ioCtx[key] === 'string' &&
+      isUrl(_ioCtx[key]);
   });
 
-  this.graph = graph || schemaOrg['@graph'].concat(saTerms().defines);
-  this.prefixList = prefixList || ['schema', 'saterms'];
+  this.graph = graph || schemaOrg['@graph'].concat(ioTerms().defines);
+  this.prefixList = prefixList || ['schema', 'ioterms'];
   this.propMap = {};
   this.classMap = {};
 
@@ -150,7 +150,7 @@ function SaSchemaOrg(graph, prefixList) {
 /**
  * is any of the type === className or a subclass of className
  */
-SaSchemaOrg.prototype.isClassOrSubClassOf = function(type, className) {
+SchemaOrgIo.prototype.isClassOrSubClassOf = function(type, className) {
   var typeList = Array.isArray(type)? type : [type];
 
   for (var i=0; i<typeList.length; i++) {
@@ -163,7 +163,7 @@ SaSchemaOrg.prototype.isClassOrSubClassOf = function(type, className) {
   return false;
 };
 
-SaSchemaOrg.prototype.getParentClasses = function(className) {
+SchemaOrgIo.prototype.getParentClasses = function(className) {
 
   var subClassesChain;
   if (this.classMap[className] && this.classMap[className].subClasses) {
@@ -184,7 +184,7 @@ SaSchemaOrg.prototype.getParentClasses = function(className) {
 
 };
 
-SaSchemaOrg.prototype.getRanges = function(prop) {
+SchemaOrgIo.prototype.getRanges = function(prop) {
   return this.propMap[prop] && this.propMap[prop].ranges.slice();
 };
 
@@ -193,7 +193,7 @@ SaSchemaOrg.prototype.getRanges = function(prop) {
  * the ranges of ```prop``, itself combined with ```type``` and the
  * subClassesChain of ```type```.
  */
-SaSchemaOrg.prototype.getClassesChain = function(prop, node) {
+SchemaOrgIo.prototype.getClassesChain = function(prop, node) {
   var ranges = this.getRanges(prop) || [];
   var classesChain = ranges.slice();
 
@@ -230,7 +230,7 @@ SaSchemaOrg.prototype.getClassesChain = function(prop, node) {
  * we don't inferr if ranges is not present
  * TODO relax ?
  */
-SaSchemaOrg.prototype.getType = function(obj, ranges) {
+SchemaOrgIo.prototype.getType = function(obj, ranges) {
   if(obj['@type']) return obj['@type'];
 
   ranges = ranges || [];
@@ -308,14 +308,14 @@ SaSchemaOrg.prototype.getType = function(obj, ranges) {
 };
 
 
-SaSchemaOrg.prototype.type = function(cdoc, ranges) {
+SchemaOrgIo.prototype.type = function(cdoc, ranges) {
 
   var type = this.getType(cdoc, ranges);
   if(!cdoc['@type'] && type){
     cdoc['@type'] = type;
   }
 
-  SaSchemaOrg.forEachNode(cdoc, function(prop, node){
+  SchemaOrgIo.forEachNode(cdoc, function(prop, node){
     var type = this.getType(node, this.getRanges(prop));
     if(!node['@type'] && type){
       node['@type'] = type;
@@ -326,41 +326,41 @@ SaSchemaOrg.prototype.type = function(cdoc, ranges) {
 };
 
 
-SaSchemaOrg.prototype._isMoreSpecific = function(typea, typeb) {
+SchemaOrgIo.prototype._isMoreSpecific = function(typea, typeb) {
   if (!(this.classMap[typea] && this.classMap[typea].subClassesChain)) return false;
 
   return !! ~this.classMap[typea].subClassesChain.indexOf(typeb);
 };
 
 
-SaSchemaOrg.prototype.validateId = function validateId(id, opts) {
+SchemaOrgIo.prototype.validateId = function validateId(id, opts) {
   opts = opts || {};
 
-  if (!id) throw new Error('invalid @id'); // '' cannot be a valid @id for SA.
+  if (!id) throw new Error('invalid @id'); // '' cannot be a valid @id for dcat.io.
 
   var splt = id.split(':');
 
-  var saPathname;
+  var ioPathname;
   if (isUrl(id)) {
     var purl = url.parse(id);
-    if (purl.hostname !== 'registry.standardanalytics.io') {
+    if (purl.hostname !== 'dcat.io') {
       return;
     }
 
-    saPathname = purl.pathname;
+    ioPathname = purl.pathname;
   } else if (splt.length === 2 && ~this.validIdPrefix.indexOf(splt[0])) { //invalid blank nodes and make sure the doc was compacted with SA @context
 
-    if(splt[0] === 'sa'){
-      saPathname = splt[1];
+    if(splt[0] === 'io'){
+      ioPathname = splt[1];
     }
 
   } else {
     throw new Error('invalid @id');
   }
 
-  if (saPathname) { //SA specific rules
+  if (ioPathname) { //dcat.io specific rules
 
-    var parts = saPathname.replace(/^\/|\/$/g, '').split('/');
+    var parts = ioPathname.replace(/^\/|\/$/g, '').split('/');
 
     if (!parts.length) {
 
@@ -392,7 +392,7 @@ SaSchemaOrg.prototype.validateId = function validateId(id, opts) {
 
     }
 
-    return 'sa:' + parts.join('/'); //always return a CURIE (simplifies this.setIds)
+    return 'io:' + parts.join('/'); //always return a CURIE (simplifies this.setIds)
 
   }
 
@@ -403,11 +403,11 @@ SaSchemaOrg.prototype.validateId = function validateId(id, opts) {
 //TODO validate that all the contentPath / filePath are unique!!!
 
 /**
- * !! cdoc is a compacted doc, compacted with SA @context.
+ * !! cdoc is a compacted doc, compacted with dcat.io @context.
  * return a hash of @id (useful for automatic unique @id generation)
  */
-SaSchemaOrg.prototype.validate = function(cdoc, contextUrl){
-  contextUrl = contextUrl || SaSchemaOrg.contextUrl;
+SchemaOrgIo.prototype.validate = function(cdoc, contextUrl){
+  contextUrl = contextUrl || SchemaOrgIo.contextUrl;
   var ids = {};
 
   if (cdoc['@context'] !== contextUrl) {
@@ -421,7 +421,7 @@ SaSchemaOrg.prototype.validate = function(cdoc, contextUrl){
   }
 
   //validate (and collect) all the @id.
-  SaSchemaOrg.forEachNode(cdoc, function(key, node){
+  SchemaOrgIo.forEachNode(cdoc, function(key, node){
     if ('@id' in node) {
       ids[node['@id']] = this.validateId(node['@id']);
     }
@@ -438,7 +438,7 @@ SaSchemaOrg.prototype.validate = function(cdoc, contextUrl){
  * http://www.w3.org/TR/json-ld-api/#generate-blank-node-identifier
  */
 
-SaSchemaOrg.prototype.setIds = function(cdoc, opts, env) {
+SchemaOrgIo.prototype.setIds = function(cdoc, opts, env) {
   opts = opts || {};
   env = env || {};
 
@@ -451,15 +451,15 @@ SaSchemaOrg.prototype.setIds = function(cdoc, opts, env) {
 
   //set @id and increment counter if not blankId
   if (!('@id' in cdoc) && (!opts.restrictToClasses || _intersect(env.classesChain, opts.restrictToClasses))) {
-    var id = 'sa:' + opts.nameSpace + '/n' + env.counter++;
+    var id = 'io:' + opts.nameSpace + '/n' + env.counter++;
     while(id in opts.preExistingIds){
-      id = 'sa:' + opts.nameSpace + '/n' + env.counter++;
+      id = 'io:' + opts.nameSpace + '/n' + env.counter++;
     }
     cdoc['@id'] = id;
   }
 
   //traverse
-  SaSchemaOrg.forEachNode(cdoc, function(prop, node){
+  SchemaOrgIo.forEachNode(cdoc, function(prop, node){
     if(~opts.ignoredProps.indexOf(prop)) return;
     env.classesChain = this.getClassesChain(prop, node);
     this.setIds(node, opts, env);

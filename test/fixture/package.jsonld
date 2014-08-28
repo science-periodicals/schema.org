@@ -1,13 +1,13 @@
 {
   "@context": "https://registry.standardanalytics.io/context.jsonld",
-  "@id": "sa:cw",
+  "@id": "io:cw",
   "@type": "ScholarlyArticle",
   "sameAs": "http://dx.doi.org/mydoi",
   "version": "0.0.0",
   "name": "Jon Markup (2020)",
   "description": "A scholarly article in JSON-LD/schema.org",
   "keywords": [ "hypermedia", "json-ld", "schema.org" ],
-  "isBasedOnUrl": [ "sa:cw", "sa:cw2/0.0.4", "sa:cw3/latest?range=%3E2.0.0" ],
+  "isBasedOnUrl": [ "io:cw", "io:cw2/0.0.4", "io:cw3/latest?range=%3E2.0.0" ],
   "author": {
     "givenName": "Jon",
     "familyName": "Markup",
@@ -18,7 +18,7 @@
   },
   "hasPart": [
     {
-      "@id": "sa:cw/swell",
+      "@id": "io:cw/swell",
       "@type": "Dataset",
       "name": "NYC swell",
       "distribution": {
@@ -26,7 +26,7 @@
       }
     },
     {
-      "@id": "sa:cw/wave",
+      "@id": "io:cw/wave",
       "@type": "Dataset",
       "name": "Wave heights in NYC",
       "distribution": [
@@ -35,7 +35,7 @@
       ]
     },
     {
-      "@id": "sa:cw/prog",
+      "@id": "io:cw/prog",
       "@type": "Code",
       "name": "wave analytics",
       "programmingLanguage": {
@@ -46,29 +46,29 @@
         "@type": "SoftwareApplication",
         "operatingSystem": "Unix",
         "downloadUrl": "http://example.com/script.r",
-        "requirements": [ "sa:cw/swell", "sa:cw/wave" ]
+        "requirements": [ "io:cw/swell", "io:cw/wave" ]
       }
     },
     {
-      "@id": "sa:cw/d3",
+      "@id": "io:cw/d3",
       "@type": "WebApplication",
       "name": "d3 wave viz",
       "browserRequirements": "SVG",
       "downloadUrl": "http://example.com/d3wave.js",
-      "requirements": [ "sa:cw/swell", "sa:cw/wave" ],
+      "requirements": [ "io:cw/swell", "io:cw/wave" ],
       "sourceCode": {
-        "codeRepository": "github:sa/d3wave"
+        "codeRepository": "github:org/d3wave"
       }
     },
     {
-      "@id": "sa:cw/fig",
+      "@id": "io:cw/fig",
       "@type": "ImageObject",
       "name": "wave height",
       "encoding": [
         { "contentPath": "image/x.png" },
         { "contentPath": "image/x.jpg" }
       ],
-      "isBasedOnUrl": [ "sa:cw/swell", "sa:cw/wave",  "sa:cw/prog" ]
+      "isBasedOnUrl": [ "io:cw/swell", "io:cw/wave",  "io:cw/prog" ]
     }
   ]
 }
