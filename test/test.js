@@ -21,7 +21,7 @@ describe('schema-org-io', function(){
       };
 
       jsonld.compact(doc, doc['@context'], function(err, cdoc){
-        assert.equal(cdoc['@id'], 'io:myNameSpace');
+        assert.equal(cdoc['@id'], 'ldr:myNameSpace');
         assert.deepEqual(cdoc.encoding, [doc.encoding]);
         assert.deepEqual(cdoc.distribution, [doc.distribution]);
         assert.deepEqual(cdoc.hasPart, [doc.hasPart['@id']]);
@@ -43,7 +43,7 @@ describe('schema-org-io', function(){
       });
     });
 
-    it('should have well initialized this.propMap with extra :ioterms', function(){
+    it('should have well initialized this.propMap with extra :ldrterms', function(){
       assert.deepEqual(packager.propMap['hasPart'], {
         domains: [ 'CreativeWork' ],
         ranges: [ 'CreativeWork' ]
@@ -58,34 +58,34 @@ describe('schema-org-io', function(){
     });
 
     it('should throw an error for invalid @id', function(){
-      ['nobase', '.a', 'wrongprefix:a', 'io:/../', '../', 'io:/ns@version', 'io:cw%40version'].forEach(function(invalidId){
+      ['nobase', '.a', 'wrongprefix:a', 'ldr:/../', '../', 'ldr:/ns@version', 'ldr:cw%40version'].forEach(function(invalidId){
         assert.throws( function(){ packager.validateId(invalidId); }, Error );
       });
     });
 
     it('should throw an error for an invalid namespace @id', function(){
-      ['io:cw/nons', 'https://dcat.io/cw/nons'].forEach(function(invalidId){
+      ['ldr:cw/nons', 'https://dcat.io/cw/nons'].forEach(function(invalidId){
         assert.throws( function(){ packager.validateId(invalidId, {isNameSpace: true}); }, Error );
       });
     });
 
     it('should validate @id and return a normalized version', function(){
-      assert.equal(packager.validateId('https://dcat.io/cw'), 'io:cw');
-      assert.equal(packager.validateId('io:cw'), 'io:cw');
-      assert.equal(packager.validateId('https://dcat.io/cw/a'), 'io:cw/a');
-      assert.equal(packager.validateId('io:cw/a'), 'io:cw/a');
+      assert.equal(packager.validateId('https://dcat.io/cw'), 'ldr:cw');
+      assert.equal(packager.validateId('ldr:cw'), 'ldr:cw');
+      assert.equal(packager.validateId('https://dcat.io/cw/a'), 'ldr:cw/a');
+      assert.equal(packager.validateId('ldr:cw/a'), 'ldr:cw/a');
     });
 
     it('should add @id', function(){
       var doc = {
         "@context": "https://dcat.io",
-        "@id": "io:cw",
+        "@id": "ldr:cw",
         "version": "0.0.0",
         "name": 'myname',
         "author": { "name": "peter" },
         "encoding": { "name": "enc" },
         "hasPart": [
-          { "@id": "io:cw/n1",  "name": "part a" },
+          { "@id": "ldr:cw/n1",  "name": "part a" },
           { "name": "part b" },
           { "name": "part c" }
         ]
@@ -93,18 +93,18 @@ describe('schema-org-io', function(){
 
       packager.setIds(doc);
 
-      assert.equal(doc['@id'], 'io:cw');
-      assert.equal(doc.author['@id'], 'io:cw/n0');
-      assert.equal(doc.encoding['@id'], 'io:cw/n2');
-      assert.equal(doc.hasPart[0]['@id'], 'io:cw/n1');
-      assert.equal(doc.hasPart[1]['@id'], 'io:cw/n3');
-      assert.equal(doc.hasPart[2]['@id'], 'io:cw/n4');
+      assert.equal(doc['@id'], 'ldr:cw');
+      assert.equal(doc.author['@id'], 'ldr:cw/n0');
+      assert.equal(doc.encoding['@id'], 'ldr:cw/n2');
+      assert.equal(doc.hasPart[0]['@id'], 'ldr:cw/n1');
+      assert.equal(doc.hasPart[1]['@id'], 'ldr:cw/n3');
+      assert.equal(doc.hasPart[2]['@id'], 'ldr:cw/n4');
     });
 
     it('should add @id and respect options', function(){
       var doc = {
         "@context": "https://dcat.io",
-        "@id": "io:cw",
+        "@id": "ldr:cw",
         "version": "0.0.0",
         "author": { "name": "peter" },
         "encoding": { "name": "enc" },

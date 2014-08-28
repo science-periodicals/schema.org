@@ -5,13 +5,13 @@ var fs = require('fs')
   , url = require('url')
   , isUrl = require('is-url')
   , schemaOrg = JSON.parse(fs.readFileSync(path.join(path.dirname(__filename), 'data', 'schema_org.jsonld')))
-  , ioTerms = require('./lib/terms')
-  , ioContext = require('./lib/context');
+  , ldrTerms = require('./lib/terms')
+  , ldrContext = require('./lib/context');
 
 module.exports = SchemaOrgIo;
 
-SchemaOrgIo.context = ioContext;
-SchemaOrgIo.terms = ioTerms;
+SchemaOrgIo.context = ldrContext;
+SchemaOrgIo.terms = ldrTerms;
 SchemaOrgIo.contextUrl = 'https://dcat.io';
 SchemaOrgIo.contextLink = '<https://dcat.io>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
@@ -37,7 +37,7 @@ SchemaOrgIo.getSha1 = function(uri){
   var pathName;
   var splt = uri.split(':');
 
-  if (splt.length === 2 && splt[0] === 'io') {
+  if (splt.length === 2 && splt[0] === 'ldr') {
     pathName = splt[1];
   } else if (isUrl(uri)) {
     purl = url.parse(uri);
@@ -56,16 +56,16 @@ SchemaOrgIo.getSha1 = function(uri){
 
 function SchemaOrgIo(graph, prefixList) {
 
-  var _ioCtx = ioContext()['@context'][1];
+  var _ldrCtx = ldrContext()['@context'][1];
 
-  this.validIdPrefix = Object.keys(_ioCtx).filter(function(key){
+  this.validIdPrefix = Object.keys(_ldrCtx).filter(function(key){
     return key.charAt(0) !== '@' &&
-      typeof _ioCtx[key] === 'string' &&
-      isUrl(_ioCtx[key]);
+      typeof _ldrCtx[key] === 'string' &&
+      isUrl(_ldrCtx[key]);
   });
 
-  this.graph = graph || schemaOrg['@graph'].concat(ioTerms().defines);
-  this.prefixList = prefixList || ['schema', 'ioterms'];
+  this.graph = graph || schemaOrg['@graph'].concat(ldrTerms().defines);
+  this.prefixList = prefixList || ['schema', 'ldrterms'];
   this.propMap = {};
   this.classMap = {};
 
@@ -340,27 +340,27 @@ SchemaOrgIo.prototype.validateId = function validateId(id, opts) {
 
   var splt = id.split(':');
 
-  var ioPathname;
+  var ldrPathname;
   if (isUrl(id)) {
     var purl = url.parse(id);
     if (purl.hostname !== 'dcat.io') {
       return;
     }
 
-    ioPathname = purl.pathname;
+    ldrPathname = purl.pathname;
   } else if (splt.length === 2 && ~this.validIdPrefix.indexOf(splt[0])) { //invalid blank nodes and make sure the doc was compacted with SA @context
 
-    if(splt[0] === 'io'){
-      ioPathname = splt[1];
+    if(splt[0] === 'ldr'){
+      ldrPathname = splt[1];
     }
 
   } else {
     throw new Error('invalid @id');
   }
 
-  if (ioPathname) { //dcat.io specific rules
+  if (ldrPathname) { //dcat.io specific rules
 
-    var parts = ioPathname.replace(/^\/|\/$/g, '').split('/');
+    var parts = ldrPathname.replace(/^\/|\/$/g, '').split('/');
 
     if (!parts.length) {
 
@@ -392,7 +392,7 @@ SchemaOrgIo.prototype.validateId = function validateId(id, opts) {
 
     }
 
-    return 'io:' + parts.join('/'); //always return a CURIE (simplifies this.setIds)
+    return 'ldr:' + parts.join('/'); //always return a CURIE (simplifies this.setIds)
 
   }
 
@@ -451,9 +451,9 @@ SchemaOrgIo.prototype.setIds = function(cdoc, opts, env) {
 
   //set @id and increment counter if not blankId
   if (!('@id' in cdoc) && (!opts.restrictToClasses || _intersect(env.classesChain, opts.restrictToClasses))) {
-    var id = 'io:' + opts.nameSpace + '/n' + env.counter++;
+    var id = 'ldr:' + opts.nameSpace + '/n' + env.counter++;
     while(id in opts.preExistingIds){
-      id = 'io:' + opts.nameSpace + '/n' + env.counter++;
+      id = 'ldr:' + opts.nameSpace + '/n' + env.counter++;
     }
     cdoc['@id'] = id;
   }

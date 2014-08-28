@@ -14,7 +14,7 @@
     "email": "jonmarkup@standardanalytics.io"
   },
   "encoding": {
-    "contentPath": "article/article.pdf"
+    "filePath": "article/article.pdf"
   },
   "hasPart": [
     {
@@ -30,8 +30,8 @@
       "@type": "Dataset",
       "name": "Wave heights in NYC",
       "distribution": [
-        { "contentPath": "data/wave.csv" },
-        { "contentPath": "data/wave.xlsx" }
+        { "filePath": "data/wave.csv" },
+        { "filePath": "data/wave.xlsx" }
       ]
     },
     {
@@ -65,8 +65,8 @@
       "@type": "ImageObject",
       "name": "wave height",
       "encoding": [
-        { "contentPath": "image/x.png" },
-        { "contentPath": "image/x.jpg" }
+        { "filePath": "image/x.png" },
+        { "filePath": "image/x.jpg" }
       ],
       "isBasedOnUrl": [ "io:cw/swell", "io:cw/wave",  "io:cw/prog" ]
     }
