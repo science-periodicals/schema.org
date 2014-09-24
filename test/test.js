@@ -57,6 +57,10 @@ describe('schema-org-io', function(){
       });
     });
 
+    it.only('should return the subclasses of a className', function(){
+      assert.deepEqual(packager.getSubClasses('Article'), [ 'APIReference', 'BlogPosting', 'MedicalScholarlyArticle', 'NewsArticle', 'ScholarlyArticle', 'TechArticle' ]);
+    });
+
     it('should throw an error for invalid @id', function(){
       ['nobase', '.a', 'wrongprefix:a', 'ldr:/../', '../', 'ldr:/ns@version', 'ldr:cw%40version'].forEach(function(invalidId){
         assert.throws( function(){ packager.validateId(invalidId); }, Error );

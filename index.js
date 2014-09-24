@@ -188,6 +188,21 @@ SchemaOrgIo.prototype.getRanges = function(prop) {
   return this.propMap[prop] && this.propMap[prop].ranges.slice();
 };
 
+
+SchemaOrgIo.prototype.getSubClasses = function(className){
+  var subClasses = [];
+  Object.keys(this.classMap).forEach(function(key){
+    if (this.classMap[key].subClassesChain &&
+        ~this.classMap[key].subClassesChain.indexOf(className) &&
+        !~subClasses.indexOf(key)
+      ) {
+      subClasses.push(key);
+    }
+  }, this);
+
+  return subClasses;
+};
+
 /**
  * return the ranges of prop combined with the subClassesChain of all
  * the ranges of ```prop``, itself combined with ```type``` and the
