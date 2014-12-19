@@ -1,6 +1,6 @@
 {
   "@context": {
-    "saterms": "https://standardanalytics.io/ns/",
+    "ldrterms": "https://dcat.io/ns/",
     "schema": "http://schema.org/",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
@@ -124,7 +124,7 @@
       "@id": "schema:Action",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_ActionCollabClass",
-      "comment": "An action performed by a direct agent and indirect     participants upon a direct object. Optionally happens at a location     with the help of an inanimate instrument. The execution of the action     may produce a result. Specific action sub-type documentation specifies     the exact expectation of each argument/role.",
+      "comment": "An action performed by a direct agent and indirect     participants upon a direct object. Optionally happens at a location     with the help of an inanimate instrument. The execution of the action     may produce a result. Specific action sub-type documentation specifies     the exact expectation of each argument/role.\n      <br/><br/>See also <a href=\"http://blog.schema.org/2014/04/announcing-schemaorg-actions.html\">blog post</a>\n      and <a href=\"http://schema.org/docs/actions.html\">Actions overview document.</a>",
       "label": "Action",
       "subClassOf": [
         "schema:Thing"
@@ -137,6 +137,15 @@
       "label": "ActionStatusType",
       "subClassOf": [
         "schema:Enumeration"
+      ]
+    },
+    {
+      "@id": "schema:ActivateAction",
+      "@type": "rdfs:Class",
+      "comment": "The act of starting or activating a device or application (e.g. starting a timer or turning on a flashlight).",
+      "label": "ActivateAction",
+      "subClassOf": [
+        "schema:ControlAction"
       ]
     },
     {
@@ -228,6 +237,13 @@
       "subClassOf": [
         "schema:CivicStructure"
       ]
+    },
+    {
+      "@id": "schema:AlbumRelease",
+      "@type": "schema:MusicAlbumReleaseType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "AlbumRelease.",
+      "label": "AlbumRelease"
     },
     {
       "@id": "schema:AlignmentObject",
@@ -392,7 +408,7 @@
       "@id": "schema:Article",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_rNews",
-      "comment": "An article, such as a news article or piece of investigative report. Newspapers and magazines have articles of many different types and this is intended to cover them all.",
+      "comment": "An article, such as a news article or piece of investigative report. Newspapers and magazines have articles of many different types and this is intended to cover them all.\n\n      <br/><br/>See also <a href=\"http://blog.schema.org/2014/09/schemaorg-support-for-bibliographic_2.html\">blog post</a>",
       "label": "Article",
       "subClassOf": [
         "schema:CreativeWork"
@@ -629,7 +645,10 @@
       "@id": "schema:Blog",
       "@type": "rdfs:Class",
       "comment": "A blog",
-      "label": "Blog"
+      "label": "Blog",
+      "subClassOf": [
+        "schema:CreativeWork"
+      ]
     },
     {
       "@id": "schema:BlogPosting",
@@ -685,6 +704,15 @@
       "label": "BookFormatType",
       "subClassOf": [
         "schema:Enumeration"
+      ]
+    },
+    {
+      "@id": "schema:BookSeries",
+      "@type": "rdfs:Class",
+      "comment": "A series of books. Included books can be indicated with the hasPart property.",
+      "label": "BookSeries",
+      "subClassOf": [
+        "schema:Series"
       ]
     },
     {
@@ -753,6 +781,15 @@
       ]
     },
     {
+      "@id": "schema:BreadcrumbList",
+      "@type": "rdfs:Class",
+      "comment": "\n      A BreadcrumbList is an ItemList consisting of a chain of linked Web pages, typically described using at least their URL and their name, ending with the current page.",
+      "label": "BreadcrumbList",
+      "subClassOf": [
+        "schema:ItemList"
+      ]
+    },
+    {
       "@id": "schema:Brewery",
       "@type": "rdfs:Class",
       "comment": "Brewery.",
@@ -769,6 +806,13 @@
       "subClassOf": [
         "schema:PublicationEvent"
       ]
+    },
+    {
+      "@id": "schema:BroadcastRelease",
+      "@type": "schema:MusicAlbumReleaseType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "BroadcastRelease.",
+      "label": "BroadcastRelease"
     },
     {
       "@id": "schema:BroadcastService",
@@ -837,7 +881,7 @@
       "@id": "schema:BusinessEntityType",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_GoodRelationsClass",
-      "comment": "A business entity type is a conceptual entity representing the legal form, the size, the main line of business, the position in the value chain, or any combination thereof, of an organization or business person.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#Business\n    http://purl.org/goodrelations/v1#Enduser\n    http://purl.org/goodrelations/v1#PublicInstitution\n    http://purl.org/goodrelations/v1#Reseller\n\n    \t\t",
+      "comment": "A business entity type is a conceptual entity representing the legal form, the size, the main line of business, the position in the value chain, or any combination thereof, of an organization or business person.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#Business\n    http://purl.org/goodrelations/v1#Enduser\n    http://purl.org/goodrelations/v1#PublicInstitution\n    http://purl.org/goodrelations/v1#Reseller\n\n        ",
       "label": "BusinessEntityType",
       "subClassOf": [
         "schema:Enumeration"
@@ -856,7 +900,7 @@
       "@id": "schema:BusinessFunction",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_GoodRelationsClass",
-      "comment": "The business function specifies the type of activity or access (i.e., the bundle of rights) offered by the organization or business person through the offer. Typical are sell, rental or lease, maintenance or repair, manufacture / produce, recycle / dispose, engineering / construction, or installation. Proprietary specifications of access rights are also instances of this class.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#ConstructionInstallation\n    http://purl.org/goodrelations/v1#Dispose\n    http://purl.org/goodrelations/v1#LeaseOut\n    http://purl.org/goodrelations/v1#Maintain\n    http://purl.org/goodrelations/v1#ProvideService\n    http://purl.org/goodrelations/v1#Repair\n    http://purl.org/goodrelations/v1#Sell\n    http://purl.org/goodrelations/v1#Buy\n    \t\t",
+      "comment": "The business function specifies the type of activity or access (i.e., the bundle of rights) offered by the organization or business person through the offer. Typical are sell, rental or lease, maintenance or repair, manufacture / produce, recycle / dispose, engineering / construction, or installation. Proprietary specifications of access rights are also instances of this class.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#ConstructionInstallation\n    http://purl.org/goodrelations/v1#Dispose\n    http://purl.org/goodrelations/v1#LeaseOut\n    http://purl.org/goodrelations/v1#Maintain\n    http://purl.org/goodrelations/v1#ProvideService\n    http://purl.org/goodrelations/v1#Repair\n    http://purl.org/goodrelations/v1#Sell\n    http://purl.org/goodrelations/v1#Buy\n        ",
       "label": "BusinessFunction",
       "subClassOf": [
         "schema:Enumeration"
@@ -870,6 +914,13 @@
       "subClassOf": [
         "schema:TradeAction"
       ]
+    },
+    {
+      "@id": "schema:CDFormat",
+      "@type": "schema:MusicReleaseFormatType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "CDFormat.",
+      "label": "CDFormat"
     },
     {
       "@id": "schema:CT",
@@ -948,6 +999,13 @@
       "subClassOf": [
         "schema:EntertainmentBusiness"
       ]
+    },
+    {
+      "@id": "schema:CassetteFormat",
+      "@type": "schema:MusicReleaseFormatType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "CassetteFormat.",
+      "label": "CassetteFormat"
     },
     {
       "@id": "schema:CatholicChurch",
@@ -1106,6 +1164,12 @@
       ]
     },
     {
+      "@id": "schema:CoOp",
+      "@type": "schema:GamePlayMode",
+      "comment": "Play mode: CoOp. Co-operative games, where you play on the same team with friends.",
+      "label": "CoOp"
+    },
+    {
       "@id": "schema:Code",
       "@type": "rdfs:Class",
       "comment": "Computer programming source code. Example: Full (compile ready) solutions, code snippet samples, scripts, templates.",
@@ -1190,6 +1254,13 @@
       "label": "CommunityHealth"
     },
     {
+      "@id": "schema:CompilationAlbum",
+      "@type": "schema:MusicAlbumProductionType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "CompilationAlbum.",
+      "label": "CompilationAlbum"
+    },
+    {
       "@id": "schema:Completed",
       "@type": "schema:MedicalStudyStatus",
       "comment": "Completed.",
@@ -1265,6 +1336,15 @@
       ]
     },
     {
+      "@id": "schema:ControlAction",
+      "@type": "rdfs:Class",
+      "comment": "An agent controls a device or application.",
+      "label": "ControlAction",
+      "subClassOf": [
+        "schema:Action"
+      ]
+    },
+    {
       "@id": "schema:ConvenienceStore",
       "@type": "rdfs:Class",
       "comment": "A convenience store.",
@@ -1333,7 +1413,7 @@
       "@id": "schema:CreditCard",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_GoodRelationsClass",
-      "comment": "A credit or debit card type as a standardized procedure for transferring the monetary amount for a purchase.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#AmericanExpress\n    http://purl.org/goodrelations/v1#DinersClub\n    http://purl.org/goodrelations/v1#Discover\n    http://purl.org/goodrelations/v1#JCB\n    http://purl.org/goodrelations/v1#MasterCard\n    http://purl.org/goodrelations/v1#VISA\n    \t\t",
+      "comment": "A credit or debit card type as a standardized procedure for transferring the monetary amount for a purchase.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#AmericanExpress\n    http://purl.org/goodrelations/v1#DinersClub\n    http://purl.org/goodrelations/v1#Discover\n    http://purl.org/goodrelations/v1#JCB\n    http://purl.org/goodrelations/v1#MasterCard\n    http://purl.org/goodrelations/v1#VISA\n        ",
       "label": "CreditCard",
       "subClassOf": [
         "schema:PaymentMethod"
@@ -1363,6 +1443,20 @@
       "subClassOf": [
         "schema:MedicalIntangible"
       ]
+    },
+    {
+      "@id": "schema:DJMixAlbum",
+      "@type": "schema:MusicAlbumProductionType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "DJMixAlbum.",
+      "label": "DJMixAlbum"
+    },
+    {
+      "@id": "schema:DVDFormat",
+      "@type": "schema:MusicReleaseFormatType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "DVDFormat.",
+      "label": "DVDFormat"
     },
     {
       "@id": "schema:DamagedCondition",
@@ -1450,10 +1544,19 @@
       ]
     },
     {
+      "@id": "schema:DatedMoneySpecification",
+      "@type": "rdfs:Class",
+      "comment": "A DatedMoneySpecification represents monetary values with optional start and end dates. For example, this could represent an employee's salary over a specific period of time.",
+      "label": "DatedMoneySpecification",
+      "subClassOf": [
+        "schema:StructuredValue"
+      ]
+    },
+    {
       "@id": "schema:DayOfWeek",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_GoodRelationsClass",
-      "comment": "The day of the week, e.g. used to specify to which day the opening hours of an OpeningHoursSpecification refer.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#Monday\n    http://purl.org/goodrelations/v1#Tuesday\n    http://purl.org/goodrelations/v1#Wednesday\n    http://purl.org/goodrelations/v1#Thursday\n    http://purl.org/goodrelations/v1#Friday\n    http://purl.org/goodrelations/v1#Saturday\n    http://purl.org/goodrelations/v1#Sunday\n    http://purl.org/goodrelations/v1#PublicHolidays\n    \t\t",
+      "comment": "The day of the week, e.g. used to specify to which day the opening hours of an OpeningHoursSpecification refer.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#Monday\n    http://purl.org/goodrelations/v1#Tuesday\n    http://purl.org/goodrelations/v1#Wednesday\n    http://purl.org/goodrelations/v1#Thursday\n    http://purl.org/goodrelations/v1#Friday\n    http://purl.org/goodrelations/v1#Saturday\n    http://purl.org/goodrelations/v1#Sunday\n    http://purl.org/goodrelations/v1#PublicHolidays\n        ",
       "label": "DayOfWeek",
       "subClassOf": [
         "schema:Enumeration"
@@ -1466,6 +1569,15 @@
       "label": "DaySpa",
       "subClassOf": [
         "schema:HealthAndBeautyBusiness"
+      ]
+    },
+    {
+      "@id": "schema:DeactivateAction",
+      "@type": "rdfs:Class",
+      "comment": "The act of stopping or deactivating a device or application (e.g. stopping a timer or turning off a flashlight).",
+      "label": "DeactivateAction",
+      "subClassOf": [
+        "schema:ControlAction"
       ]
     },
     {
@@ -1509,7 +1621,7 @@
       "@id": "schema:DeliveryMethod",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_GoodRelationsClass",
-      "comment": "A delivery method is a standardized procedure for transferring the product or service to the destination of fulfillment chosen by the customer. Delivery methods are characterized by the means of transportation used, and by the organization or group that is the contracting party for the sending organization or person.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#DeliveryModeDirectDownload\n    http://purl.org/goodrelations/v1#DeliveryModeFreight\n    http://purl.org/goodrelations/v1#DeliveryModeMail\n    http://purl.org/goodrelations/v1#DeliveryModeOwnFleet\n    http://purl.org/goodrelations/v1#DeliveryModePickUp\n    http://purl.org/goodrelations/v1#DHL\n    http://purl.org/goodrelations/v1#FederalExpress\n    http://purl.org/goodrelations/v1#UPS\n    \t\t",
+      "comment": "A delivery method is a standardized procedure for transferring the product or service to the destination of fulfillment chosen by the customer. Delivery methods are characterized by the means of transportation used, and by the organization or group that is the contracting party for the sending organization or person.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#DeliveryModeDirectDownload\n    http://purl.org/goodrelations/v1#DeliveryModeFreight\n    http://purl.org/goodrelations/v1#DeliveryModeMail\n    http://purl.org/goodrelations/v1#DeliveryModeOwnFleet\n    http://purl.org/goodrelations/v1#DeliveryModePickUp\n    http://purl.org/goodrelations/v1#DHL\n    http://purl.org/goodrelations/v1#FederalExpress\n    http://purl.org/goodrelations/v1#UPS\n        ",
       "label": "DeliveryMethod",
       "subClassOf": [
         "schema:Enumeration"
@@ -1524,6 +1636,13 @@
       "subClassOf": [
         "schema:Intangible"
       ]
+    },
+    {
+      "@id": "schema:DemoAlbum",
+      "@type": "schema:MusicAlbumProductionType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "DemoAlbum.",
+      "label": "DemoAlbum"
     },
     {
       "@id": "schema:Dentist",
@@ -1617,6 +1736,20 @@
       "subClassOf": [
         "schema:MedicalTherapy"
       ]
+    },
+    {
+      "@id": "schema:DigitalAudioTapeFormat",
+      "@type": "schema:MusicReleaseFormatType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "DigitalAudioTapeFormat.",
+      "label": "DigitalAudioTapeFormat"
+    },
+    {
+      "@id": "schema:DigitalFormat",
+      "@type": "schema:MusicReleaseFormatType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "DigitalFormat.",
+      "label": "DigitalFormat"
     },
     {
       "@id": "schema:DisagreeAction",
@@ -1815,6 +1948,13 @@
       "label": "EBook"
     },
     {
+      "@id": "schema:EPRelease",
+      "@type": "schema:MusicAlbumReleaseType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "EPRelease.",
+      "label": "EPRelease"
+    },
+    {
       "@id": "schema:Ear",
       "@type": "schema:PhysicalExam",
       "comment": "Ear",
@@ -1919,6 +2059,15 @@
       ]
     },
     {
+      "@id": "schema:EmployeeRole",
+      "@type": "rdfs:Class",
+      "comment": "A subclass of OrganizationRole used to describe employee relationships.",
+      "label": "EmployeeRole",
+      "subClassOf": [
+        "schema:OrganizationRole"
+      ]
+    },
+    {
       "@id": "schema:EmploymentAgency",
       "@type": "rdfs:Class",
       "comment": "An employment agency.",
@@ -1988,7 +2137,7 @@
     {
       "@id": "schema:Episode",
       "@type": "rdfs:Class",
-      "comment": "A TV or radio episode which can be part of a series or season.",
+      "comment": "A media episode (e.g. TV, radio, video game) which can be part of a series or season.",
       "label": "Episode",
       "subClassOf": [
         "schema:CreativeWork"
@@ -2145,6 +2294,12 @@
       "label": "FDAnotEvaluated"
     },
     {
+      "@id": "schema:FailedActionStatus",
+      "@type": "schema:ActionStatusType",
+      "comment": "An action that failed to complete. The action's error property and the HTTP return code contain more information about the failure.",
+      "label": "FailedActionStatus"
+    },
+    {
       "@id": "schema:False",
       "@type": "schema:Boolean",
       "comment": "The boolean value false",
@@ -2299,6 +2454,42 @@
       "label": "FurnitureStore",
       "subClassOf": [
         "schema:Store"
+      ]
+    },
+    {
+      "@id": "schema:Game",
+      "@type": "rdfs:Class",
+      "comment": "The Game type represents things which are games. These are typically rule-governed recreational activities, e.g. role-playing games in which players assume the role of characters in a fictional setting. See also <a href=\"https://github.com/rvguha/schemaorg/issues/169\">open issues list</a>.",
+      "label": "Game",
+      "subClassOf": [
+        "schema:CreativeWork"
+      ]
+    },
+    {
+      "@id": "schema:GamePlayMode",
+      "@type": "rdfs:Class",
+      "comment": "Indicates whether this game is multi-player, co-op or single-player.",
+      "label": "GamePlayMode",
+      "subClassOf": [
+        "schema:Enumeration"
+      ]
+    },
+    {
+      "@id": "schema:GameServer",
+      "@type": "rdfs:Class",
+      "comment": "Server that provides game interaction in a multiplayer game.",
+      "label": "GameServer",
+      "subClassOf": [
+        "schema:Intangible"
+      ]
+    },
+    {
+      "@id": "schema:GameServerStatus",
+      "@type": "rdfs:Class",
+      "comment": "Status of a game server.",
+      "label": "GameServerStatus",
+      "subClassOf": [
+        "schema:Enumeration"
       ]
     },
     {
@@ -2817,8 +3008,35 @@
       "comment": "A list of items of any sort&#x2014;for example, Top 10 Movies About Weathermen, or Top 100 Party Songs. Not to be confused with HTML lists, which are often used only for formatting.",
       "label": "ItemList",
       "subClassOf": [
-        "schema:CreativeWork"
+        "schema:Intangible"
       ]
+    },
+    {
+      "@id": "schema:ItemListOrderAscending",
+      "@type": "schema:ItemListOrderType",
+      "comment": "An ItemList ordered with lower values listed first.",
+      "label": "ItemListOrderAscending"
+    },
+    {
+      "@id": "schema:ItemListOrderDescending",
+      "@type": "schema:ItemListOrderType",
+      "comment": "An ItemList ordered with higher values listed first.",
+      "label": "ItemListOrderDescending"
+    },
+    {
+      "@id": "schema:ItemListOrderType",
+      "@type": "rdfs:Class",
+      "comment": "Enumerated for values for itemListOrder for indicating how an ordered ItemList is organized.",
+      "label": "ItemListOrderType",
+      "subClassOf": [
+        "schema:Enumeration"
+      ]
+    },
+    {
+      "@id": "schema:ItemListUnordered",
+      "@type": "schema:ItemListOrderType",
+      "comment": "An ItemList ordered with no explicit order.",
+      "label": "ItemListUnordered"
     },
     {
       "@id": "schema:ItemPage",
@@ -2909,6 +3127,13 @@
       ]
     },
     {
+      "@id": "schema:LaserDiscFormat",
+      "@type": "schema:MusicReleaseFormatType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "LaserDiscFormat.",
+      "label": "LaserDiscFormat"
+    },
+    {
       "@id": "schema:LeaveAction",
       "@type": "rdfs:Class",
       "comment": "An agent leaves an event / group with participants/friends at a location.<p>Related actions:</p><ul><li><a href=\"http://schema.org/JoinAction\">JoinAction</a>: The antagonym of LeaveAction.</li><li><a href=\"http://schema.org/UnRegisterAction\">UnRegisterAction</a>: Unlike UnRegisterAction, LeaveAction implies leaving a group/team of people rather than a service.</li></ul>",
@@ -2995,6 +3220,15 @@
       ]
     },
     {
+      "@id": "schema:ListItem",
+      "@type": "rdfs:Class",
+      "comment": "An list item, e.g. a step in a checklist or how-to description.",
+      "label": "ListItem",
+      "subClassOf": [
+        "schema:Intangible"
+      ]
+    },
+    {
       "@id": "schema:ListenAction",
       "@type": "rdfs:Class",
       "comment": "The act of consuming audio content.",
@@ -3011,6 +3245,13 @@
       "subClassOf": [
         "schema:Event"
       ]
+    },
+    {
+      "@id": "schema:LiveAlbum",
+      "@type": "schema:MusicAlbumProductionType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "LiveAlbum.",
+      "label": "LiveAlbum"
     },
     {
       "@id": "schema:LocalBusiness",
@@ -3598,6 +3839,13 @@
       "label": "Midwifery"
     },
     {
+      "@id": "schema:MixtapeAlbum",
+      "@type": "schema:MusicAlbumProductionType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "MixtapeAlbum.",
+      "label": "MixtapeAlbum"
+    },
+    {
       "@id": "schema:MobileApplication",
       "@type": "rdfs:Class",
       "comment": "A software application designed specifically to work well on a mobile device such as a telephone.",
@@ -3688,6 +3936,15 @@
       ]
     },
     {
+      "@id": "schema:MovieSeries",
+      "@type": "rdfs:Class",
+      "comment": "A series of movies. Included movies can be indicated with the hasPart property.",
+      "label": "MovieSeries",
+      "subClassOf": [
+        "schema:Series"
+      ]
+    },
+    {
       "@id": "schema:MovieTheater",
       "@type": "rdfs:Class",
       "comment": "A movie theater.",
@@ -3711,6 +3968,12 @@
       "@type": "schema:MedicalTrialDesign",
       "comment": "A trial that takes place at multiple centers.",
       "label": "MultiCenterTrial"
+    },
+    {
+      "@id": "schema:MultiPlayer",
+      "@type": "schema:GamePlayMode",
+      "comment": "Play mode: MultiPlayer. Requiring or allowing multiple human players to play simultaneously.",
+      "label": "MultiPlayer"
     },
     {
       "@id": "schema:MulticellularParasite",
@@ -3759,6 +4022,36 @@
       ]
     },
     {
+      "@id": "schema:MusicAlbumProductionType",
+      "@type": "rdfs:Class",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "Classification of the album by it's type of content: soundtrack, live album, studio album, etc.",
+      "label": "MusicAlbumProductionType",
+      "subClassOf": [
+        "schema:Enumeration"
+      ]
+    },
+    {
+      "@id": "schema:MusicAlbumReleaseType",
+      "@type": "rdfs:Class",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "The kind of release which this album is: single, EP or album.",
+      "label": "MusicAlbumReleaseType",
+      "subClassOf": [
+        "schema:Enumeration"
+      ]
+    },
+    {
+      "@id": "schema:MusicComposition",
+      "@type": "rdfs:Class",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "A musical composition.",
+      "label": "MusicComposition",
+      "subClassOf": [
+        "schema:CreativeWork"
+      ]
+    },
+    {
       "@id": "schema:MusicEvent",
       "@type": "rdfs:Class",
       "comment": "Event type: Music event.",
@@ -3792,6 +4085,26 @@
       "label": "MusicRecording",
       "subClassOf": [
         "schema:CreativeWork"
+      ]
+    },
+    {
+      "@id": "schema:MusicRelease",
+      "@type": "rdfs:Class",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "A MusicRelease is a specific release of a music album.",
+      "label": "MusicRelease",
+      "subClassOf": [
+        "schema:MusicPlaylist"
+      ]
+    },
+    {
+      "@id": "schema:MusicReleaseFormatType",
+      "@type": "rdfs:Class",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "Format of this release (the type of recording media used, ie. compact disc, digital media, LP, etc.).",
+      "label": "MusicReleaseFormatType",
+      "subClassOf": [
+        "schema:Enumeration"
       ]
     },
     {
@@ -3986,7 +4299,7 @@
       "@id": "schema:Offer",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_GoodRelationsProperties",
-      "comment": "An offer to transfer some rights to an item or to provide a service&#x2014;for example, an offer to sell tickets to an event, to rent the DVD of a movie, to stream a TV show over the internet, to repair a motorcycle, or to loan a book.",
+      "comment": "An offer to transfer some rights to an item or to provide a service&#x2014;for example, an offer to sell tickets to an event, to rent the DVD of a movie, to stream a TV show over the internet, to repair a motorcycle, or to loan a book.\n      <br/><br/>\n      For <a href=\"http://www.gs1.org/barcodes/technical/idkeys/gtin\">GTIN</a>-related fields, see\n      <a href=\"http://www.gs1.org/barcodes/support/check_digit_calculator\">Check Digit calculator</a>\n      and <a href=\"http://www.gs1us.org/resources/standards/gtin-validation-guide\">validation guide</a>\n      from <a href=\"http://www.gs1.org/\">GS1</a>.\n      ",
       "label": "Offer",
       "subClassOf": [
         "schema:Intangible"
@@ -4011,6 +4324,18 @@
       ]
     },
     {
+      "@id": "schema:OfflinePermanently",
+      "@type": "schema:GameServerStatus",
+      "comment": "Game server status: OfflinePermanently. Server is offline and not available.",
+      "label": "OfflinePermanently "
+    },
+    {
+      "@id": "schema:OfflineTemporarily",
+      "@type": "schema:GameServerStatus",
+      "comment": "Game server status: OfflineTemporarily. Server is offline now but it can be online soon.",
+      "label": "OfflineTemporarily "
+    },
+    {
       "@id": "schema:OnDemandEvent",
       "@type": "rdfs:Class",
       "comment": "A publication event e.g. catch-up TV or radio podcast, during which a program is available on-demand.",
@@ -4030,6 +4355,18 @@
       "@type": "schema:MedicalSpecialty",
       "comment": "A specific branch of medical science that deals with benign and malignant tumors, including the study of their development, diagnosis, treatment and prevention.",
       "label": "Oncologic"
+    },
+    {
+      "@id": "schema:Online",
+      "@type": "schema:GameServerStatus",
+      "comment": "Game server status: Online. Server is available.",
+      "label": "Online"
+    },
+    {
+      "@id": "schema:OnlineFull",
+      "@type": "schema:GameServerStatus",
+      "comment": "Game server status: OnlineFull. Server is online but unavailable. The maximum number of players has reached.",
+      "label": "OnlineFull "
     },
     {
       "@id": "schema:OnlineOnly",
@@ -4261,7 +4598,7 @@
       "@id": "schema:ParcelService",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_GoodRelationsClass",
-      "comment": "A private parcel service as the delivery mode available for a certain offer.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#DHL\n    http://purl.org/goodrelations/v1#FederalExpress\n    http://purl.org/goodrelations/v1#UPS\n    \t",
+      "comment": "A private parcel service as the delivery mode available for a certain offer.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#DHL\n    http://purl.org/goodrelations/v1#FederalExpress\n    http://purl.org/goodrelations/v1#UPS\n      ",
       "label": "ParcelService",
       "subClassOf": [
         "schema:DeliveryMethod"
@@ -4354,7 +4691,7 @@
       "@id": "schema:PaymentMethod",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_GoodRelationsClass",
-      "comment": "A payment method is a standardized procedure for transferring the monetary amount for a purchase. Payment methods are characterized by the legal and technical structures used, and by the organization or group carrying out the transaction.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#ByBankTransferInAdvance\n    http://purl.org/goodrelations/v1#ByInvoice\n    http://purl.org/goodrelations/v1#Cash\n    http://purl.org/goodrelations/v1#CheckInAdvance\n    http://purl.org/goodrelations/v1#COD\n    http://purl.org/goodrelations/v1#DirectDebit\n    http://purl.org/goodrelations/v1#GoogleCheckout\n    http://purl.org/goodrelations/v1#PayPal\n    http://purl.org/goodrelations/v1#PaySwarm\n    \t\t",
+      "comment": "A payment method is a standardized procedure for transferring the monetary amount for a purchase. Payment methods are characterized by the legal and technical structures used, and by the organization or group carrying out the transaction.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#ByBankTransferInAdvance\n    http://purl.org/goodrelations/v1#ByInvoice\n    http://purl.org/goodrelations/v1#Cash\n    http://purl.org/goodrelations/v1#CheckInAdvance\n    http://purl.org/goodrelations/v1#COD\n    http://purl.org/goodrelations/v1#DirectDebit\n    http://purl.org/goodrelations/v1#GoogleCheckout\n    http://purl.org/goodrelations/v1#PayPal\n    http://purl.org/goodrelations/v1#PaySwarm\n        ",
       "label": "PaymentMethod",
       "subClassOf": [
         "schema:Enumeration"
@@ -4421,10 +4758,10 @@
       "@id": "schema:Periodical",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
-      "comment": "A publication in any medium issued in successive parts bearing numerical or chronological designations and intended, such as a magazine, scholarly journal, or newspaper to continue indefinitely.",
+      "comment": "A publication in any medium issued in successive parts bearing numerical or chronological designations and intended, such as a magazine, scholarly journal, or newspaper to continue indefinitely.\n\n      <br/><br/>See also <a href=\"http://blog.schema.org/2014/09/schemaorg-support-for-bibliographic_2.html\">blog post</a>\n      ",
       "label": "Periodical",
       "subClassOf": [
-        "schema:CreativeWork"
+        "schema:Series"
       ],
       "equivalentClass": "http://purl.org/ontology/bibo/Periodical"
     },
@@ -4841,7 +5178,7 @@
       "@id": "schema:PublicationIssue",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
-      "comment": "A part of a successively published publication such as a periodical or publication volume, often numbered, usually containing a grouping of works such as articles.",
+      "comment": "A part of a successively published publication such as a periodical or publication volume, often numbered, usually containing a grouping of works such as articles.\n\n      <br/><br/>See also <a href=\"http://blog.schema.org/2014/09/schemaorg-support-for-bibliographic_2.html\">blog post</a>\n      ",
       "label": "PublicationIssue",
       "subClassOf": [
         "schema:CreativeWork"
@@ -4852,7 +5189,7 @@
       "@id": "schema:PublicationVolume",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
-      "comment": "A part of a successively published publication such as a periodical or multi-volume work, often numbered. It may represent a time span, such as a year.",
+      "comment": "A part of a successively published publication such as a periodical or multi-volume work, often numbered. It may represent a time span, such as a year.\n\n      <br/><br/>See also <a href=\"http://blog.schema.org/2014/09/schemaorg-support-for-bibliographic_2.html\">blog post</a>\n      ",
       "label": "PublicationVolume",
       "subClassOf": [
         "schema:CreativeWork"
@@ -5000,7 +5337,7 @@
     {
       "@id": "schema:Rating",
       "@type": "rdfs:Class",
-      "comment": "The rating of the video.",
+      "comment": "A rating is an evaluation on a numeric scale, such as 1 to 5 stars.",
       "label": "Rating",
       "subClassOf": [
         "schema:Intangible"
@@ -5110,6 +5447,13 @@
       "subClassOf": [
         "schema:AllocateAction"
       ]
+    },
+    {
+      "@id": "schema:RemixAlbum",
+      "@type": "schema:MusicAlbumProductionType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "RemixAlbum.",
+      "label": "RemixAlbum"
     },
     {
       "@id": "schema:Renal",
@@ -5274,6 +5618,15 @@
       "label": "ResultsNotAvailable"
     },
     {
+      "@id": "schema:ResumeAction",
+      "@type": "rdfs:Class",
+      "comment": "The act of resuming a device or application which was formerly paused (e.g. resume music playback or resume a timer).",
+      "label": "ResumeAction",
+      "subClassOf": [
+        "schema:ControlAction"
+      ]
+    },
+    {
       "@id": "schema:Retail",
       "@type": "schema:DrugCostCategory",
       "comment": "The drug's cost represents the retail cost of the drug.",
@@ -5324,7 +5677,7 @@
     {
       "@id": "schema:Role",
       "@type": "rdfs:Class",
-      "comment": "Represents additional information about a relationship or property. For example a Role can be used to say that a 'member' role linking some SportsTeam to a player occurred during a particular time period. Or that a Person's 'actor' role in a Movie was for some particular characterName. Such properties can be attached to a Role entity, which is then associated with the main entities using ordinary properties like 'member' or 'actor'.\n    ",
+      "comment": "Represents additional information about a relationship or property. For example a Role can be used to say that a 'member' role linking some SportsTeam to a player occurred during a particular time period. Or that a Person's 'actor' role in a Movie was for some particular characterName. Such properties can be attached to a Role entity, which is then associated with the main entities using ordinary properties like 'member' or 'actor'.\n\n      <br/><br/>See also <a href=\"http://blog.schema.org/2014/06/introducing-role.html\">blog post</a>\n    ",
       "label": "Role",
       "subClassOf": [
         "schema:Intangible"
@@ -5348,6 +5701,33 @@
       "subClassOf": [
         "schema:InformAction"
       ]
+    },
+    {
+      "@id": "schema:RsvpResponseMaybe",
+      "@type": "schema:RsvpResponseType",
+      "comment": "The invitee may or may not attend.",
+      "label": "RsvpResponseMaybe"
+    },
+    {
+      "@id": "schema:RsvpResponseNo",
+      "@type": "schema:RsvpResponseType",
+      "comment": "The invitee will not attend.",
+      "label": "RsvpResponseNo"
+    },
+    {
+      "@id": "schema:RsvpResponseType",
+      "@type": "rdfs:Class",
+      "comment": "RsvpResponseType is an enumeration type whose instances represent responding to an RSVP request.",
+      "label": "RsvpResponseType",
+      "subClassOf": [
+        "schema:Enumeration"
+      ]
+    },
+    {
+      "@id": "schema:RsvpResponseYes",
+      "@type": "schema:RsvpResponseType",
+      "comment": "The invitee will attend.",
+      "label": "RsvpResponseYes"
     },
     {
       "@id": "schema:SaleEvent",
@@ -5424,7 +5804,7 @@
     {
       "@id": "schema:Season",
       "@type": "rdfs:Class",
-      "comment": "A TV or radio season.",
+      "comment": "A media season e.g. tv, radio, video game etc.",
       "label": "Season",
       "subClassOf": [
         "schema:CreativeWork"
@@ -5475,7 +5855,7 @@
     {
       "@id": "schema:Series",
       "@type": "rdfs:Class",
-      "comment": "A TV or radio series.",
+      "comment": "\n          A Series in schema.org is a group of related items, typically but not necessarily of the same kind.\n          Series are usually organized into some order, often chronological. Unlike <a href=\"/ItemList\">ItemList</a> which\n          is a general purpose data structure for lists of things, the emphasis with Series\n          is on published materials (written e.g. books and periodicals, or media such as\n          tv, radio and games).\n\n          <br/><br/>\n\n          Specific subtypes are available for describing <a href=\"/TVSeries\">TVSeries</a>, <a href=\"/RadioSeries\">RadioSeries</a>,\n          <a href=\"/MovieSeries\">MovieSeries</a>,\n          <a href=\"/BookSeries\">BookSeries</a>,\n          <a href=\"/Periodical\">Periodical</a>\n          and <a href=\"/VideoGameSeries\">VideoGameSeries</a>. In each case,\n          the <a href=\"/hasPart\">hasPart</a> / <a href=\"/isPartOf\">isPartOf</a> properties\n          can be used to relate the Series to its parts. The general Series type serves largely\n          just to organize these more specific and practical subtypes.\n\n          <br/><br/>\n\n          It is common for properties applicable to an item from the series to be usefully applied to the containing group.\n          Schema.org attempts to anticipate some of these cases, but publishers should be free to apply\n          properties of the series parts to the series as a whole wherever they seem appropriate.\n          ",
       "label": "Series",
       "subClassOf": [
         "schema:CreativeWork"
@@ -5548,6 +5928,19 @@
       ]
     },
     {
+      "@id": "schema:SinglePlayer",
+      "@type": "schema:GamePlayMode",
+      "comment": "Play mode: SinglePlayer. Which is played by a lone player.",
+      "label": "SinglePlayer"
+    },
+    {
+      "@id": "schema:SingleRelease",
+      "@type": "schema:MusicAlbumReleaseType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "SingleRelease.",
+      "label": "SingleRelease"
+    },
+    {
       "@id": "schema:SiteNavigationElement",
       "@type": "rdfs:Class",
       "comment": "A navigation element of the page.",
@@ -5606,6 +5999,13 @@
       ]
     },
     {
+      "@id": "schema:SoundtrackAlbum",
+      "@type": "schema:MusicAlbumProductionType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "SoundtrackAlbum.",
+      "label": "SoundtrackAlbum"
+    },
+    {
       "@id": "schema:Specialty",
       "@type": "rdfs:Class",
       "comment": "Any branch of a field in which people typically develop specific expertise, usually after significant study, time, and effort.",
@@ -5619,6 +6019,13 @@
       "@type": "schema:MedicalSpecialty",
       "comment": "Speech pathology.",
       "label": "SpeechPathology"
+    },
+    {
+      "@id": "schema:SpokenWordAlbum",
+      "@type": "schema:MusicAlbumProductionType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "SpokenWordAlbum.",
+      "label": "SpokenWordAlbum"
     },
     {
       "@id": "schema:SportingGoodsStore",
@@ -5657,12 +6064,21 @@
       ]
     },
     {
+      "@id": "schema:SportsOrganization",
+      "@type": "rdfs:Class",
+      "comment": "Represents the collection of all sports organizations, including sports teams, governing bodies, and sports associations.",
+      "label": "SportsOrganization",
+      "subClassOf": [
+        "schema:Organization"
+      ]
+    },
+    {
       "@id": "schema:SportsTeam",
       "@type": "rdfs:Class",
       "comment": "Organization: Sports team.",
       "label": "SportsTeam",
       "subClassOf": [
-        "schema:Organization"
+        "schema:SportsOrganization"
       ]
     },
     {
@@ -5709,6 +6125,13 @@
       ]
     },
     {
+      "@id": "schema:StudioAlbum",
+      "@type": "schema:MusicAlbumProductionType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "StudioAlbum.",
+      "label": "StudioAlbum"
+    },
+    {
       "@id": "schema:SubscribeAction",
       "@type": "rdfs:Class",
       "comment": "The act of forming a personal connection with someone/something (object) unidirectionally/asymmetrically to get updates pushed to.<p>Related actions:</p><ul><li><a href=\"http://schema.org/FollowAction\">FollowAction</a>: Unlike FollowAction, SubscribeAction implies that the subscriber acts as a passive agent being constantly/actively pushed for updates.</li><li><a href=\"http://schema.org/RegisterAction\">RegisterAction</a>: Unlike RegisterAction, SubscribeAction implies that the agent is interested in continuing receiving updates from the object.</li><li><a href=\"http://schema.org/JoinAction\">JoinAction</a>: Unlike JoinAction, SubscribeAction implies that the agent is interested in continuing receiving updates from the object.</li></ul>",
@@ -5747,6 +6170,15 @@
       "@type": "schema:MedicalProcedureType",
       "comment": "A type of medical procedure that involves invasive surgical techniques.",
       "label": "SurgicalProcedure"
+    },
+    {
+      "@id": "schema:SuspendAction",
+      "@type": "rdfs:Class",
+      "comment": "The act of momentarily pausing a device or application (e.g. pause music playback or pause a timer).",
+      "label": "SuspendAction",
+      "subClassOf": [
+        "schema:ControlAction"
+      ]
     },
     {
       "@id": "schema:Suspended",
@@ -6356,6 +6788,25 @@
       ]
     },
     {
+      "@id": "schema:VideoGame",
+      "@type": "rdfs:Class",
+      "comment": "A video game is an electronic game that involves human interaction with a user interface to generate visual feedback on a video device.",
+      "label": "VideoGame",
+      "subClassOf": [
+        "schema:SoftwareApplication",
+        "schema:Game"
+      ]
+    },
+    {
+      "@id": "schema:VideoGameSeries",
+      "@type": "rdfs:Class",
+      "comment": "A <a href=\"/VideoGame\">video game</a> series.",
+      "label": "VideoGameSeries",
+      "subClassOf": [
+        "schema:Series"
+      ]
+    },
+    {
       "@id": "schema:VideoObject",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_rNews",
@@ -6373,6 +6824,13 @@
       "subClassOf": [
         "schema:ConsumeAction"
       ]
+    },
+    {
+      "@id": "schema:VinylFormat",
+      "@type": "schema:MusicReleaseFormatType",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "comment": "VinylFormat.",
+      "label": "VinylFormat"
     },
     {
       "@id": "schema:Virus",
@@ -6472,7 +6930,7 @@
       "@id": "schema:WarrantyScope",
       "@type": "rdfs:Class",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_GoodRelationsClass",
-      "comment": "A range of of services that will be provided to a customer free of charge in case of a defect or malfunction of a product.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#Labor-BringIn\n    http://purl.org/goodrelations/v1#PartsAndLabor-BringIn\n    http://purl.org/goodrelations/v1#PartsAndLabor-PickUp\n    \t",
+      "comment": "A range of of services that will be provided to a customer free of charge in case of a defect or malfunction of a product.\n\n    Commonly used values:\n\n    http://purl.org/goodrelations/v1#Labor-BringIn\n    http://purl.org/goodrelations/v1#PartsAndLabor-BringIn\n    http://purl.org/goodrelations/v1#PartsAndLabor-PickUp\n      ",
       "label": "WarrantyScope",
       "subClassOf": [
         "schema:Enumeration"
@@ -6727,7 +7185,7 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Muscle",
       "rangeIncludes": "schema:Text",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:muscleAction"
       },
       "comment": "The movement the muscle generates.",
@@ -6774,15 +7232,17 @@
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:Movie",
+        "schema:VideoObject",
+        "schema:VideoGame",
         "schema:Episode",
-        "schema:TVEpisode",
-        "schema:Series",
+        "schema:RadioSeries",
+        "schema:MovieSeries",
+        "schema:VideoGameSeries",
         "schema:TVSeries",
-        "schema:RadioEpisode",
-        "schema:RadioSeries"
+        "schema:Clip"
       ],
       "rangeIncludes": "schema:Person",
-      "comment": "A cast member of the movie, tv/radio series, season, episode, or video.",
+      "comment": "An actor, e.g. in tv, radio, movie, video games etc. Actors can be associated with individual items or with a series, episode, clip.",
       "label": "actor"
     },
     {
@@ -6790,18 +7250,20 @@
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:Movie",
+        "schema:VideoObject",
+        "schema:VideoGame",
         "schema:Episode",
-        "schema:TVEpisode",
-        "schema:Series",
+        "schema:RadioSeries",
+        "schema:MovieSeries",
+        "schema:VideoGameSeries",
         "schema:TVSeries",
-        "schema:RadioEpisode",
-        "schema:RadioSeries"
+        "schema:Clip"
       ],
       "rangeIncludes": "schema:Person",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:actor"
       },
-      "comment": "A cast member of the movie, tv/radio series, season, episode, or video. (legacy spelling; see singular form, actor)",
+      "comment": "An actor, e.g. in tv, radio, movie, video games etc. Actors can be associated with individual items or with a series, episode, clip.",
       "label": "actors"
     },
     {
@@ -6821,12 +7283,23 @@
       "label": "additionalName"
     },
     {
+      "@id": "schema:additionalNumberOfGuests",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:RsvpAction",
+      "rangeIncludes": "schema:Number",
+      "comment": "If responding yes, the number of guests who will attend in addition to the invitee.",
+      "label": "additionalNumberOfGuests"
+    },
+    {
       "@id": "schema:additionalType",
       "@type": "rdf:Property",
       "domainIncludes": "schema:Thing",
       "rangeIncludes": "schema:URL",
       "comment": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
-      "label": "additionalType"
+      "label": "additionalType",
+      "subPropertyOf": [
+        "rdf:type"
+      ]
     },
     {
       "@id": "schema:additionalVariable",
@@ -6963,14 +7436,43 @@
       "label": "album"
     },
     {
+      "@id": "schema:albumProductionType",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicAlbum",
+      "rangeIncludes": "schema:MusicAlbumProductionType",
+      "comment": "Classification of the album by it's type of content: soundtrack, live album, studio album, etc.",
+      "label": "albumProductionType"
+    },
+    {
+      "@id": "schema:albumRelease",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:MusicAlbum",
+      "schema:inverseOf": {
+        "@id": "schema:releaseOf"
+      },
+      "rangeIncludes": "schema:MusicRelease",
+      "comment": "A release of this album.",
+      "label": "albumRelease"
+    },
+    {
+      "@id": "schema:albumReleaseType",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicAlbum",
+      "rangeIncludes": "schema:MusicAlbumReleaseType",
+      "comment": "The kind of release which this album is: single, EP or album.",
+      "label": "albumReleaseType"
+    },
+    {
       "@id": "schema:albums",
       "@type": "rdf:Property",
       "domainIncludes": "schema:MusicGroup",
       "rangeIncludes": "schema:MusicAlbum",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:album"
       },
-      "comment": "A collection of music albums (legacy spelling; see singular form, album).",
+      "comment": "A collection of music albums.",
       "label": "albums"
     },
     {
@@ -7000,10 +7502,7 @@
     {
       "@id": "schema:alternateName",
       "@type": "rdf:Property",
-      "domainIncludes": [
-        "schema:Thing",
-        "schema:MedicalEntity"
-      ],
+      "domainIncludes": "schema:Thing",
       "rangeIncludes": "schema:Text",
       "comment": "An alias for the item.",
       "label": "alternateName"
@@ -7037,6 +7536,14 @@
       "rangeIncludes": "schema:EducationalOrganization",
       "comment": "An educational organizations that the person is an alumni of.",
       "label": "alumniOf"
+    },
+    {
+      "@id": "schema:amount",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:DatedMoneySpecification",
+      "rangeIncludes": "schema:Number",
+      "comment": "The amount of money.",
+      "label": "amount"
     },
     {
       "@id": "schema:amountOfThisGood",
@@ -7301,6 +7808,14 @@
       "label": "associatedPathophysiology"
     },
     {
+      "@id": "schema:athlete",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:SportsTeam",
+      "rangeIncludes": "schema:Person",
+      "comment": "A person that acts as performing member of a sports team; a player as opposed to a coach",
+      "label": "athlete"
+    },
+    {
       "@id": "schema:attendee",
       "@type": "rdf:Property",
       "domainIncludes": "schema:Event",
@@ -7319,10 +7834,10 @@
         "schema:Organization",
         "schema:Person"
       ],
-      "schema:supercededBy": {
-        "@id": "schema:attendees"
+      "schema:supersededBy": {
+        "@id": "schema:attendee"
       },
-      "comment": "A person attending the event (legacy spelling; see singular form, attendee).",
+      "comment": "A person attending the event.",
       "label": "attendees"
     },
     {
@@ -7513,11 +8028,25 @@
         "schema:Person"
       ],
       "rangeIncludes": "schema:Text",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:award"
       },
-      "comment": "Awards won by this person or for this creative work. (legacy spelling; see singular form, award)",
+      "comment": "Awards won by this person or for this creative work.",
       "label": "awards"
+    },
+    {
+      "@id": "schema:awayTeam",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:SportsEvent",
+      "rangeIncludes": [
+        "schema:Person",
+        "schema:SportsTeam"
+      ],
+      "comment": "The away team in a sports event.",
+      "label": "awayTeam",
+      "subPropertyOf": [
+        "schema:competitor"
+      ]
     },
     {
       "@id": "schema:background",
@@ -7530,9 +8059,15 @@
     {
       "@id": "schema:baseSalary",
       "@type": "rdf:Property",
-      "domainIncludes": "schema:JobPosting",
-      "rangeIncludes": "schema:Number",
-      "comment": "The base salary of the job.",
+      "domainIncludes": [
+        "schema:JobPosting",
+        "schema:EmployeeRole"
+      ],
+      "rangeIncludes": [
+        "schema:Number",
+        "schema:PriceSpecification"
+      ],
+      "comment": "The base salary of the job or of an employee in an EmployeeRole.",
       "label": "baseSalary"
     },
     {
@@ -7587,6 +8122,14 @@
       "label": "birthDate"
     },
     {
+      "@id": "schema:birthPlace",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:Person",
+      "rangeIncludes": "schema:Place",
+      "comment": "The place where the person was born.",
+      "label": "birthPlace"
+    },
+    {
       "@id": "schema:bitrate",
       "@type": "rdf:Property",
       "domainIncludes": "schema:MediaObject",
@@ -7607,10 +8150,10 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Blog",
       "rangeIncludes": "schema:BlogPosting",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:blogPost"
       },
-      "comment": "The postings that are part of this blog (legacy spelling; see singular form, blogPost).",
+      "comment": "The postings that are part of this blog.",
       "label": "blogPosts"
     },
     {
@@ -7661,7 +8204,7 @@
         "schema:Person",
         "schema:Organization"
       ],
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:broker"
       },
       "comment": "'bookingAgent' is an out-dated term indicating a 'broker' that serves as a booking agent.",
@@ -7698,10 +8241,7 @@
       "@id": "schema:branch",
       "@type": "rdf:Property",
       "domainIncludes": "schema:Nerve",
-      "rangeIncludes": [
-        "schema:AnatomicalStructure",
-        "schema:Nerve"
-      ],
+      "rangeIncludes": "schema:AnatomicalStructure",
       "comment": "The branches that delineate from the nerve bundle.",
       "label": "branch"
     },
@@ -7732,7 +8272,10 @@
       "@id": "schema:breadcrumb",
       "@type": "rdf:Property",
       "domainIncludes": "schema:WebPage",
-      "rangeIncludes": "schema:Text",
+      "rangeIncludes": [
+        "schema:Text",
+        "schema:BreadcrumbList"
+      ],
       "comment": "A set of links that can help a user understand and navigate a website hierarchy.",
       "label": "breadcrumb"
     },
@@ -7870,7 +8413,7 @@
         "schema:Flight"
       ],
       "rangeIncludes": "schema:Organization",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:provider"
       },
       "comment": "'carrier' is an out-dated term indicating the 'provider' for parcel delivery and flights.",
@@ -7891,6 +8434,15 @@
       "rangeIncludes": "schema:DataCatalog",
       "comment": "A data catalog which contains a dataset.",
       "label": "catalog"
+    },
+    {
+      "@id": "schema:catalogNumber",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicRelease",
+      "rangeIncludes": "schema:Text",
+      "comment": "The catalog number for the release.",
+      "label": "catalogNumber"
     },
     {
       "@id": "schema:category",
@@ -7927,12 +8479,42 @@
       "label": "causeOf"
     },
     {
+      "@id": "schema:character",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:CreativeWork",
+      "rangeIncludes": "schema:Person",
+      "comment": "Fictional person connected with a creative work.",
+      "label": "character"
+    },
+    {
+      "@id": "schema:characterAttribute",
+      "@type": "rdf:Property",
+      "domainIncludes": [
+        "schema:Game",
+        "schema:VideoGameSeries"
+      ],
+      "rangeIncludes": "schema:Thing",
+      "comment": "A piece of data that represents a particular aspect of a fictional character (skill, power, character points, advantage, disadvantage).",
+      "label": "characterAttribute"
+    },
+    {
       "@id": "schema:characterName",
       "@type": "rdf:Property",
       "domainIncludes": "schema:PerformanceRole",
       "rangeIncludes": "schema:Text",
       "comment": "The name of a character played in some acting or performing role, i.e. in a PerformanceRole.",
       "label": "characterName"
+    },
+    {
+      "@id": "schema:cheatCode",
+      "@type": "rdf:Property",
+      "domainIncludes": [
+        "schema:VideoGame",
+        "schema:VideoGameSeries"
+      ],
+      "rangeIncludes": "schema:CreativeWork",
+      "comment": "Cheat codes to the game.",
+      "label": "cheatCode"
     },
     {
       "@id": "schema:checkinTime",
@@ -8032,6 +8614,14 @@
       "label": "closes"
     },
     {
+      "@id": "schema:coach",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:SportsTeam",
+      "rangeIncludes": "schema:Person",
+      "comment": "A person that acts in a coaching role for a sports team.",
+      "label": "coach"
+    },
+    {
       "@id": "schema:code",
       "@type": "rdf:Property",
       "domainIncludes": "schema:MedicalEntity",
@@ -8076,10 +8666,10 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Person",
       "rangeIncludes": "schema:Person",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:colleague"
       },
-      "comment": "A colleague of the person (legacy spelling; see singular form, colleague).",
+      "comment": "A colleague of the person.",
       "label": "colleagues"
     },
     {
@@ -8137,6 +8727,29 @@
       "label": "commentTime"
     },
     {
+      "@id": "schema:competitor",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:SportsEvent",
+      "rangeIncludes": [
+        "schema:Person",
+        "schema:SportsTeam"
+      ],
+      "comment": "A competitor in a sports event.",
+      "label": "competitor"
+    },
+    {
+      "@id": "schema:composer",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicComposition",
+      "rangeIncludes": [
+        "schema:Person",
+        "schema:Organization"
+      ],
+      "comment": "The person or organization who wrote the composition.",
+      "label": "composer"
+    },
+    {
       "@id": "schema:comprisedOf",
       "@type": "rdf:Property",
       "domainIncludes": "schema:AnatomicalSystem",
@@ -8190,10 +8803,10 @@
         "schema:Person"
       ],
       "rangeIncludes": "schema:ContactPoint",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:contactPoint"
       },
-      "comment": "A contact point for a person or organization (legacy spelling; see singular form, contactPoint).",
+      "comment": "A contact point for a person or organization.",
       "label": "contactPoints"
     },
     {
@@ -8394,12 +9007,32 @@
       "label": "creator"
     },
     {
+      "@id": "schema:creditedTo",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicRelease",
+      "rangeIncludes": [
+        "schema:Person",
+        "schema:Organization"
+      ],
+      "comment": "The group the release is credited to if different than the byArtist. For example, Red and Blue is credited to \"Stefani Germanotta Band\", but by Lady Gaga.",
+      "label": "creditedTo"
+    },
+    {
       "@id": "schema:currenciesAccepted",
       "@type": "rdf:Property",
       "domainIncludes": "schema:LocalBusiness",
       "rangeIncludes": "schema:Text",
       "comment": "The currency accepted (in <a href='http://en.wikipedia.org/wiki/ISO_4217'>ISO 4217 currency format</a>).",
       "label": "currenciesAccepted"
+    },
+    {
+      "@id": "schema:currency",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:DatedMoneySpecification",
+      "rangeIncludes": "schema:Text",
+      "comment": "The currency in which the monetary amount is expressed (in 3-letter <a href='http://en.wikipedia.org/wiki/ISO_4217'\">ISO 4217</a> format).",
+      "label": "currency"
     },
     {
       "@id": "schema:customer",
@@ -8483,6 +9116,14 @@
       "rangeIncludes": "schema:Date",
       "comment": "Date of death.",
       "label": "deathDate"
+    },
+    {
+      "@id": "schema:deathPlace",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:Person",
+      "rangeIncludes": "schema:Place",
+      "comment": "The place where the person died.",
+      "label": "deathPlace"
     },
     {
       "@id": "schema:defaultValue",
@@ -8692,15 +9333,17 @@
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:Movie",
+        "schema:VideoObject",
+        "schema:VideoGame",
         "schema:Episode",
-        "schema:TVEpisode",
-        "schema:Series",
+        "schema:VideoGameSeries",
         "schema:TVSeries",
-        "schema:RadioEpisode",
-        "schema:RadioSeries"
+        "schema:RadioSeries",
+        "schema:MovieSeries",
+        "schema:Clip"
       ],
       "rangeIncludes": "schema:Person",
-      "comment": "The director of the movie, tv/radio episode or series.",
+      "comment": "A director of e.g. tv, radio, movie, video games etc. content. Directors can be associated with individual items or with a series, episode, clip.",
       "label": "director"
     },
     {
@@ -8708,18 +9351,20 @@
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:Movie",
+        "schema:VideoObject",
+        "schema:VideoGame",
         "schema:Episode",
-        "schema:TVEpisode",
-        "schema:Series",
+        "schema:VideoGameSeries",
         "schema:TVSeries",
-        "schema:RadioEpisode",
-        "schema:RadioSeries"
+        "schema:RadioSeries",
+        "schema:MovieSeries",
+        "schema:Clip"
       ],
       "rangeIncludes": "schema:Person",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:director"
       },
-      "comment": "The director of the movie, tv/radio episode or series. (legacy spelling; see singular form, director)",
+      "comment": "A director of e.g. tv, radio, movie, video games etc. content. Directors can be associated with individual items or with a series, episode, clip.",
       "label": "directors"
     },
     {
@@ -8945,7 +9590,8 @@
         "schema:MediaObject",
         "schema:Event",
         "schema:Movie",
-        "schema:MusicRecording"
+        "schema:MusicRecording",
+        "schema:MusicRelease"
       ],
       "rangeIncludes": "schema:Duration",
       "comment": "The duration of the item (movie, audio recording, event, etc.) in <a href='http://en.wikipedia.org/wiki/ISO_8601'>ISO 8601 date format</a>.",
@@ -9115,10 +9761,10 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Organization",
       "rangeIncludes": "schema:Person",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:employee"
       },
-      "comment": "People working for this organization. (legacy spelling; see singular form, employee)",
+      "comment": "People working for this organization.",
       "label": "employees"
     },
     {
@@ -9166,10 +9812,10 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:CreativeWork",
       "rangeIncludes": "schema:MediaObject",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:encoding"
       },
-      "comment": "A media object that encodes this CreativeWork (legacy spelling; see singular form, encoding).",
+      "comment": "A media object that encodes this CreativeWork.",
       "label": "encodings"
     },
     {
@@ -9179,12 +9825,11 @@
         "schema:Role",
         "schema:Event",
         "schema:Season",
-        "schema:TVSeason",
         "schema:Series",
-        "schema:TVSeries"
+        "schema:DatedMoneySpecification"
       ],
       "rangeIncludes": "schema:Date",
-      "comment": "The end date and time of the role, event or item (in <a href='http://en.wikipedia.org/wiki/ISO_8601'>ISO 8601 date format</a>).",
+      "comment": "The end date and time of the item (in <a href='http://en.wikipedia.org/wiki/ISO_8601'>ISO 8601 date format</a>).",
       "label": "endDate"
     },
     {
@@ -9250,15 +9895,16 @@
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:Season",
-        "schema:TVSeason",
-        "schema:Series",
-        "schema:TVSeries",
-        "schema:RadioSeason",
-        "schema:RadioSeries"
+        "schema:RadioSeries",
+        "schema:VideoGameSeries",
+        "schema:TVSeries"
       ],
       "rangeIncludes": "schema:Episode",
-      "comment": "An episode of a TV/radio series or season",
-      "label": "episode"
+      "comment": "An episode of a tv, radio or game media within a series or season.",
+      "label": "episode",
+      "subPropertyOf": [
+        "schema:hasPart"
+      ]
     },
     {
       "@id": "schema:episodeNumber",
@@ -9279,17 +9925,15 @@
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:Season",
-        "schema:TVSeason",
-        "schema:Series",
-        "schema:TVSeries",
-        "schema:RadioSeason",
-        "schema:RadioSeries"
+        "schema:RadioSeries",
+        "schema:VideoGameSeries",
+        "schema:TVSeries"
       ],
       "rangeIncludes": "schema:Episode",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:episode"
       },
-      "comment": "An episode of a TV/radio series or season (legacy spelling; see singular form, episode)",
+      "comment": "An episode of a TV/radio series or season.",
       "label": "episodes"
     },
     {
@@ -9299,6 +9943,14 @@
       "rangeIncludes": "schema:QualitativeValue",
       "comment": "This ordering relation for qualitative values indicates that the subject is equal to the object.",
       "label": "equal"
+    },
+    {
+      "@id": "schema:error",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:Action",
+      "rangeIncludes": "schema:Thing",
+      "comment": "For failed actions, more information on the cause of the failure.",
+      "label": "error"
     },
     {
       "@id": "schema:estimatedFlightDuration",
@@ -9332,7 +9984,7 @@
         "schema:LeaveAction"
       ],
       "rangeIncludes": "schema:Event",
-      "comment": "Upcoming or past event associated with this place or organization.",
+      "comment": "Upcoming or past event associated with this place, organization, or action.",
       "label": "event"
     },
     {
@@ -9351,10 +10003,10 @@
         "schema:Place"
       ],
       "rangeIncludes": "schema:Event",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:event"
       },
-      "comment": "Upcoming or past events associated with this place or organization (legacy spelling; see singular form, event).",
+      "comment": "Upcoming or past events associated with this place or organization.",
       "label": "events"
     },
     {
@@ -9440,6 +10092,14 @@
       "label": "expectedPrognosis"
     },
     {
+      "@id": "schema:expectsAcceptanceOf",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:ConsumeAction",
+      "rangeIncludes": "schema:Offer",
+      "comment": "An Offer which must be accepted before the user can perform the Action. For example, the user may need to buy a movie before being able to watch it.",
+      "label": "expectsAcceptanceOf"
+    },
+    {
       "@id": "schema:experienceRequirements",
       "@type": "rdf:Property",
       "domainIncludes": "schema:JobPosting",
@@ -9468,7 +10128,7 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Person",
       "rangeIncludes": "schema:Text",
-      "comment": "Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the Name property.",
+      "comment": "Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the name property.",
       "label": "familyName"
     },
     {
@@ -9526,6 +10186,15 @@
       "rangeIncludes": "schema:Integer",
       "comment": "Size of the application / package (e.g. 18MB). In the absence of a unit (MB, KB etc.), KB will be assumed.",
       "label": "fileSize"
+    },
+    {
+      "@id": "schema:firstPerformance",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicComposition",
+      "rangeIncludes": "schema:Event",
+      "comment": "The date and place the work was first performed.",
+      "label": "firstPerformance"
     },
     {
       "@id": "schema:flightDistance",
@@ -9622,10 +10291,10 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Organization",
       "rangeIncludes": "schema:Person",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:founder"
       },
-      "comment": "A person who founded this organization (legacy spelling; see singular form, founder).",
+      "comment": "A person who founded this organization.",
       "label": "founders"
     },
     {
@@ -9635,6 +10304,14 @@
       "rangeIncludes": "schema:Date",
       "comment": "The date that this organization was founded.",
       "label": "foundingDate"
+    },
+    {
+      "@id": "schema:foundingLocation",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:Organization",
+      "rangeIncludes": "schema:Place",
+      "comment": "The place where the Organization was founded.",
+      "label": "foundingLocation"
     },
     {
       "@id": "schema:free",
@@ -9687,6 +10364,74 @@
       "label": "functionalClass"
     },
     {
+      "@id": "schema:game",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:GameServer",
+      "schema:inverseOf": {
+        "@id": "schema:gameServer"
+      },
+      "rangeIncludes": "schema:VideoGame",
+      "comment": "Video game which is played on this server.",
+      "label": "game"
+    },
+    {
+      "@id": "schema:gameItem",
+      "@type": "rdf:Property",
+      "domainIncludes": [
+        "schema:Game",
+        "schema:VideoGameSeries"
+      ],
+      "rangeIncludes": "schema:Thing",
+      "comment": "An item is an object within the game world that can be collected by a player or, occasionally, a non-player character.",
+      "label": "gameItem"
+    },
+    {
+      "@id": "schema:gameLocation",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:Game",
+      "rangeIncludes": [
+        "schema:URL",
+        "schema:Place",
+        "schema:PostalAddress"
+      ],
+      "comment": "Real or fictional location of the game (or part of game).",
+      "label": "gameLocation"
+    },
+    {
+      "@id": "schema:gamePlatform",
+      "@type": "rdf:Property",
+      "domainIncludes": [
+        "schema:VideoGame",
+        "schema:VideoGameSeries"
+      ],
+      "rangeIncludes": [
+        "schema:Text",
+        "schema:URL",
+        "schema:Thing"
+      ],
+      "comment": "The electronic systems used to play <a href=\"http://en.wikipedia.org/wiki/Category:Video_game_platforms\">video games</a>.",
+      "label": "gamePlatform"
+    },
+    {
+      "@id": "schema:gameServer",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:VideoGame",
+      "schema:inverseOf": {
+        "@id": "schema:game"
+      },
+      "rangeIncludes": "schema:GameServer",
+      "comment": "The server on which  it is possible to play the game.",
+      "label": "gameServer"
+    },
+    {
+      "@id": "schema:gameTip",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:VideoGame",
+      "rangeIncludes": "schema:CreativeWork",
+      "comment": "Links to tips, tactics, etc.",
+      "label": "gameTip"
+    },
+    {
       "@id": "schema:gender",
       "@type": "rdf:Property",
       "domainIncludes": "schema:Person",
@@ -9697,9 +10442,12 @@
     {
       "@id": "schema:genre",
       "@type": "rdf:Property",
-      "domainIncludes": "schema:CreativeWork",
+      "domainIncludes": [
+        "schema:CreativeWork",
+        "schema:MusicGroup"
+      ],
       "rangeIncludes": "schema:Text",
-      "comment": "Genre of the creative work",
+      "comment": "Genre of the creative work or group.",
       "label": "genre"
     },
     {
@@ -9726,7 +10474,7 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Person",
       "rangeIncludes": "schema:Text",
-      "comment": "Given name. In the U.S., the first name of a Person. This can be used along with familyName instead of the Name property.",
+      "comment": "Given name. In the U.S., the first name of a Person. This can be used along with familyName instead of the name property.",
       "label": "givenName"
     },
     {
@@ -9766,7 +10514,7 @@
         "schema:Demand"
       ],
       "rangeIncludes": "schema:Text",
-      "comment": "The GTIN-13 code of the product, or the product to which the offer refers. This is equivalent to 13-digit ISBN codes and EAN UCC-13. Former 12-digit UPC codes can be converted into a GTIN-13 code by simply adding a preceeding zero.",
+      "comment": "The <a href=\"http://apps.gs1.org/GDD/glossary/Pages/GTIN-13.aspx\">GTIN-13</a> code of the product, or the product to which the offer refers. This is equivalent to 13-digit ISBN codes and EAN UCC-13. Former 12-digit UPC codes can be converted into a GTIN-13 code by simply adding a preceeding zero. See <a href=\"http://www.gs1.org/barcodes/technical/idkeys/gtin\">GS1 GTIN Summary</a> for more details.",
       "label": "gtin13"
     },
     {
@@ -9778,7 +10526,7 @@
         "schema:Demand"
       ],
       "rangeIncludes": "schema:Text",
-      "comment": "The GTIN-14 code of the product, or the product to which the offer refers.",
+      "comment": "The <a href=\"http://apps.gs1.org/GDD/glossary/Pages/GTIN-14.aspx\">GTIN-14</a> code of the product, or the product to which the offer refers. See <a href=\"http://www.gs1.org/barcodes/technical/idkeys/gtin\">GS1 GTIN Summary</a> for more details.",
       "label": "gtin14"
     },
     {
@@ -9790,7 +10538,7 @@
         "schema:Demand"
       ],
       "rangeIncludes": "schema:Text",
-      "comment": "The GTIN-8 code of the product, or the product to which the offer refers. This code is also known as EAN/UCC-8 or 8-digit EAN.",
+      "comment": "The <a href=\"http://apps.gs1.org/GDD/glossary/Pages/GTIN-8.aspx\">GTIN-8</a> code of the product, or the product to which the offer refers. This code is also known as EAN/UCC-8 or 8-digit EAN. See <a href=\"http://www.gs1.org/barcodes/technical/idkeys/gtin\">GS1 GTIN Summary</a> for more details.",
       "label": "gtin8"
     },
     {
@@ -9883,13 +10631,14 @@
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:MediaObject",
-        "schema:Product"
+        "schema:Product",
+        "schema:Person"
       ],
       "rangeIncludes": [
         "schema:Distance",
         "schema:QuantitativeValue"
       ],
-      "comment": "The height of the item.",
+      "comment": "The height of the item or person.",
       "label": "height"
     },
     {
@@ -9921,6 +10670,20 @@
       ],
       "comment": "A contact location for a person's residence.",
       "label": "homeLocation"
+    },
+    {
+      "@id": "schema:homeTeam",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:SportsEvent",
+      "rangeIncludes": [
+        "schema:Person",
+        "schema:SportsTeam"
+      ],
+      "comment": "The home team in a sports event.",
+      "label": "homeTeam",
+      "subPropertyOf": [
+        "schema:competitor"
+      ]
     },
     {
       "@id": "schema:honorificPrefix",
@@ -10029,7 +10792,7 @@
         "schema:URL",
         "schema:ImageObject"
       ],
-      "comment": "URL of an image of the item.",
+      "comment": "An image of the item. This can be a <a href=\"http://schema.org/URL\">URL</a> or a fully described <a href=\"http://schema.org/ImageObject\">ImageObject</a>.",
       "label": "image"
     },
     {
@@ -10071,6 +10834,15 @@
       "rangeIncludes": "schema:Text",
       "comment": "Description of bonus and commission compensation aspects of the job.",
       "label": "incentives"
+    },
+    {
+      "@id": "schema:includedComposition",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicComposition",
+      "rangeIncludes": "schema:MusicComposition",
+      "comment": "Smaller compositions included in this work (e.g. a movement in a symphony).",
+      "label": "includedComposition"
     },
     {
       "@id": "schema:includedRiskFactor",
@@ -10117,6 +10889,14 @@
       "rangeIncludes": "schema:Text",
       "comment": "The industry associated with the job position.",
       "label": "industry"
+    },
+    {
+      "@id": "schema:ineligibleRegion",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:Offer",
+      "rangeIncludes": "schema:Place",
+      "comment": "The place(s) from which the offer cannot be obtained (e.g. a region where the transaction is not allowed).",
+      "label": "ineligibleRegion"
     },
     {
       "@id": "schema:infectiousAgent",
@@ -10189,7 +10969,6 @@
         "schema:CreativeWork",
         "schema:Organization",
         "schema:Place",
-        "schema:MediaObject",
         "schema:Person"
       ],
       "rangeIncludes": "schema:Text",
@@ -10340,6 +11119,15 @@
       "label": "isicV4"
     },
     {
+      "@id": "schema:isrcCode",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicRecording",
+      "rangeIncludes": "schema:Text",
+      "comment": "The International Standard Recording Code for the recording.",
+      "label": "isrcCode"
+    },
+    {
       "@id": "schema:issn",
       "@type": "rdf:Property",
       "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex",
@@ -10385,6 +11173,23 @@
       "label": "issuedThrough"
     },
     {
+      "@id": "schema:iswcCode",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicComposition",
+      "rangeIncludes": "schema:Text",
+      "comment": "The International Standard Musical Work Code for the composition.",
+      "label": "iswcCode"
+    },
+    {
+      "@id": "schema:item",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:ListItem",
+      "rangeIncludes": "schema:Thing",
+      "comment": "An entity represented by an entry in a list (e.g. an 'artist' in a list of 'artists')’.",
+      "label": "item"
+    },
+    {
       "@id": "schema:itemCondition",
       "@type": "rdf:Property",
       "domainIncludes": [
@@ -10400,15 +11205,22 @@
       "@id": "schema:itemListElement",
       "@type": "rdf:Property",
       "domainIncludes": "schema:ItemList",
-      "rangeIncludes": "schema:Text",
-      "comment": "A single list item.",
+      "rangeIncludes": [
+        "schema:Text",
+        "schema:ListItem",
+        "schema:Thing"
+      ],
+      "comment": "For itemListElement values, you can use simple strings (e.g. \"Peter\", \"Paul, \"Mary\"), existing entities, or use ListItem.\n    <br/><br/>\n    Text values are best if the elements in the list are plain strings. Existing entities are best for a simple, unordered list of existing things in your data. ListItem is used with ordered lists when you want to provide additional context about the element in that list or when the same item might be in different places in different lists.\n    <br/><br/>\n    Note: The order of elements in your mark-up is not sufficient for indicating the order or elements.  Use ListItem with a 'position' property in such cases.",
       "label": "itemListElement"
     },
     {
       "@id": "schema:itemListOrder",
       "@type": "rdf:Property",
       "domainIncludes": "schema:ItemList",
-      "rangeIncludes": "schema:Text",
+      "rangeIncludes": [
+        "schema:ItemListOrderType",
+        "schema:Text"
+      ],
       "comment": "Type of ordering (e.g. Ascending, Descending, Unordered).",
       "label": "itemListOrder"
     },
@@ -10649,8 +11461,11 @@
         "schema:ImageObject",
         "schema:URL"
       ],
-      "comment": "A logo associated with an organization.",
-      "label": "logo"
+      "comment": "An associated logo.",
+      "label": "logo",
+      "subPropertyOf": [
+        "schema:image"
+      ]
     },
     {
       "@id": "schema:longitude",
@@ -10684,6 +11499,15 @@
       ],
       "comment": "The lowest price of all offers available.",
       "label": "lowPrice"
+    },
+    {
+      "@id": "schema:lyricist",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicComposition",
+      "rangeIncludes": "schema:Person",
+      "comment": "The person who wrote the words.",
+      "label": "lyricist"
     },
     {
       "@id": "schema:mainContentOfPage",
@@ -10721,7 +11545,7 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Place",
       "rangeIncludes": "schema:URL",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:hasMap"
       },
       "comment": "A URL to a map of the place.",
@@ -10740,10 +11564,10 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Place",
       "rangeIncludes": "schema:URL",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:hasMap"
       },
-      "comment": "A URL to a map of the place (legacy spelling; see singular form, map).",
+      "comment": "A URL to a map of the place.",
       "label": "maps"
     },
     {
@@ -10857,10 +11681,10 @@
         "schema:Organization",
         "schema:Person"
       ],
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:member"
       },
-      "comment": "A member of this organization (legacy spelling; see singular form, member).",
+      "comment": "A member of this organization.",
       "label": "members"
     },
     {
@@ -10909,7 +11733,7 @@
         "schema:Organization",
         "schema:Person"
       ],
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:seller"
       },
       "comment": "'merchant' is an out-dated term for 'seller'.",
@@ -10982,15 +11806,21 @@
       "label": "muscleAction"
     },
     {
+      "@id": "schema:musicArrangement",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicComposition",
+      "rangeIncludes": "schema:MusicComposition",
+      "comment": "An arrangement derived from the composition.",
+      "label": "musicArrangement"
+    },
+    {
       "@id": "schema:musicBy",
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:Movie",
         "schema:Episode",
-        "schema:TVEpisode",
-        "schema:Series",
         "schema:TVSeries",
-        "schema:RadioEpisode",
         "schema:RadioSeries"
       ],
       "rangeIncludes": [
@@ -11001,15 +11831,42 @@
       "label": "musicBy"
     },
     {
+      "@id": "schema:musicCompositionForm",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicComposition",
+      "rangeIncludes": "schema:Text",
+      "comment": "The type of composition (e.g. overture, sonata, symphony, etc.)",
+      "label": "musicCompositionForm"
+    },
+    {
       "@id": "schema:musicGroupMember",
       "@type": "rdf:Property",
       "domainIncludes": "schema:MusicGroup",
       "rangeIncludes": "schema:Person",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:member"
       },
       "comment": "A member of a music group&#x2014;for example, John, Paul, George, or Ringo.",
       "label": "musicGroupMember"
+    },
+    {
+      "@id": "schema:musicReleaseFormat",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicRelease",
+      "rangeIncludes": "schema:MusicReleaseFormatType",
+      "comment": "Format of this release (the type of recording media used, ie. compact disc, digital media, LP, etc.).",
+      "label": "musicReleaseFormat"
+    },
+    {
+      "@id": "schema:musicalKey",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicComposition",
+      "rangeIncludes": "schema:Text",
+      "comment": "The key, mode, or scale this composition uses.",
+      "label": "musicalKey"
     },
     {
       "@id": "schema:naics",
@@ -11033,11 +11890,14 @@
     {
       "@id": "schema:namedPosition",
       "@type": "rdf:Property",
-      "domainIncludes": "schema:OrganizationRole",
+      "domainIncludes": "schema:Role",
       "rangeIncludes": [
         "schema:Text",
         "schema:URL"
       ],
+      "schema:supersededBy": {
+        "@id": "schema:roleName"
+      },
       "comment": "A position played, performed or filled by a person or organization, as part of an organization. For example, an athlete in a SportsTeam might play in the position named 'Quarterback'.",
       "label": "namedPosition"
     },
@@ -11072,6 +11932,22 @@
       "rangeIncludes": "schema:Muscle",
       "comment": "The neurological pathway extension that involves muscle control.",
       "label": "nerveMotor"
+    },
+    {
+      "@id": "schema:netWorth",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:Person",
+      "rangeIncludes": "schema:PriceSpecification",
+      "comment": "The total financial value of the organization or person as calculated by subtracting assets from liabilities.",
+      "label": "netWorth"
+    },
+    {
+      "@id": "schema:nextItem",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:ListItem",
+      "rangeIncludes": "schema:ListItem",
+      "comment": "A link to the ListItem that follows the current one.",
+      "label": "nextItem"
     },
     {
       "@id": "schema:nonEqual",
@@ -11135,15 +12011,21 @@
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:Season",
-        "schema:TVSeason",
-        "schema:Series",
         "schema:TVSeries",
-        "schema:RadioSeason",
+        "schema:VideoGameSeries",
         "schema:RadioSeries"
       ],
       "rangeIncludes": "schema:Number",
       "comment": "The number of episodes in this season or series.",
       "label": "numberOfEpisodes"
+    },
+    {
+      "@id": "schema:numberOfItems",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:ItemList",
+      "rangeIncludes": "schema:Number",
+      "comment": "The number of items in an ItemList. Note that some descriptions might not full describe all items in a list (e.g. multi-page pagination).",
+      "label": "numberOfItems"
     },
     {
       "@id": "schema:numberOfPages",
@@ -11154,12 +12036,35 @@
       "label": "numberOfPages"
     },
     {
+      "@id": "schema:numberOfPlayers",
+      "@type": "rdf:Property",
+      "domainIncludes": [
+        "schema:Game",
+        "schema:VideoGameSeries"
+      ],
+      "rangeIncludes": "schema:QuantitativeValue",
+      "comment": "Indicate how many people can play this game (minimum, maximum, or range).",
+      "label": "numberOfPlayers"
+    },
+    {
       "@id": "schema:numberOfSeasons",
       "@type": "rdf:Property",
-      "domainIncludes": "schema:Series",
+      "domainIncludes": [
+        "schema:TVSeries",
+        "schema:RadioSeries",
+        "schema:VideoGameSeries"
+      ],
       "rangeIncludes": "schema:Number",
       "comment": "The number of seasons in this series.",
       "label": "numberOfSeasons"
+    },
+    {
+      "@id": "schema:numberedPosition",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:OrganizationRole",
+      "rangeIncludes": "schema:Number",
+      "comment": "A number associated with a role in an organization, for example, the number on an athlete's jersey.",
+      "label": "numberedPosition"
     },
     {
       "@id": "schema:numberofEmployees",
@@ -11206,7 +12111,6 @@
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:CreativeWork",
-        "schema:MediaObject",
         "schema:Event",
         "schema:Product"
       ],
@@ -11475,10 +12379,10 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Person",
       "rangeIncludes": "schema:Person",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:parent"
       },
-      "comment": "A parents of the person (legacy spelling; see singular form, parent).",
+      "comment": "A parents of the person.",
       "label": "parents"
     },
     {
@@ -11487,7 +12391,10 @@
       "domainIncludes": "schema:Clip",
       "rangeIncludes": "schema:Episode",
       "comment": "The episode to which this clip belongs.",
-      "label": "partOfEpisode"
+      "label": "partOfEpisode",
+      "subPropertyOf": [
+        "schema:isPartOf"
+      ]
     },
     {
       "@id": "schema:partOfOrder",
@@ -11495,40 +12402,39 @@
       "domainIncludes": "schema:ParcelDelivery",
       "rangeIncludes": "schema:Order",
       "comment": "The overall order the items in this delivery were included in.",
-      "label": "partOfOrder"
+      "label": "partOfOrder",
+      "subPropertyOf": [
+        "schema:isPartOf"
+      ]
     },
     {
       "@id": "schema:partOfSeason",
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:Episode",
-        "schema:TVEpisode",
-        "schema:Clip",
-        "schema:RadioClip",
-        "schema:RadioEpisode",
-        "schema:TVClip"
+        "schema:Clip"
       ],
       "rangeIncludes": "schema:Season",
       "comment": "The season to which this episode belongs.",
-      "label": "partOfSeason"
+      "label": "partOfSeason",
+      "subPropertyOf": [
+        "schema:isPartOf"
+      ]
     },
     {
       "@id": "schema:partOfSeries",
       "@type": "rdf:Property",
       "domainIncludes": [
         "schema:Episode",
-        "schema:TVEpisode",
         "schema:Season",
-        "schema:TVSeason",
-        "schema:Clip",
-        "schema:RadioClip",
-        "schema:RadioEpisode",
-        "schema:RadioSeason",
-        "schema:TVClip"
+        "schema:Clip"
       ],
       "rangeIncludes": "schema:Series",
       "comment": "The series to which this episode or season belongs.",
-      "label": "partOfSeries"
+      "label": "partOfSeries",
+      "subPropertyOf": [
+        "schema:isPartOf"
+      ]
     },
     {
       "@id": "schema:partOfSystem",
@@ -11536,7 +12442,10 @@
       "domainIncludes": "schema:AnatomicalStructure",
       "rangeIncludes": "schema:AnatomicalSystem",
       "comment": "The anatomical or organ system that this structure is part of.",
-      "label": "partOfSystem"
+      "label": "partOfSystem",
+      "subPropertyOf": [
+        "schema:isPartOf"
+      ]
     },
     {
       "@id": "schema:partOfTVSeries",
@@ -11547,11 +12456,14 @@
         "schema:TVClip"
       ],
       "rangeIncludes": "schema:TVSeries",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:partOfSeries"
       },
       "comment": "The TV series to which this episode or season belongs. (legacy form; partOfSeries is preferred)",
-      "label": "partOfTVSeries"
+      "label": "partOfTVSeries",
+      "subPropertyOf": [
+        "schema:isPartOf"
+      ]
     },
     {
       "@id": "schema:participant",
@@ -11656,10 +12568,10 @@
         "schema:Organization",
         "schema:Person"
       ],
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:performer"
       },
-      "comment": "The main performer or performers of the event&#x2014;for example, a presenter, musician, or actor (legacy spelling; see singular form, performer).",
+      "comment": "The main performer or performers of the event&#x2014;for example, a presenter, musician, or actor.",
       "label": "performers"
     },
     {
@@ -11695,7 +12607,10 @@
         "schema:Photograph"
       ],
       "comment": "A photograph of this place.",
-      "label": "photo"
+      "label": "photo",
+      "subPropertyOf": [
+        "schema:image"
+      ]
     },
     {
       "@id": "schema:photos",
@@ -11705,10 +12620,10 @@
         "schema:ImageObject",
         "schema:Photograph"
       ],
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:photo"
       },
-      "comment": "Photographs of this place (legacy spelling; see singular form, photo).",
+      "comment": "Photographs of this place.",
       "label": "photos"
     },
     {
@@ -11742,12 +12657,31 @@
       "label": "pickupTime"
     },
     {
+      "@id": "schema:playMode",
+      "@type": "rdf:Property",
+      "domainIncludes": [
+        "schema:VideoGame",
+        "schema:VideoGameSeries"
+      ],
+      "rangeIncludes": "schema:GamePlayMode",
+      "comment": "Indicates whether this game is multi-player, co-op or single-player.  The game can be marked as multi-player, co-op and single-player at the same time.",
+      "label": "playMode"
+    },
+    {
       "@id": "schema:playerType",
       "@type": "rdf:Property",
       "domainIncludes": "schema:MediaObject",
       "rangeIncludes": "schema:Text",
       "comment": "Player type required&#x2014;for example, Flash or Silverlight.",
       "label": "playerType"
+    },
+    {
+      "@id": "schema:playersOnline",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:GameServer",
+      "rangeIncludes": "schema:Number",
+      "comment": "Number of players on the server.",
+      "label": "playersOnline"
     },
     {
       "@id": "schema:polygon",
@@ -11768,12 +12702,15 @@
     {
       "@id": "schema:position",
       "@type": "rdf:Property",
-      "domainIncludes": "schema:CreativeWork",
+      "domainIncludes": [
+        "schema:CreativeWork",
+        "schema:ListItem"
+      ],
       "rangeIncludes": [
         "schema:Text",
         "schema:Integer"
       ],
-      "comment": "The position of the creative work within a series or other ordered collection of works.",
+      "comment": "The position of an item in a series or sequence of items.",
       "label": "position"
     },
     {
@@ -11892,6 +12829,14 @@
       "label": "prescriptionStatus"
     },
     {
+      "@id": "schema:previousItem",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:ListItem",
+      "rangeIncludes": "schema:ListItem",
+      "comment": "A link to the ListItem that preceeds the current one.",
+      "label": "previousItem"
+    },
+    {
       "@id": "schema:previousStartDate",
       "@type": "rdf:Property",
       "domainIncludes": "schema:Event",
@@ -11911,7 +12856,7 @@
         "schema:Number",
         "schema:Text"
       ],
-      "comment": "The offer price of a product, or of a price component when attached to PriceSpecification and its subtypes.",
+      "comment": "The offer price of a product, or of a price component when attached to PriceSpecification and its subtypes.\n<br />\n<br />\n      Usage guidelines:\n<br />\n<ul>\n<li>Use the <a href=\"/priceCurrency\">priceCurrency</a> property (with <a href=\"http://en.wikipedia.org/wiki/ISO_4217#Active_codes\">ISO 4217 codes</a> e.g. \"USD\") instead of\n      including <a href=\"http://en.wikipedia.org/wiki/Dollar_sign#Currencies_that_use_the_dollar_or_peso_sign\">ambiguous symbols</a> such as '$' in the value.\n</li>\n<li>\n      Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator.\n</li>\n<li>\n      Note that both <a href=\"http://www.w3.org/TR/xhtml-rdfa-primer/#using-the-content-attribute\">RDFa</a> and Microdata syntax allow the use of a \"content=\" attribute for publishing simple machine-readable values\n      alongside more human-friendly formatting.\n</li>\n<li>\n      Use values from 0123456789 (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similiar Unicode symbols.\n</li>\n</ul>\n\n      ",
       "label": "price"
     },
     {
@@ -12046,17 +12991,11 @@
       "@id": "schema:producer",
       "@type": "rdf:Property",
       "domainIncludes": [
-        "schema:Movie",
-        "schema:Episode",
-        "schema:TVEpisode",
-        "schema:Season",
-        "schema:Series",
-        "schema:TVSeries",
-        "schema:RadioEpisode",
-        "schema:RadioSeries"
+        "schema:CreativeWork",
+        "schema:Organization"
       ],
       "rangeIncludes": "schema:Person",
-      "comment": "The producer of the movie, tv/radio series, season, or episode, or video.",
+      "comment": "The person or organization who produced the work (e.g. music album, movie, tv/radio series etc.).",
       "label": "producer"
     },
     {
@@ -12093,16 +13032,14 @@
         "schema:MediaObject",
         "schema:Movie",
         "schema:Episode",
-        "schema:TVEpisode",
         "schema:Season",
-        "schema:Series",
         "schema:TVSeries",
-        "schema:VideoObject",
-        "schema:RadioEpisode",
-        "schema:RadioSeries"
+        "schema:RadioSeries",
+        "schema:MovieSeries",
+        "schema:VideoGameSeries"
       ],
       "rangeIncludes": "schema:Organization",
-      "comment": "The production company or studio that made the movie, tv/radio series, season, or episode, or media object.",
+      "comment": "The production company or studio responsible for the item e.g. series, video game, episode etc.",
       "label": "productionCompany"
     },
     {
@@ -12270,6 +13207,17 @@
       ]
     },
     {
+      "@id": "schema:quest",
+      "@type": "rdf:Property",
+      "domainIncludes": [
+        "schema:Game",
+        "schema:VideoGameSeries"
+      ],
+      "rangeIncludes": "schema:Thing",
+      "comment": "The task that a player-controlled character, or group of characters may complete in order to gain a reward.",
+      "label": "quest"
+    },
+    {
       "@id": "schema:question",
       "@type": "rdf:Property",
       "domainIncludes": "schema:AskAction",
@@ -12415,6 +13363,61 @@
       "label": "recommendedIntake"
     },
     {
+      "@id": "schema:recordLabel",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicRelease",
+      "rangeIncludes": "schema:Organization",
+      "comment": "The label that issued the release.",
+      "label": "recordLabel"
+    },
+    {
+      "@id": "schema:recordedAs",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicComposition",
+      "schema:inverseOf": {
+        "@id": "schema:recordingOf"
+      },
+      "rangeIncludes": "schema:MusicRecording",
+      "comment": "An audio recording of the work.",
+      "label": "recordedAs"
+    },
+    {
+      "@id": "schema:recordedAt",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:CreativeWork",
+      "schema:inverseOf": {
+        "@id": "schema:recordedIn"
+      },
+      "rangeIncludes": "schema:Event",
+      "comment": "The Event where the CreativeWork was recorded. The CreativeWork may capture all or part of the event.",
+      "label": "recordedAt"
+    },
+    {
+      "@id": "schema:recordedIn",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:Event",
+      "schema:inverseOf": {
+        "@id": "schema:recordedAt"
+      },
+      "rangeIncludes": "schema:CreativeWork",
+      "comment": "The CreativeWork that captured all or part of this Event.",
+      "label": "recordedIn"
+    },
+    {
+      "@id": "schema:recordingOf",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicRecording",
+      "schema:inverseOf": {
+        "@id": "schema:recordedAs"
+      },
+      "rangeIncludes": "schema:MusicComposition",
+      "comment": "The composition this track is a recording of.",
+      "label": "recordingOf"
+    },
+    {
       "@id": "schema:regionDrained",
       "@type": "rdf:Property",
       "domainIncludes": [
@@ -12521,6 +13524,26 @@
       ],
       "comment": "Description of what changed in this version.",
       "label": "releaseNotes"
+    },
+    {
+      "@id": "schema:releaseOf",
+      "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "domainIncludes": "schema:MusicRelease",
+      "schema:inverseOf": {
+        "@id": "schema:albumRelease"
+      },
+      "rangeIncludes": "schema:MusicAlbum",
+      "comment": "The album this is a release of.",
+      "label": "releaseOf"
+    },
+    {
+      "@id": "schema:releasedEvent",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:CreativeWork",
+      "rangeIncludes": "schema:PublicationEvent",
+      "comment": "The place and time the release was issued, expressed as a PublicationEvent.",
+      "label": "releasedEvent"
     },
     {
       "@id": "schema:relevantSpecialty",
@@ -12746,10 +13769,10 @@
         "schema:Product"
       ],
       "rangeIncludes": "schema:Review",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:review"
       },
-      "comment": "Review of the item (legacy spelling; see singular form, review).",
+      "comment": "Review of the item.",
       "label": "reviews"
     },
     {
@@ -12767,6 +13790,25 @@
       "rangeIncludes": "schema:Text",
       "comment": "Specific physiologic risks associated to the plan.",
       "label": "risks"
+    },
+    {
+      "@id": "schema:roleName",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:Role",
+      "rangeIncludes": [
+        "schema:Text",
+        "schema:URL"
+      ],
+      "comment": "A role played, performed or filled by a person or organization. For example, the team of creators for a comic book might fill the roles named 'inker', 'penciller', and 'letterer'; or an athlete in a SportsTeam might play in the position named 'Quarterback'.",
+      "label": "roleName"
+    },
+    {
+      "@id": "schema:rsvpResponse",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:RsvpAction",
+      "rangeIncludes": "schema:RsvpResponseType",
+      "comment": "The response (yes, no, maybe) to the RSVP.",
+      "label": "rsvpResponse"
     },
     {
       "@id": "schema:runsTo",
@@ -12795,9 +13837,12 @@
     {
       "@id": "schema:salaryCurrency",
       "@type": "rdf:Property",
-      "domainIncludes": "schema:JobPosting",
+      "domainIncludes": [
+        "schema:JobPosting",
+        "schema:EmployeeRole"
+      ],
       "rangeIncludes": "schema:Text",
-      "comment": "The currency (coded using ISO 4217, http://en.wikipedia.org/wiki/ISO_4217 used for the main salary information in this job posting.",
+      "comment": "The currency (coded using ISO 4217, http://en.wikipedia.org/wiki/ISO_4217 ) used for the main salary information in this job posting or for this employee.",
       "label": "salaryCurrency"
     },
     {
@@ -12827,10 +13872,7 @@
     {
       "@id": "schema:scheduledTime",
       "@type": "rdf:Property",
-      "domainIncludes": [
-        "schema:PlanAction",
-        "schema:ReserveAction"
-      ],
+      "domainIncludes": "schema:PlanAction",
       "rangeIncludes": "schema:DateTime",
       "comment": "The time the object is scheduled to.",
       "label": "scheduledTime"
@@ -12850,21 +13892,21 @@
       "@id": "schema:season",
       "@type": "rdf:Property",
       "domainIncludes": [
-        "schema:Series",
+        "schema:VideoGameSeries",
         "schema:TVSeries",
         "schema:RadioSeries"
       ],
       "rangeIncludes": "schema:Season",
-      "comment": "A season in a tv/radio series.",
-      "label": "season"
+      "comment": "A season in a media series.",
+      "label": "season",
+      "subPropertyOf": [
+        "schema:hasPart"
+      ]
     },
     {
       "@id": "schema:seasonNumber",
       "@type": "rdf:Property",
-      "domainIncludes": [
-        "schema:Season",
-        "schema:TVSeason"
-      ],
+      "domainIncludes": "schema:Season",
       "rangeIncludes": [
         "schema:Integer",
         "schema:Text"
@@ -12879,15 +13921,15 @@
       "@id": "schema:seasons",
       "@type": "rdf:Property",
       "domainIncludes": [
-        "schema:Series",
+        "schema:VideoGameSeries",
         "schema:TVSeries",
         "schema:RadioSeries"
       ],
       "rangeIncludes": "schema:Season",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:season"
       },
-      "comment": "A season in a tv/radio series. (legacy spelling; see singular form, season)",
+      "comment": "A season in a media series.",
       "label": "seasons"
     },
     {
@@ -13014,6 +14056,14 @@
       "label": "seriousAdverseOutcome"
     },
     {
+      "@id": "schema:serverStatus",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:GameServer",
+      "rangeIncludes": "schema:GameServerStatus",
+      "comment": "Status of a game server.",
+      "label": "serverStatus"
+    },
+    {
       "@id": "schema:servesCuisine",
       "@type": "rdf:Property",
       "domainIncludes": "schema:FoodEstablishment",
@@ -13114,10 +14164,10 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Person",
       "rangeIncludes": "schema:Person",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:sibling"
       },
-      "comment": "A sibling of the person (legacy spelling; see singular form, sibling).",
+      "comment": "A sibling of the person.",
       "label": "siblings"
     },
     {
@@ -13157,10 +14207,10 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:WebPage",
       "rangeIncludes": "schema:URL",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:significantLink"
       },
-      "comment": "The most significant URLs on the page. Typically, these are the non-navigation links that are clicked on the most (legacy spelling; see singular form, significantLink).",
+      "comment": "The most significant URLs on the page. Typically, these are the non-navigation links that are clicked on the most.",
       "label": "significantLinks"
     },
     {
@@ -13190,6 +14240,22 @@
       "rangeIncludes": "schema:Mass",
       "comment": "The number of milligrams of sodium.",
       "label": "sodiumContent"
+    },
+    {
+      "@id": "schema:softwareAddOn",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:SoftwareApplication",
+      "rangeIncludes": "schema:SoftwareApplication",
+      "comment": "Additional content for a software application.",
+      "label": "softwareAddOn"
+    },
+    {
+      "@id": "schema:softwareHelp",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:SoftwareApplication",
+      "rangeIncludes": "schema:CreativeWork",
+      "comment": "Software application help.",
+      "label": "softwareHelp"
     },
     {
       "@id": "schema:softwareVersion",
@@ -13256,6 +14322,17 @@
       "label": "sponsor"
     },
     {
+      "@id": "schema:sport",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:SportsOrganization",
+      "rangeIncludes": [
+        "schema:Text",
+        "schema:URL"
+      ],
+      "comment": "A type of sport (e.g. Baseball).",
+      "label": "sport"
+    },
+    {
       "@id": "schema:sportsActivityLocation",
       "@type": "rdf:Property",
       "domainIncludes": "schema:ExerciseAction",
@@ -13319,12 +14396,11 @@
         "schema:Role",
         "schema:Event",
         "schema:Season",
-        "schema:TVSeason",
         "schema:Series",
-        "schema:TVSeries"
+        "schema:DatedMoneySpecification"
       ],
       "rangeIncludes": "schema:Date",
-      "comment": "The start date and time of the event, role or item (in <a href='http://en.wikipedia.org/wiki/ISO_8601'>ISO 8601 date format</a>).",
+      "comment": "The start date and time of the item (in <a href='http://en.wikipedia.org/wiki/ISO_8601'>ISO 8601 date format</a>).",
       "label": "startDate"
     },
     {
@@ -13442,10 +14518,10 @@
       "@type": "rdf:Property",
       "domainIncludes": "schema:Event",
       "rangeIncludes": "schema:Event",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:subEvent"
       },
-      "comment": "Events that are a part of this event. For example, a conference event includes many presentations, each subEvents of the conference (legacy spelling; see singular form, subEvent).",
+      "comment": "Events that are a part of this event. For example, a conference event includes many presentations, each subEvents of the conference.",
       "label": "subEvents"
     },
     {
@@ -13553,12 +14629,12 @@
       "label": "superEvent"
     },
     {
-      "@id": "schema:supercededBy",
+      "@id": "schema:supersededBy",
       "@type": "rdf:Property",
       "domainIncludes": "schema:Property",
       "rangeIncludes": "schema:Property",
-      "comment": "Relates a property to one that supercedes it.",
-      "label": "supercededBy"
+      "comment": "Relates a property to one that supersedes it.",
+      "label": "supersededBy"
     },
     {
       "@id": "schema:supplyTo",
@@ -13790,12 +14866,16 @@
     {
       "@id": "schema:track",
       "@type": "rdf:Property",
+      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
       "domainIncludes": [
         "schema:MusicPlaylist",
         "schema:MusicGroup"
       ],
-      "rangeIncludes": "schema:MusicRecording",
-      "comment": "A music recording (track)&#x2014;usually a single song.",
+      "rangeIncludes": [
+        "schema:ItemList",
+        "schema:MusicRecording"
+      ],
+      "comment": "A music recording (track)&#x2014;usually a single song. If an ItemList is given, the list should contain items of type MusicRecording",
       "label": "track"
     },
     {
@@ -13822,10 +14902,10 @@
         "schema:MusicGroup"
       ],
       "rangeIncludes": "schema:MusicRecording",
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:track"
       },
-      "comment": "A music recording (track)&#x2014;usually a single song (legacy spelling; see singular form, track).",
+      "comment": "A music recording (track)&#x2014;usually a single song.",
       "label": "tracks"
     },
     {
@@ -13834,17 +14914,15 @@
       "domainIncludes": [
         "schema:Movie",
         "schema:Episode",
-        "schema:TVEpisode",
         "schema:Season",
-        "schema:TVSeason",
-        "schema:Series",
-        "schema:TVSeries",
-        "schema:RadioEpisode",
-        "schema:RadioSeason",
-        "schema:RadioSeries"
+        "schema:VideoGame",
+        "schema:VideoGameSeries",
+        "schema:MovieGameSeries",
+        "schema:RadioSeries",
+        "schema:TVSeries"
       ],
       "rangeIncludes": "schema:VideoObject",
-      "comment": "The trailer of a movie or tv/radio series, season, or episode.",
+      "comment": "The trailer of a movie or tv/radio series, season, episode, etc.",
       "label": "trailer"
     },
     {
@@ -13881,6 +14959,17 @@
       "rangeIncludes": "schema:Text",
       "comment": "If this MediaObject is an AudioObject or VideoObject, the transcript of that object.",
       "label": "transcript"
+    },
+    {
+      "@id": "schema:translator",
+      "@type": "rdf:Property",
+      "domainIncludes": "schema:CreativeWork",
+      "rangeIncludes": [
+        "schema:Person",
+        "schema:Organization"
+      ],
+      "comment": "Organization or person who adapts a creative work to different languages, regional differences and technical requirements of a target market.",
+      "label": "translator"
     },
     {
       "@id": "schema:transmissionMethod",
@@ -14162,7 +15251,7 @@
         "schema:Organization",
         "schema:Person"
       ],
-      "schema:supercededBy": {
+      "schema:supersededBy": {
         "@id": "schema:seller"
       },
       "comment": "'vendor' is an earlier term for 'seller'.",
@@ -14271,9 +15360,12 @@
     {
       "@id": "schema:weight",
       "@type": "rdf:Property",
-      "domainIncludes": "schema:Product",
+      "domainIncludes": [
+        "schema:Product",
+        "schema:Person"
+      ],
       "rangeIncludes": "schema:QuantitativeValue",
-      "comment": "The weight of the product.",
+      "comment": "The weight of the product or person.",
       "label": "weight"
     },
     {
@@ -14390,6 +15482,12 @@
       "rangeIncludes": "schema:QuantitativeValue",
       "comment": "The age of the business.",
       "label": "yearsInOperation"
+    },
+    {
+      "@id": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",
+      "@type": "schema:Organization",
+      "comment": "This vocabulary was improved through collaboration with the MusicBrainz project\n    (<a href=\"http://www.musicbrainz.org\">www.musicbrainz.org</a>), and is partially inspired by the MusicBrainz and\n    <a href=\"http://musicontology.com/docs/getting-started.html\">Music Ontology</a> schemas.",
+      "label": "MBZ"
     },
     {
       "@id": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_ActionCollabClass",
