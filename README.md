@@ -1,10 +1,9 @@
-schema.org I/O
-==============
+schema.org
+==========
 
-A bag of utility functions, JSON-LD context and terms to build a
-package manager thingy out of [schema.org](http://schema.org)
+WIP
 
-[![NPM](https://nodei.co/npm/schema-org-io.png)](https://nodei.co/npm/schema-org-io/)
+[schema.org](http://schema.org) in JS
 
 Tests
 =====
