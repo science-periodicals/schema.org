@@ -8,26 +8,30 @@ schemaOrg = JSON.parse(schemaOrg);
 
 export default class SchemaOrg {
 
-  constructor(prefixList) {
+  constructor(data, prefixList = ['schema']) {
     this.graph = schemaOrg['@graph'];
+    this.prefixes = new Set(prefixList);
     this.propMap = {};
     this.classMap = {};
 
     //init this.propMap and this.classMap
     this.graph.forEach(node => {
-      const key = node['@id'];
-      if (node['@type'] === 'rdf:Property' && (node.domain || node.range)) {
-        this.propMap[key] = {};
-        if (node.domain) {
-          this.propMap[key].domain = new Set(arrayify(node.domain));
-        };
-        if (node.range) {
-          this.propMap[key].range = new Set(arrayify(node.range));
-        };
-      } else if (node['@type'] === 'rdfs:Class' && node.subClassOf) {
-        this.classMap[key] = {
-          subClassOf: new Set(arrayify(node.subClassOf))
-        };
+      const splt = node['@id'].split(':');
+      if (splt.length === 2 && this.prefixes.has(splt[0])) {
+        const key = splt[1];
+        if (node['@type'] === 'rdf:Property' && (node.domain || node.range)) {
+          this.propMap[key] = {};
+          if (node.domain) {
+            this.propMap[key].domain = new Set(this.unprefix(node.domain));
+          };
+          if (node.range) {
+            this.propMap[key].range = new Set(this.unprefix(node.range));
+          };
+        } else if (node['@type'] === 'rdfs:Class' && node.subClassOf) {
+          this.classMap[key] = {
+            subClassOf: new Set(this.unprefix(node.subClassOf))
+          };
+        }
       }
     });
 
@@ -38,6 +42,13 @@ export default class SchemaOrg {
         this.classMap[key].subClassOfChain = subClassOfChain;
       }
     }
+  }
+
+  unprefix(terms) {
+    return arrayify(terms).filter(term => {
+      let splt = term.split(':');
+      return splt.length === 2 && this.prefixes.has(splt[0])
+    }).map(term => term.split(':')[1]);
   }
 
   getParentClasses(className) {
@@ -124,17 +135,17 @@ export default class SchemaOrg {
     //at least 2 candidates...
     //for each candidate, compute number of matches with the props of obj, if clear winner -> return it, if  equality, return undefined
     var scores = {};
-    for (let candidate of candidates.keys()) {
-      scores[candidate] = 0;
+    for (let c of candidates.keys()) {
+      scores[c] = 0;
       Object.keys(obj).forEach(p => {
         if (
           this.propMap[p] &&
           this.propMap[p].domain &&
-          this.classMap[candidate] &&
-          this.classMap[candidate].subClassOfChain &&
-          Array.from(this.propMap[p].domain).some(d => d === candidate || this.classMap[candidate].subClassOfChain.has(d))
+          this.classMap[c] &&
+          this.classMap[c].subClassOfChain &&
+          Array.from(this.propMap[p].domain).some(d => d === c || this.classMap[c].subClassOfChain.has(d))
         ) {
-          scores[candidate]++;
+          scores[c]++;
         }
       });
     }

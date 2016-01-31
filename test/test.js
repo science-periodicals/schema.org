@@ -9,59 +9,59 @@ describe('schema-org', function() {
   });
 
   it('should have well initialized this.propMap', function() {
-    let map = schemaOrg.propMap['schema:valueReference'];
+    let map = schemaOrg.propMap['valueReference'];
     assert.deepEqual(Array.from(map.domain).sort(), [
-      'schema:PropertyValue',
-      'schema:QualitativeValue',
-      'schema:QuantitativeValue'
+      'PropertyValue',
+      'QualitativeValue',
+      'QuantitativeValue'
     ].sort());
     assert.deepEqual(Array.from(map.range).sort(), [
-      'schema:Enumeration',
-      'schema:PropertyValue',
-      'schema:QualitativeValue',
-      'schema:QuantitativeValue',
-      'schema:StructuredValue'
+      'Enumeration',
+      'PropertyValue',
+      'QualitativeValue',
+      'QuantitativeValue',
+      'StructuredValue'
     ].sort());
   });
 
   it('should have well initialized this.classMap', function() {
-    let map = schemaOrg.classMap['schema:MedicalScholarlyArticle'];
-    assert.deepEqual(Array.from(map.subClassOf.keys()), [ 'schema:ScholarlyArticle' ]);
-    assert.deepEqual(Array.from(map.subClassOfChain.keys()), [ 'schema:ScholarlyArticle', 'schema:Article', 'schema:CreativeWork', 'schema:Thing' ]);
+    let map = schemaOrg.classMap['MedicalScholarlyArticle'];
+    assert.deepEqual(Array.from(map.subClassOf.keys()), [ 'ScholarlyArticle' ]);
+    assert.deepEqual(Array.from(map.subClassOfChain.keys()), [ 'ScholarlyArticle', 'Article', 'CreativeWork', 'Thing' ]);
   });
 
   it('should return the subclasses of a className', function() {
-    assert.deepEqual(Array.from(schemaOrg.getSubClasses('schema:Article').keys()), [
-      'schema:APIReference',
-      'schema:BlogPosting',
-      'schema:DiscussionForumPosting',
-      'schema:LiveBlogPosting',
-      'schema:MedicalScholarlyArticle',
-      'schema:NewsArticle',
-      'schema:Report',
-      'schema:ScholarlyArticle',
-      'schema:SocialMediaPosting',
-      'schema:TechArticle'
+    assert.deepEqual(Array.from(schemaOrg.getSubClasses('Article').keys()), [
+      'APIReference',
+      'BlogPosting',
+      'DiscussionForumPosting',
+      'LiveBlogPosting',
+      'MedicalScholarlyArticle',
+      'NewsArticle',
+      'Report',
+      'ScholarlyArticle',
+      'SocialMediaPosting',
+      'TechArticle'
     ]);
   });
 
   it('should assess if a type is of a given class or not taking into account all the parent classes', function() {
-    assert(schemaOrg.is('schema:MedicalScholarlyArticle', 'schema:Article'));
-    assert(!schemaOrg.is('schema:MedicalScholarlyArticle', 'schema:QuantitativeValue'));
+    assert(schemaOrg.is('MedicalScholarlyArticle', 'Article'));
+    assert(!schemaOrg.is('MedicalScholarlyArticle', 'QuantitativeValue'));
   });
 
   it('should assess if a class is more specific than another', function() {
-    assert(schemaOrg.isMoreSpecific('schema:MedicalScholarlyArticle', 'schema:Article'));
-    assert(!schemaOrg.isMoreSpecific('schema:Article', 'schema:MedicalScholarlyArticle'));
+    assert(schemaOrg.isMoreSpecific('MedicalScholarlyArticle', 'Article'));
+    assert(!schemaOrg.isMoreSpecific('Article', 'MedicalScholarlyArticle'));
   });
 
   it('should infer type of a node', function(){
     var obj = {
-      "schema:name": "a name",
-      "schema:videoQuality": "bad",
-      "schema:transcript": "a transcript"
+      "name": "a name",
+      "videoQuality": "bad",
+      "transcript": "a transcript"
     };
-    assert.equal(schemaOrg.getType(obj, 'schema:CreativeWork'), 'schema:VideoObject');
+    assert.equal(schemaOrg.getType(obj), 'VideoObject');
   });
 
 });
