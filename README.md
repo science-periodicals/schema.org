@@ -21,6 +21,15 @@ var schemaOrg = new SchemaOrg();
 
 returns the RDFS node corresponding to the term;
 
+```
+schemaOrg.get(MedicalScholarlyArticle)
+{ '@id': 'schema:MedicalScholarlyArticle',
+  '@type': 'rdfs:Class',
+  comment: 'A scholarly article in the medical domain.',
+  label: 'MedicalScholarlyArticle',
+  subClassOf: [ 'schema:ScholarlyArticle' ] }
+```
+
 ### SchemaOrg.prototype.getSubClasses(type[, recursive])
 
 returns a set containing the sub classes of the `type`. if `recursive`
