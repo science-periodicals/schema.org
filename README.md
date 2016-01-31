@@ -14,8 +14,8 @@ extension.
 
 ```
 import SchemaOrg from 'schema.org';
-var schemaOrg = new SchemaOrg()
-``
+var schemaOrg = new SchemaOrg();
+```
 
 ### SchemaOrg.prototype.get(term)
 
