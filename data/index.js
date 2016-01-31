@@ -87,7 +87,7 @@ jsonld.fromRDF('http://schema.org/docs/schema_org_rdfa.html', {format: 'text/htm
   if (err) return console.error(err);
   jsonld.compact(data, context, function(err, data) {
     if (err) return console.error(err);
-    fs.writeFile('schema_org.jsonld', JSON.stringify(data, null, 2), function(err) {
+    fs.writeFile('schema_org.json', JSON.stringify(data, null, 2), function(err) {
       if (err) console.error(err);
     });
   });

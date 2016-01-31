@@ -8,29 +8,23 @@ describe('schema-org', function() {
     schemaOrg = new SchemaOrg();
   });
 
-  it('should have well initialized this.propMap', function() {
-    let map = schemaOrg.propMap['valueReference'];
-    assert.deepEqual(Array.from(map.domain).sort(), [
-      'PropertyValue',
-      'QualitativeValue',
-      'QuantitativeValue'
-    ].sort());
-    assert.deepEqual(Array.from(map.range).sort(), [
-      'Enumeration',
-      'PropertyValue',
-      'QualitativeValue',
-      'QuantitativeValue',
-      'StructuredValue'
-    ].sort());
+
+  it('should return all the RDFS node', function() {
+    assert(schemaOrg.get('MedicalScholarlyArticle').label, 'MedicalScholarlyArticle');
   });
 
-  it('should have well initialized this.classMap', function() {
-    let map = schemaOrg.classMap['MedicalScholarlyArticle'];
-    assert.deepEqual(Array.from(map.subClassOf.keys()), [ 'ScholarlyArticle' ]);
-    assert.deepEqual(Array.from(map.subClassOfChain.keys()), [ 'ScholarlyArticle', 'Article', 'CreativeWork', 'Thing' ]);
+
+  it('should return all the parent classes', function() {
+    assert.deepEqual(Array.from(schemaOrg.getParents('MedicalScholarlyArticle')), [ 'ScholarlyArticle', 'Article', 'CreativeWork', 'Thing' ]);
   });
 
-  it('should return the subclasses of a className', function() {
+
+  it('should assess if a type is of a given class or not taking into account all the parent classes', function() {
+    assert(schemaOrg.is('MedicalScholarlyArticle', 'Article'));
+    assert(!schemaOrg.is('MedicalScholarlyArticle', 'QuantitativeValue'));
+  });
+
+  it('should return all the subclasses of a className', function() {
     assert.deepEqual(Array.from(schemaOrg.getSubClasses('Article').keys()), [
       'APIReference',
       'BlogPosting',
@@ -45,9 +39,14 @@ describe('schema-org', function() {
     ]);
   });
 
-  it('should assess if a type is of a given class or not taking into account all the parent classes', function() {
-    assert(schemaOrg.is('MedicalScholarlyArticle', 'Article'));
-    assert(!schemaOrg.is('MedicalScholarlyArticle', 'QuantitativeValue'));
+  it('should return the direct subclasses of a className', function() {
+    assert.deepEqual(Array.from(schemaOrg.getSubClasses('Article', false).keys()), [
+      'NewsArticle',
+      'Report',
+      'ScholarlyArticle',
+      'SocialMediaPosting',
+      'TechArticle'
+    ]);
   });
 
   it('should assess if a class is more specific than another', function() {
