@@ -79,6 +79,17 @@ schemaOrg.getType({
 ```
 
 
+## Utils
+
+
+```
+import * as utils from 'schema.org/utils';
+```
+
+### getParts
+
+
+
 Tests
 =====
 
