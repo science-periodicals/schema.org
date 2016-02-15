@@ -2,13 +2,13 @@
   "name": "schema.org",
   "version": "1.2.0",
   "description": "schema.org in JS (wip)",
-  "main": "dist/index.js",
+  "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --compilers js:babel-register",
-    "prepublish": "rm -rf dist && ./node_modules/.bin/babel src --out-dir dist"
+    "prepublish": "./node_modules/.bin/babel src --out-dir ."
   },
   "repository": {
     "type": "git",
