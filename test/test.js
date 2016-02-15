@@ -22,10 +22,13 @@ describe('schema-org', function() {
     });
 
 
-    it('should assess if a type is of a given class or not taking into account all the parent classes', function() {
+    it.only('should assess if a type is of a given class or not taking into account all the parent classes', function() {
       assert(schemaOrg.is('MedicalScholarlyArticle', 'MedicalScholarlyArticle'));
       assert(schemaOrg.is('MedicalScholarlyArticle', 'Article'));
       assert(!schemaOrg.is('MedicalScholarlyArticle', 'QuantitativeValue'));
+
+      // test memoization (second call is memoized);
+      assert(schemaOrg.is('MedicalScholarlyArticle', 'MedicalScholarlyArticle'));
     });
 
     it('should return all the subclasses of a className', function() {

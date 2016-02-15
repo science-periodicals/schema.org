@@ -16,6 +16,27 @@ export default class SchemaOrg {
       nodeMap[node['@id'].split(':')[1]] = node;
       return nodeMap;
     }, {});
+
+
+    // memoize
+    this._cache = Object.getOwnPropertyNames(Object.getPrototypeOf(this)).reduce((cache, key) => {
+      cache[key] = {};
+      return cache;
+    }, {});
+
+    // TODO generalize
+    this.is = function() {
+      if (arguments[0] in this._cache.is && arguments[1] in this._cache.is[arguments[0]]) {
+        return this._cache.is[arguments[0]][arguments[1]];
+      }
+      const value = SchemaOrg.prototype.is.apply(this, arguments);
+      if (! (arguments[0] in this._cache.is)) {
+        this._cache.is[arguments[0]] = {};
+      }
+      this._cache.is[arguments[0]][[arguments[1]]] = value;
+      return value;
+    }.bind(this);
+
   }
 
   getParents(className) {
