@@ -1,8 +1,8 @@
 {
   "name": "schema.org",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "schema.org in JS (wip)",
-  "main": "index.js",
+  "main": "dist/index.js",
   "directories": {
     "test": "test"
   },

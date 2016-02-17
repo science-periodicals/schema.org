@@ -72,6 +72,15 @@ describe('schema-org', function() {
 
   });
 
+
+  describe('SchemaOrg and extensions', function() {
+    it('should work with extensions', function() {
+      var schemaorg = new SchemaOrg([{'@graph': {'@id': 'sa:Image', subClassOf: ['schema:CreativeWork']}}]);
+      assert(schemaorg.is('Image', 'CreativeWork'));
+    });
+  });
+
+
   describe('utils', function() {
 
     describe('getParts', function() {

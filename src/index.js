@@ -10,7 +10,7 @@ const reClass = /^rdfs:Class$|^http:\/\/www.w3.org\/2000\/01\/rdf-schema#Class$/
 export default class SchemaOrg {
 
   constructor(data = []) {
-    this.graph = schemaOrg['@graph'].concat(data.map(d => d['@graph'])).filter(node => !isUrl(node['@id']));
+    this.graph = Array.prototype.concat.apply(schemaOrg['@graph'], data.map(d => d['@graph'])).filter(node => !isUrl(node['@id']));
     this.prefixes = new Set(this.graph.map(node => node['@id'].split(':')[0]));
     this.nodeMap = this.graph.reduce((nodeMap, node) => {
       nodeMap[node['@id'].split(':')[1]] = node;
