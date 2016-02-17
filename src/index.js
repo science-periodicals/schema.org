@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import url from 'url';
 import isUrl from 'is-url';
-import schemaOrg  from '../data/schema_org';
+import schemaOrg  from './schema_org';
 
 const reProperty = /^rdf:Property$|^http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#Property$/;
 const reClass = /^rdfs:Class$|^http:\/\/www.w3.org\/2000\/01\/rdf-schema#Class$/;

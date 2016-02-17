@@ -1,14 +1,14 @@
 {
   "name": "schema.org",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "schema.org in JS (wip)",
-  "main": "dist/index.js",
+  "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --compilers js:babel-register",
-    "build": "./node_modules/.bin/babel src --out-dir .",
+    "build": "./node_modules/.bin/babel src --out-dir . && cp ./src/schema_org.json .",
     "prepublish": "npm run build"
   },
   "repository": {
