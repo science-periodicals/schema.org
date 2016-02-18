@@ -3,6 +3,11 @@
 
 Work in progress...
 
+## Context
+
+```
+import context form 'schema.org/context';
+```
 
 ## API
 
@@ -80,7 +85,6 @@ schemaOrg.getType({
 
 
 ## Utils
-
 
 ```
 import * as utils from 'schema.org/utils';

@@ -7,6 +7,7 @@ var path = require('path');
 var jsonldRdfaParser = require('jsonld-rdfa-parser');
 var jsonld = require('jsonld');
 var util = require('util');
+var request = require('request');
 
 // register the parser for content type text/html
 jsonld.registerRDFParser('text/html', jsonldRdfaParser);
@@ -85,11 +86,26 @@ var context = {
 };
 
 jsonld.fromRDF('http://schema.org/docs/schema_org_rdfa.html', {format: 'text/html'}, function(err, data) {
-  if (err) return console.error(err);
+  if (err) throw err;
   jsonld.compact(data, context, function(err, data) {
-    if (err) return console.error(err);
-    fs.writeFile(path.resolve('..', 'src', 'schema_org.json'), JSON.stringify(data, null, 2), function(err) {
-      if (err) console.error(err);
+    if (err) throw err;
+    fs.writeFile(path.resolve(path.dirname(__dirname), 'src', 'schema_org.json'), JSON.stringify(data, null, 2), function(err) {
+      if (err) throw err;
+
+      // grab schema.org context
+      request.get({
+        url: 'http://schema.org',
+        headers: {Accept: 'application/ld+json'}
+      }, (err, resp, context) => {
+        if (err) throw err;
+        if (resp.statusCode >= 400) {
+          throw new Error(resp.statusCode);
+        }
+
+        fs.writeFile(path.resolve(path.dirname(__dirname), 'src', 'schema_org_context.json'), JSON.stringify(JSON.parse(context), null, 2), function(err) {
+          if (err) throw err;
+        });
+      });
     });
   });
 });

@@ -3,6 +3,7 @@ import SchemaOrg from '../src';
 import util from 'util';
 import jsonld from 'jsonld';
 import * as utils from '../src/utils';
+import context from '../src/context';
 
 describe('schema-org', function() {
 
@@ -106,6 +107,13 @@ describe('schema-org', function() {
           done();
         });
       });
+    });
+
+  });
+
+  describe('context', function() {
+    it('should have schema.org context', function() {
+      assert(context['@context']);
     });
   });
 

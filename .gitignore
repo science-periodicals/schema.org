@@ -18,3 +18,6 @@ node_modules
 
 /index.js
 /utils.js
+/context.js
+/schema_org.json
+/schema_org_context.json
