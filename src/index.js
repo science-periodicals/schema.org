@@ -55,7 +55,7 @@ export default class SchemaOrg {
         }
       }
     }
-    return subClassOfChain;
+    return subClassOfChain || new Set();
   }
 
   get(term) {

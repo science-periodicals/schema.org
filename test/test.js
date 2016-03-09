@@ -30,7 +30,11 @@ describe('schema-org', function() {
 
       // test memoization (second call is memoized);
       assert(schemaOrg.is('MedicalScholarlyArticle', 'MedicalScholarlyArticle'));
+
+      assert(!schemaOrg.is(undefined, 'Article'));
     });
+
+
 
     it('should return all the subclasses of a className', function() {
       assert.deepEqual(Array.from(schemaOrg.getSubClasses('Article').keys()), [
