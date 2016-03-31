@@ -17,6 +17,23 @@ describe('schema-org', function() {
       assert(schemaOrg.get('MedicalScholarlyArticle').label, 'MedicalScholarlyArticle');
     });
 
+    it('should expand terms into URL', function() {
+      const custom = new SchemaOrg({
+        '@context': {
+          customPrefix: 'http://example.com/customPrefix/'
+        },
+        '@graph': [
+          {
+            "@id": "customPrefix:CustomTerm",
+            "@type": "rdfs:Class",
+            "label": "CustomTerm"
+          }
+        ]
+      });
+
+      assert.equal(custom.expand('MedicalScholarlyArticle'), 'http://schema.org/MedicalScholarlyArticle');
+      assert.equal(custom.expand('CustomTerm'), 'http://example.com/customPrefix/CustomTerm');
+    })
 
     it('should return all the parent classes', function() {
       assert.deepEqual(Array.from(schemaOrg.getParents('MedicalScholarlyArticle')), [ 'ScholarlyArticle', 'Article', 'CreativeWork', 'Thing' ]);

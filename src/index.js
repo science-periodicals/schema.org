@@ -10,13 +10,31 @@ const reClass = /^rdfs:Class$|^http:\/\/www.w3.org\/2000\/01\/rdf-schema#Class$/
 export default class SchemaOrg {
 
   constructor(data = []) {
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
+
     this.graph = Array.prototype.concat.apply(schemaOrg['@graph'], data.map(d => d['@graph'])).filter(node => !isUrl(node['@id']));
+
+    this.prefixMap = [schemaOrg['@context']].concat(
+      data.filter(entry => entry['@context']).map(entry => entry['@context'])
+    ).reduce((prefixMap, ctx) => {
+      Object.keys(ctx).forEach(key => {
+        if (!~key.indexOf(':')) {
+          const value = ctx[key]['@id'] || ctx[key];
+          if (isUrl(value)) {
+            prefixMap[key] = value;
+          }
+        }
+      });
+      return prefixMap;
+    }, {});
+
     this.prefixes = new Set(this.graph.map(node => node['@id'].split(':')[0]));
     this.nodeMap = this.graph.reduce((nodeMap, node) => {
       nodeMap[node['@id'].split(':')[1]] = node;
       return nodeMap;
     }, {});
-
 
     // memoize
     this._cache = Object.getOwnPropertyNames(Object.getPrototypeOf(this)).reduce((cache, key) => {
@@ -62,6 +80,17 @@ export default class SchemaOrg {
     return this.nodeMap[term];
   }
 
+  expand(term) {
+    const value = this.get(term);
+    if (!value || !value['@id']) return value;
+    const splt = value['@id'].split(':');
+    if (splt.length === 2 && splt[0] in this.prefixMap) {
+      return this.prefixMap[splt[0]] + splt[1];
+    } else {
+      return term;
+    }
+  }
+
   is(type, className) {
     var typeList = arrayify(type);
 
@@ -77,7 +106,7 @@ export default class SchemaOrg {
   unprefix(terms) {
     return arrayify(terms).filter(term => {
       let splt = term.split(':');
-      return splt.length === 2 && this.prefixes.has(splt[0])
+      return splt.length === 2 && this.prefixes.has(splt[0]);
     }).map(term => term.split(':')[1]);
   }
 
