@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import url from 'url';
 import isUrl from 'is-url';
 import schemaOrg  from './schema_org';
