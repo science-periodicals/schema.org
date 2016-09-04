@@ -130,6 +130,14 @@ describe('schema-org', function() {
       });
     });
 
+    describe('getCreativeWorkTypeFromMime', function() {
+      it('should get a @type from a MIME', function() {
+        assert.equal(
+          utils.getCreativeWorkTypeFromMime('application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
+          'ScholarlyArticle'
+        );
+      });
+    });
   });
 
   describe('context', function() {
