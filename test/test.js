@@ -138,6 +138,26 @@ describe('schema-org', function() {
         );
       });
     });
+
+    describe('getAgent', function() {
+      it('should unrolify or return the agent if not a role', function() {
+        assert.equal(
+          utils.getAgent({author: 'ex:authorId'}),
+          'ex:authorId'
+        );
+        assert.equal(
+          utils.getAgent('ex:authorId'),
+          'ex:authorId'
+        );
+      });
+
+      it('should get the agent Id', function() {
+        assert.equal(
+          utils.getAgentId({author: {'@id': 'ex:authorId'}}),
+          'ex:authorId'
+        );
+      });
+    });
   });
 
   describe('context', function() {

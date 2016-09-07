@@ -92,3 +92,43 @@ export function getCreativeWorkTypeFromMime(mimeType = '') {
   }
 
 };
+
+
+export function getAgent(agent) {
+  const personOrOrganization = (
+    (
+      agent && (
+        agent.agent ||
+        agent.recipient ||
+        agent.participant ||
+        agent.creator ||
+        agent.author ||
+        agent.contributor ||
+        agent.producer ||
+        agent.editor ||
+        agent.sender ||
+        agent.accountablePerson ||
+        agent.copyrightHolder ||
+        agent.director ||
+        agent.illustrator ||
+        agent.knows ||
+        agent.publishedBy ||
+        agent.reviewedBy ||
+        agent.sibling ||
+        agent.spouse ||
+        agent.translator
+      )
+    ) ||
+    agent
+  );
+
+  // Due to the context, personOrOrganization could be a list (for instance author could be defined as @container: @list)
+  return Array.isArray(personOrOrganization) ? personOrOrganization[0] : personOrOrganization;
+};
+
+export function getAgentId(agent) {
+  const personOrOrganization = getAgent(agent);
+  if (personOrOrganization) {
+    return (typeof personOrOrganization === 'string') ? personOrOrganization : personOrOrganization['@id'];
+  }
+};
