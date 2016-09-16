@@ -130,6 +130,23 @@ describe('schema-org', function() {
       });
     });
 
+    describe('getRootPart', function() {
+      it.only('should get the root part', function() {
+        const tree = {
+          '@id': '_:1',
+          isPartOf: {
+            '@id': '_:2',
+            isPartOf: {
+              '@id': '_:3',
+              isPartOf: '_:4'
+            }
+          }
+        };
+
+        assert.equal(utils.getRootPart(tree), '_:4');
+      });
+    });
+
     describe('getCreativeWorkTypeFromMime', function() {
       it('should get a @type from a MIME', function() {
         assert.equal(

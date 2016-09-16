@@ -21,6 +21,16 @@ export function getParts(root, nodeMap) {
   }, []);
 };
 
+export function getRootPart(object) {
+  let root;
+  if (object && object.isPartOf) {
+    root = object;
+    while (root && root.isPartOf) {
+      root = root.isPartOf
+    }
+  }
+  return root;
+};
 
 export function getCreativeWorkTypeFromMime(mimeType = '') {
   const dataset = new Set([
