@@ -144,6 +144,7 @@ describe('schema-org', function() {
         };
 
         assert.equal(utils.getRootPart(tree), '_:4');
+        assert.equal(utils.getRootPartId(tree), '_:4');
       });
     });
 

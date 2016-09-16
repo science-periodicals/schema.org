@@ -32,6 +32,13 @@ export function getRootPart(object) {
   return root;
 };
 
+export function getRootPartId(object) {
+  const root = getRootPart(object);
+  if (root) {
+    return (typeof root === 'string') ? root : root['@id'];
+  }
+}
+
 export function getCreativeWorkTypeFromMime(mimeType = '') {
   const dataset = new Set([
     'application/vnd.ms-excel',
