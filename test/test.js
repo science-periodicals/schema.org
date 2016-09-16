@@ -131,7 +131,7 @@ describe('schema-org', function() {
     });
 
     describe('getRootPart', function() {
-      it.only('should get the root part', function() {
+      it('should get the root part', function() {
         const tree = {
           '@id': '_:1',
           isPartOf: {
