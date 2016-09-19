@@ -37,7 +37,7 @@ export function getRootPartId(object) {
   if (root) {
     return (typeof root === 'string') ? root : root['@id'];
   }
-}
+};
 
 export function getCreativeWorkTypeFromMime(mimeType = '') {
   const dataset = new Set([
