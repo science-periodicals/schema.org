@@ -1,3 +1,5 @@
+import urlTemplate from 'url-template';
+
 export function getParts(root, nodeMap) {
   if (nodeMap) {
     if ('@graph' in nodeMap) {
@@ -169,3 +171,44 @@ export function getAgentId(agent) {
     return (typeof personOrOrganization === 'string') ? personOrOrganization : personOrOrganization['@id'];
   }
 };
+
+export function renderUrlTemplate(action, params, target) {
+  target = target || action.target;
+
+  if (target && Array.isArray(target) && target.length === 1) {
+    target = target[0];
+  }
+
+  if (!target || !target.urlTemplate) {
+    return '';
+  }
+
+  return urlTemplate
+          .parse(target.urlTemplate)
+          .expand(getUrlTemplateCtx(action, params));
+};
+
+export function getUrlTemplateCtx(action, params) {
+  action = action || {};
+  params = params || {};
+  let ctx = {};
+
+  _traverse(action, function(key, value) {
+    if (/-input$|-output$/.test(key)) {
+      if ('valueName' in value && (('defaultValue' in value) || (value.valueName in params))) {
+        ctx[value.valueName] = params[value.valueName] || value.defaultValue;
+      }
+    }
+  }, this);
+
+  return ctx;
+};
+
+function _traverse(obj, func, ctx) {
+  for (var i in obj) {
+    func.apply(ctx || this, [i, obj[i]] );
+    if (obj[i] !== null && typeof obj[i] == 'object') {
+      _traverse(obj[i], func, ctx);
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "schema.org",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "schema.org in JS (wip)",
   "main": "index.js",
   "scripts": {
@@ -38,6 +38,7 @@
     "request": "2.74.0"
   },
   "dependencies": {
-    "is-url": "1.2.2"
+    "is-url": "1.2.2",
+    "url-template": "2.0.8"
   }
 }

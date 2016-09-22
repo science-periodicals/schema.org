@@ -90,8 +90,6 @@ schemaOrg.getType({
 import * as utils from 'schema.org/utils';
 ```
 
-### getParts
-
 
 
 Tests

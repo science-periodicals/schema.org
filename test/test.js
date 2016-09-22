@@ -186,6 +186,25 @@ describe('schema-org', function() {
         );
       });
     });
+
+    describe('getUrlTemplateCtx', function() {
+      it('should get urlTemplate context from an action', function() {
+        let action = {
+          'a-input': {
+            valueName: 'a',
+            defaultValue: 'aa'
+          },
+          target: {
+            'b-input': {
+              valueName: 'b',
+              defaultValue: 'bb'
+            }
+          }
+        };
+        var ctx = utils.getUrlTemplateCtx(action, {a: 'aaa'});
+        assert.deepEqual(ctx, {a: 'aaa', b: 'bb'});
+      });
+    });
   });
 
   describe('context', function() {
