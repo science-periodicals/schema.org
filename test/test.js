@@ -149,13 +149,23 @@ describe('schema-org', function() {
     });
 
     describe('getCreativeWorkTypeFromMime', function() {
-      it('should get a @type from a MIME', function() {
+      it('should get a CreativeWork @type from a MIME', function() {
         assert.equal(
           utils.getCreativeWorkTypeFromMime('application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
           'ScholarlyArticle'
         );
       });
     });
+
+    describe('getEncodingTypeFromMime', function() {
+      it('should get an encoding @type from a MIME', function() {
+        assert.equal(
+          utils.getEncodingTypeFromMime('application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
+          'DocumentObject'
+        );
+      });
+    });
+
 
     describe('getAgent', function() {
       it('should unrolify or return the agent if not a role', function() {

@@ -110,6 +110,26 @@ export function getCreativeWorkTypeFromMime(mimeType = '') {
 
 };
 
+export function getEncodingTypeFromMime(mimeType = '') {
+  const contentType = mimeType.split(';')[0].trim();
+  const type = contentType.split('/')[0];
+
+  if (type === 'image' ) {
+    return 'ImageObject';
+  } else if (type === 'video') {
+    return 'VideoObject';
+  } else if (type === 'audio') {
+    return 'AudioObject';
+  } else if (~['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'text/tab-separated-values', 'application/json', 'application/ld+json', 'application/x-ldjson', 'application/xml', 'application/rdf+xml', 'text/n3', 'text/turtle'].indexOf(contentType)) {
+    return 'DataDownload';
+  } else if (~['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.oasis.opendocument.text', 'application/x-latex', 'text/html'].indexOf(contentType)) {
+    return 'DocumentObject';
+  } else if (~['application/javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript'].indexOf(contentType)) {
+    return 'SoftwareSourceCodeObject';
+  } else {
+    return 'MediaObject';
+  }
+};
 
 export function getAgent(agent) {
   const personOrOrganization = (
