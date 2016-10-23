@@ -14,7 +14,6 @@ describe('schema-org', function() {
     });
 
     it('should return all the RDFS node', function() {
-      console.log(schemaOrg.get('ScholarlyArticle'));
       assert(schemaOrg.get('ScholarlyArticle').label, 'ScholarlyArticle');
     });
 
