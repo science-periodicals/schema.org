@@ -187,6 +187,22 @@ describe('schema-org', function() {
       });
     });
 
+    describe('getObject', function() {
+      it('should unrolify', function() {
+        assert.deepEqual(
+          utils.getObject({object: {object: {'@id': 'ex:objectId'}}}),
+          {'@id': 'ex:objectId'}
+        );
+      });
+
+      it('should unrolify and get the @id', function() {
+        assert.equal(
+          utils.getObjectId({object: {object: {'@id': 'ex:objectId'}}}),
+          'ex:objectId'
+        );
+      });
+    });
+
     describe('getUrlTemplateCtx', function() {
       it('should get urlTemplate context from an action', function() {
         let action = {

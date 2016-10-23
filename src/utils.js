@@ -172,6 +172,20 @@ export function getAgentId(agent) {
   }
 };
 
+export function getObject(action) {
+  if (!action) return;
+  if (action.object) {
+    return action.object.object || action.object;
+  }
+};
+
+export function getObjectId(action) {
+  const object = getObject(action);
+  if (object) {
+    return (typeof object === 'string') ? object : object['@id'];
+  }
+};
+
 export function renderUrlTemplate(action, params, target) {
   target = target || action.target;
 

@@ -95,7 +95,7 @@ jsonld.fromRDF('http://schema.org/docs/schema_org_rdfa.html', {format: 'text/htm
       // grab schema.org context
       request.get({
         url: 'http://schema.org',
-        headers: {Accept: 'application/ld+json'}
+        headers: { Accept: 'application/ld+json' }
       }, (err, resp, context) => {
         if (err) throw err;
         if (resp.statusCode >= 400) {
