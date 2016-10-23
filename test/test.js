@@ -14,7 +14,8 @@ describe('schema-org', function() {
     });
 
     it('should return all the RDFS node', function() {
-      assert(schemaOrg.get('MedicalScholarlyArticle').label, 'MedicalScholarlyArticle');
+      console.log(schemaOrg.get('ScholarlyArticle'));
+      assert(schemaOrg.get('ScholarlyArticle').label, 'ScholarlyArticle');
     });
 
     it('should expand terms into URL', function() {
@@ -31,27 +32,24 @@ describe('schema-org', function() {
         ]
       });
 
-      assert.equal(custom.expand('MedicalScholarlyArticle'), 'http://schema.org/MedicalScholarlyArticle');
+      assert.equal(custom.expand('ScholarlyArticle'), 'http://schema.org/ScholarlyArticle');
       assert.equal(custom.expand('CustomTerm'), 'http://example.com/customPrefix/CustomTerm');
     })
 
     it('should return all the parent classes', function() {
-      assert.deepEqual(Array.from(schemaOrg.getParents('MedicalScholarlyArticle')), [ 'ScholarlyArticle', 'Article', 'CreativeWork', 'Thing' ]);
+      assert.deepEqual(Array.from(schemaOrg.getParents('ScholarlyArticle')), [ 'Article', 'CreativeWork', 'Thing' ]);
     });
 
 
     it('should assess if a type is of a given class or not taking into account all the parent classes', function() {
-      assert(schemaOrg.is('MedicalScholarlyArticle', 'MedicalScholarlyArticle'));
-      assert(schemaOrg.is('MedicalScholarlyArticle', 'Article'));
-      assert(!schemaOrg.is('MedicalScholarlyArticle', 'QuantitativeValue'));
+      assert(schemaOrg.is('ScholarlyArticle', 'Article'));
+      assert(!schemaOrg.is('ScholarlyArticle', 'QuantitativeValue'));
 
       // test memoization (second call is memoized);
-      assert(schemaOrg.is('MedicalScholarlyArticle', 'MedicalScholarlyArticle'));
+      assert(schemaOrg.is('ScholarlyArticle', 'Article'));
 
       assert(!schemaOrg.is(undefined, 'Article'));
     });
-
-
 
     it('should return all the subclasses of a className', function() {
       assert.deepEqual(Array.from(schemaOrg.getSubClasses('Article').keys()), [
@@ -59,7 +57,6 @@ describe('schema-org', function() {
         'BlogPosting',
         'DiscussionForumPosting',
         'LiveBlogPosting',
-        'MedicalScholarlyArticle',
         'NewsArticle',
         'Report',
         'ScholarlyArticle',
@@ -79,8 +76,8 @@ describe('schema-org', function() {
     });
 
     it('should assess if a class is more specific than another', function() {
-      assert(schemaOrg.isMoreSpecific('MedicalScholarlyArticle', 'Article'));
-      assert(!schemaOrg.isMoreSpecific('Article', 'MedicalScholarlyArticle'));
+      assert(schemaOrg.isMoreSpecific('ScholarlyArticle', 'Article'));
+      assert(!schemaOrg.isMoreSpecific('Article', 'ScholarlyArticle'));
     });
 
     it('should infer type of a node', function(){
