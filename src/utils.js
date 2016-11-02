@@ -63,6 +63,12 @@ export function getCreativeWorkTypeFromMime(mimeType = '') {
     'application/x-latex'
   ]);
 
+  const formula = new Set([
+    'application/mathml-presentation+xml',
+    'application/mathml-content+xml',
+    'application/mathml+xml'
+  ]);
+
   const languageMimeSuffixes = [
     'javascript',
     'ecmascript',
@@ -106,30 +112,33 @@ export function getCreativeWorkTypeFromMime(mimeType = '') {
     return 'ScholarlyArticle';
   } else if (softwareSourceCode.has(mimeType)) {
     return 'SoftwareSourceCode';
+  } else if (formula.has(mimeType)) {
+    return 'Formula';
   } else {
     return 'CreativeWork';
   }
-
 };
 
 export function getEncodingTypeFromMime(mimeType = '') {
-  const contentType = mimeType.split(';')[0].trim();
-  const type = contentType.split('/')[0];
-
-  if (type === 'image' ) {
-    return 'ImageObject';
-  } else if (type === 'video') {
-    return 'VideoObject';
-  } else if (type === 'audio') {
-    return 'AudioObject';
-  } else if (~['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'text/tab-separated-values', 'application/json', 'application/ld+json', 'application/x-ldjson', 'application/xml', 'application/rdf+xml', 'text/n3', 'text/turtle'].indexOf(contentType)) {
-    return 'DataDownload';
-  } else if (~['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.oasis.opendocument.text', 'application/x-latex', 'text/html'].indexOf(contentType)) {
-    return 'DocumentObject';
-  } else if (~['application/javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript'].indexOf(contentType)) {
-    return 'SoftwareSourceCodeObject';
-  } else {
-    return 'MediaObject';
+  const rType = getCreativeWorkTypeFromMime(mimeType);
+  switch (rType) {
+    case 'Image':
+      return 'ImageObject';
+    case 'Audio':
+      return 'AudioObject';
+    case 'Video':
+      return 'VideoObject';
+    case 'Dataset':
+      return 'DataDownload';
+    case 'Article':
+    case 'ScholarlyArticle':
+      return 'DocumentObject';
+    case 'SoftwareSourceCode':
+      return 'SoftwareSourceCodeObject';
+    case 'Formula':
+      return 'FormulaObject';
+    default:
+      return 'MediaObject';
   }
 };
 
