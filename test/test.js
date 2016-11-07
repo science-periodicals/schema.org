@@ -41,6 +41,9 @@ describe('schema-org', function() {
 
 
     it('should assess if a type is of a given class or not taking into account all the parent classes', function() {
+      assert(schemaOrg.is({'@type': 'ScholarlyArticle'}, 'Article'));
+      assert(schemaOrg.is([{'@type': 'ScholarlyArticle'}], 'Article'));
+      assert(schemaOrg.is(['ScholarlyArticle'], 'Article'));
       assert(schemaOrg.is('ScholarlyArticle', 'Article'));
       assert(!schemaOrg.is('ScholarlyArticle', 'QuantitativeValue'));
 

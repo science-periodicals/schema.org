@@ -93,6 +93,7 @@ export default class SchemaOrg {
     var typeList = arrayify(type);
 
     for (var type of typeList) {
+      type = (type && type['@type']) || type;
       if (type === className || this.getParents(type).has(className)) {
         return true;
       }
