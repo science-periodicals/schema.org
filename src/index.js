@@ -42,17 +42,20 @@ export default class SchemaOrg {
 
     // TODO generalize
     this.is = function() {
-      if (arguments[0] in this._cache.is && arguments[1] in this._cache.is[arguments[0]]) {
-        return this._cache.is[arguments[0]][arguments[1]];
+      if (Array.isArray(arguments[0])) {
+        return SchemaOrg.prototype.is.apply(this, arguments);
+      }
+      const type = (arguments[0] && arguments[0]['@type']) || arguments[0];
+      if (type in this._cache.is && arguments[1] in this._cache.is[type]) {
+        return this._cache.is[type][arguments[1]];
       }
       const value = SchemaOrg.prototype.is.apply(this, arguments);
-      if (! (arguments[0] in this._cache.is)) {
-        this._cache.is[arguments[0]] = {};
+      if (! (type in this._cache.is)) {
+        this._cache.is[type] = {};
       }
-      this._cache.is[arguments[0]][[arguments[1]]] = value;
+      this._cache.is[type][[arguments[1]]] = value;
       return value;
     }.bind(this);
-
   }
 
   getParents(className) {

@@ -49,6 +49,10 @@ describe('schema-org', function() {
 
       // test memoization (second call is memoized);
       assert(schemaOrg.is('ScholarlyArticle', 'Article'));
+      assert(schemaOrg.is({'@type': 'Action'}, 'Action'));
+      assert(schemaOrg.is({'@type': 'Action'}, 'Action'));
+      assert(schemaOrg.is({'@type': 'PublicationEvent'}, 'Event'));
+      assert(schemaOrg.is({'@type': 'PublicationEvent'}, 'Event'));
 
       assert(!schemaOrg.is(undefined, 'Article'));
     });

@@ -1,6 +1,6 @@
 {
   "name": "schema.org",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "schema.org in JS (wip)",
   "main": "index.js",
   "scripts": {
