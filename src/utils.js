@@ -164,7 +164,8 @@ export function getAgent(agent) {
         agent.reviewedBy ||
         agent.sibling ||
         agent.spouse ||
-        agent.translator
+        agent.translator ||
+        agent.grantee
       )
     ) ||
     agent
