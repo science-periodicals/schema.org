@@ -196,6 +196,20 @@ export function getObjectId(action) {
   }
 };
 
+export function getTargetCollection(action) {
+  if (!action) return;
+  if (action.targetCollection) {
+    return action.targetCollection.targetCollection || action.targetCollection;
+  }
+};
+
+export function getTargetCollectionId(action) {
+  const targetCollection = getTargetCollection(action);
+  if (targetCollection) {
+    return (typeof targetCollection === 'string') ? targetCollection : targetCollection['@id'];
+  }
+};
+
 export function renderUrlTemplate(action, params, target) {
   target = target || action.target;
 

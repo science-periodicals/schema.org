@@ -206,6 +206,22 @@ describe('schema-org', function() {
       });
     });
 
+    describe('getTargetCollection', function() {
+      it('should unrolify', function() {
+        assert.deepEqual(
+          utils.getTargetCollection({targetCollection: {targetCollection: {'@id': 'ex:targetCollectionId'}}}),
+          {'@id': 'ex:targetCollectionId'}
+        );
+      });
+
+      it('should unrolify and get the @id', function() {
+        assert.equal(
+          utils.getTargetCollectionId({targetCollection: {targetCollection: {'@id': 'ex:targetCollectionId'}}}),
+          'ex:targetCollectionId'
+        );
+      });
+    });
+
     describe('getUrlTemplateCtx', function() {
       it('should get urlTemplate context from an action', function() {
         let action = {
