@@ -10,6 +10,9 @@
     "prepublish": "npm run build",
     "postpublish": "rm ./index.js ./utils.js ./context.js ./schema_org.json ./schema_org_context.json"
   },
+  "eslintConfig": {
+    "extends": "scienceai"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/scienceai/schema.org.git"
@@ -28,10 +31,10 @@
   "homepage": "https://github.com/scienceai/schema.org",
   "devDependencies": {
     "babel-cli": "^6.22.2",
-    "babel-eslint": "^7.1.1",
     "babel-preset-es2015": "^6.22.0",
     "babel-register": "^6.22.0",
     "clone": "^2.1.0",
+    "eslint-config-scienceai": "^2.6.0",
     "jsonld": "0.4.11",
     "jsonld-rdfa-parser": "1.5.1",
     "mocha": "^3.2.0",

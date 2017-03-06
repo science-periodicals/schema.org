@@ -165,7 +165,8 @@ export function getAgent(agent) {
         agent.sibling ||
         agent.spouse ||
         agent.translator ||
-        agent.grantee
+        agent.grantee ||
+        agent.member
       )
     ) ||
     agent
