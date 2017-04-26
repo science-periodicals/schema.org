@@ -1,32 +1,35 @@
 import url from 'url';
 import isUrl from 'is-url';
-import schemaOrg  from './schema_org';
+import schemaOrg from './schema_org';
 
 const reProperty = /^rdf:Property$|^http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#Property$/;
 const reClass = /^rdfs:Class$|^http:\/\/www.w3.org\/2000\/01\/rdf-schema#Class$/;
 
 export default class SchemaOrg {
-
   constructor(data = []) {
     if (!Array.isArray(data)) {
       data = [data];
     }
 
-    this.graph = Array.prototype.concat.apply(schemaOrg['@graph'], data.map(d => d['@graph'])).filter(node => !isUrl(node['@id']));
+    this.graph = Array.prototype.concat
+      .apply(schemaOrg['@graph'], data.map(d => d['@graph']))
+      .filter(node => !isUrl(node['@id']));
 
-    this.prefixMap = [schemaOrg['@context']].concat(
-      data.filter(entry => entry['@context']).map(entry => entry['@context'])
-    ).reduce((prefixMap, ctx) => {
-      Object.keys(ctx).forEach(key => {
-        if (!~key.indexOf(':')) {
-          const value = ctx[key]['@id'] || ctx[key];
-          if (isUrl(value)) {
-            prefixMap[key] = value;
+    this.prefixMap = [schemaOrg['@context']]
+      .concat(
+        data.filter(entry => entry['@context']).map(entry => entry['@context'])
+      )
+      .reduce((prefixMap, ctx) => {
+        Object.keys(ctx).forEach(key => {
+          if (!~key.indexOf(':')) {
+            const value = ctx[key]['@id'] || ctx[key];
+            if (isUrl(value)) {
+              prefixMap[key] = value;
+            }
           }
-        }
-      });
-      return prefixMap;
-    }, {});
+        });
+        return prefixMap;
+      }, {});
 
     this.prefixes = new Set(this.graph.map(node => node['@id'].split(':')[0]));
     this.nodeMap = this.graph.reduce((nodeMap, node) => {
@@ -35,7 +38,9 @@ export default class SchemaOrg {
     }, {});
 
     // memoize
-    this._cache = Object.getOwnPropertyNames(Object.getPrototypeOf(this)).reduce((cache, key) => {
+    this._cache = Object.getOwnPropertyNames(
+      Object.getPrototypeOf(this)
+    ).reduce((cache, key) => {
       cache[key] = {};
       return cache;
     }, {});
@@ -50,7 +55,7 @@ export default class SchemaOrg {
         return this._cache.is[type][arguments[1]];
       }
       const value = SchemaOrg.prototype.is.apply(this, arguments);
-      if (! (type in this._cache.is)) {
+      if (!(type in this._cache.is)) {
         this._cache.is[type] = {};
       }
       this._cache.is[type][[arguments[1]]] = value;
@@ -70,7 +75,7 @@ export default class SchemaOrg {
             if (!subClassOfChain.has(p)) {
               subClassOfChain.add(p);
             }
-          };
+          }
         }
       }
     }
@@ -106,10 +111,12 @@ export default class SchemaOrg {
   }
 
   unprefix(terms) {
-    return arrayify(terms).filter(term => {
-      let splt = term.split(':');
-      return splt.length === 2 && this.prefixes.has(splt[0]);
-    }).map(term => term.split(':')[1]);
+    return arrayify(terms)
+      .filter(term => {
+        let splt = term.split(':');
+        return splt.length === 2 && this.prefixes.has(splt[0]);
+      })
+      .map(term => term.split(':')[1]);
   }
 
   getSubClasses(className, recursive = true) {
@@ -118,11 +125,19 @@ export default class SchemaOrg {
       if (reClass.test(this.nodeMap[key]['@type'])) {
         if (recursive) {
           let parents = this.getParents(key);
-          if (parents && parents.size && parents.has(className) && !subClasses.has(key)) {
+          if (
+            parents &&
+            parents.size &&
+            parents.has(className) &&
+            !subClasses.has(key)
+          ) {
             subClasses.add(key);
           }
         } else {
-          if (this.nodeMap[key].subClassOf && ~this.unprefix(this.nodeMap[key].subClassOf).indexOf(className)) {
+          if (
+            this.nodeMap[key].subClassOf &&
+            ~this.unprefix(this.nodeMap[key].subClassOf).indexOf(className)
+          ) {
             subClasses.add(key);
           }
         }
@@ -147,7 +162,10 @@ export default class SchemaOrg {
     Object.keys(obj).forEach(key => {
       if (this.nodeMap[key] && this.nodeMap[key].domain) {
         for (let d of this.unprefix(this.nodeMap[key].domain)) {
-          if (!candidates.has(d) && moreSpecificOrEqualThan.every(t => this.isMoreSpecific(d, t))) {
+          if (
+            !candidates.has(d) &&
+            moreSpecificOrEqualThan.every(t => this.isMoreSpecific(d, t))
+          ) {
             candidates.add(d);
           }
         }
@@ -155,7 +173,7 @@ export default class SchemaOrg {
     });
 
     moreSpecificOrEqualThan.forEach(t => {
-      if (! candidates.has(t)) {
+      if (!candidates.has(t)) {
         candidates.add(t);
       }
     });
@@ -176,13 +194,14 @@ export default class SchemaOrg {
       let parents = this.getParents(c);
       scores[c] = 0;
       Object.keys(obj).forEach(p => {
-
         if (
           this.nodeMap[p] &&
           this.nodeMap[p].domain &&
           parents &&
           parents.size &&
-          this.unprefix(this.nodeMap[p].domain).some(d => d === c || parents.has(d))
+          this.unprefix(this.nodeMap[p].domain).some(
+            d => d === c || parents.has(d)
+          )
         ) {
           scores[c]++;
         }
@@ -190,11 +209,12 @@ export default class SchemaOrg {
     }
 
     var sortedScores = Object.keys(scores)
-                             .map(x => {
-                               return {type: x, score: scores[x]};
-                             }).sort((a, b) => {
-                               return b.score - a.score;
-                             });
+      .map(x => {
+        return { type: x, score: scores[x] };
+      })
+      .sort((a, b) => {
+        return b.score - a.score;
+      });
 
     if (sortedScores[0].score === sortedScores[1].score) {
       return; //cannot identify unambiguously
@@ -202,9 +222,7 @@ export default class SchemaOrg {
 
     return sortedScores[0].type;
   }
-
 }
-
 
 function arrayify(x) {
   return Array.isArray(x) ? x : [x];

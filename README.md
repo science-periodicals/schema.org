@@ -1,6 +1,10 @@
 [schema.org](http://schema.org)
 ===============================
 
+[![CircleCI](https://circleci.com/gh/scienceai/schema.org.svg?style=svg)](https://circleci.com/gh/scienceai/schema.org)
+
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+
 Work in progress...
 
 ## Context

@@ -21,25 +21,42 @@ export function getParts(root, nodeMap) {
   return root.hasPart.reduce(function(prev, curr) {
     return prev.concat(curr, getParts(curr, nodeMap));
   }, []);
-};
+}
 
 export function getRootPart(object) {
   let root;
   if (object && object.isPartOf) {
     root = object;
     while (root && root.isPartOf) {
-      root = root.isPartOf
+      root = root.isPartOf;
     }
   }
   return root;
-};
+}
+
+export function getChecksumValue(object, algorithm = 'nash') {
+  if (!object) return;
+  if (object.contentChecksum) {
+    const checksums = Array.isArray(object.contentChecksum)
+      ? object.contentChecksum
+      : [object.contentChecksum];
+
+    const checksum = checksums.find(
+      checksum =>
+        checksum.checksumAlgorithm === algorithm && checksum.checksumValue
+    );
+    if (checksum) {
+      return checksum.checksumValue;
+    }
+  }
+}
 
 export function getRootPartId(object) {
   const root = getRootPart(object);
   if (root) {
-    return (typeof root === 'string') ? root : root['@id'];
+    return typeof root === 'string' ? root : root['@id'];
   }
-};
+}
 
 export function getCreativeWorkTypeFromMime(mimeType = '') {
   const dataset = new Set([
@@ -92,15 +109,15 @@ export function getCreativeWorkTypeFromMime(mimeType = '') {
     'x-perl'
   ];
   const softwareSourceCode = new Set(
-    languageMimeSuffixes.map(l => `text/${l}`).concat(
-      languageMimeSuffixes.map(l => `application/${l}`)
-    )
+    languageMimeSuffixes
+      .map(l => `text/${l}`)
+      .concat(languageMimeSuffixes.map(l => `application/${l}`))
   );
 
   mimeType = mimeType.split(';')[0].trim();
   const type = mimeType.split('/')[0];
 
-  if (type === 'image' ) {
+  if (type === 'image') {
     return 'Image';
   } else if (type === 'video') {
     return 'Video';
@@ -117,7 +134,7 @@ export function getCreativeWorkTypeFromMime(mimeType = '') {
   } else {
     return 'CreativeWork';
   }
-};
+}
 
 export function getEncodingTypeFromMime(mimeType = '') {
   const rType = getCreativeWorkTypeFromMime(mimeType);
@@ -140,13 +157,12 @@ export function getEncodingTypeFromMime(mimeType = '') {
     default:
       return 'MediaObject';
   }
-};
+}
 
 export function getAgent(agent) {
-  const personOrOrganization = (
-    (
-      agent && (
-        agent.agent ||
+  const personOrOrganization =
+    (agent &&
+      (agent.agent ||
         agent.recipient ||
         agent.participant ||
         agent.creator ||
@@ -166,50 +182,53 @@ export function getAgent(agent) {
         agent.spouse ||
         agent.translator ||
         agent.grantee ||
-        agent.member
-      )
-    ) ||
-    agent
-  );
+        agent.member)) ||
+    agent;
 
   // Due to the context, personOrOrganization could be a list (for instance author could be defined as @container: @list)
-  return Array.isArray(personOrOrganization) ? personOrOrganization[0] : personOrOrganization;
-};
+  return Array.isArray(personOrOrganization)
+    ? personOrOrganization[0]
+    : personOrOrganization;
+}
 
 export function getAgentId(agent) {
   const personOrOrganization = getAgent(agent);
   if (personOrOrganization) {
-    return (typeof personOrOrganization === 'string') ? personOrOrganization : personOrOrganization['@id'];
+    return typeof personOrOrganization === 'string'
+      ? personOrOrganization
+      : personOrOrganization['@id'];
   }
-};
+}
 
 export function getObject(action) {
   if (!action) return;
   if (action.object) {
     return action.object.object || action.object;
   }
-};
+}
 
 export function getObjectId(action) {
   const object = getObject(action);
   if (object) {
-    return (typeof object === 'string') ? object : object['@id'];
+    return typeof object === 'string' ? object : object['@id'];
   }
-};
+}
 
 export function getTargetCollection(action) {
   if (!action) return;
   if (action.targetCollection) {
     return action.targetCollection.targetCollection || action.targetCollection;
   }
-};
+}
 
 export function getTargetCollectionId(action) {
   const targetCollection = getTargetCollection(action);
   if (targetCollection) {
-    return (typeof targetCollection === 'string') ? targetCollection : targetCollection['@id'];
+    return typeof targetCollection === 'string'
+      ? targetCollection
+      : targetCollection['@id'];
   }
-};
+}
 
 export function renderUrlTemplate(action, params, target) {
   target = target || action.target;
@@ -223,29 +242,36 @@ export function renderUrlTemplate(action, params, target) {
   }
 
   return urlTemplate
-          .parse(target.urlTemplate)
-          .expand(getUrlTemplateCtx(action, params));
-};
+    .parse(target.urlTemplate)
+    .expand(getUrlTemplateCtx(action, params));
+}
 
 export function getUrlTemplateCtx(action, params) {
   action = action || {};
   params = params || {};
   let ctx = {};
 
-  _traverse(action, function(key, value) {
-    if (/-input$|-output$/.test(key)) {
-      if ('valueName' in value && (('defaultValue' in value) || (value.valueName in params))) {
-        ctx[value.valueName] = params[value.valueName] || value.defaultValue;
+  _traverse(
+    action,
+    function(key, value) {
+      if (/-input$|-output$/.test(key)) {
+        if (
+          'valueName' in value &&
+          ('defaultValue' in value || value.valueName in params)
+        ) {
+          ctx[value.valueName] = params[value.valueName] || value.defaultValue;
+        }
       }
-    }
-  }, this);
+    },
+    this
+  );
 
   return ctx;
-};
+}
 
 function _traverse(obj, func, ctx) {
   for (var i in obj) {
-    func.apply(ctx || this, [i, obj[i]] );
+    func.apply(ctx || this, [i, obj[i]]);
     if (obj[i] !== null && typeof obj[i] == 'object') {
       _traverse(obj[i], func, ctx);
     }
