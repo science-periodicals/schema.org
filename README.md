@@ -10,7 +10,7 @@ Work in progress...
 ## Context
 
 ```
-import context form 'schema.org/context';
+import context from 'schema.org/context';
 ```
 
 ## API
