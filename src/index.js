@@ -1,8 +1,6 @@
-import url from 'url';
 import isUrl from 'is-url';
 import schemaOrg from './schema_org';
 
-const reProperty = /^rdf:Property$|^http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#Property$/;
 const reClass = /^rdfs:Class$|^http:\/\/www.w3.org\/2000\/01\/rdf-schema#Class$/;
 
 export default class SchemaOrg {
@@ -100,9 +98,9 @@ export default class SchemaOrg {
   is(type, className) {
     var typeList = arrayify(type);
 
-    for (var type of typeList) {
-      type = (type && type['@type']) || type;
-      if (type === className || this.getParents(type).has(className)) {
+    for (let typeItem of typeList) {
+      typeItem = (typeItem && typeItem['@type']) || typeItem;
+      if (typeItem === className || this.getParents(typeItem).has(className)) {
         return true;
       }
     }
