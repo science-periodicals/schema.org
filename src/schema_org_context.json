@@ -1417,9 +1417,6 @@
     "LiquorStore": {
       "@id": "schema:LiquorStore"
     },
-    "ListItem": {
-      "@id": "schema:ListItem"
-    },
     "ListenAction": {
       "@id": "schema:ListenAction"
     },
@@ -1794,9 +1791,6 @@
     },
     "Neurologic": {
       "@id": "schema:Neurologic"
-    },
-    "NewCondition": {
-      "@id": "schema:NewCondition"
     },
     "NewsArticle": {
       "@id": "schema:NewsArticle"
