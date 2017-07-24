@@ -990,7 +990,7 @@
     {
       "@id": "schema:CheckAction",
       "@type": "rdfs:Class",
-      "comment": "An agent inspects/determines/investigates/inquire or examine an object's accuracy/quality/condition or state.",
+      "comment": "An agent inspects, determines, investigates, inquires, or examines an object's accuracy, quality, condition, or state.",
       "label": "CheckAction",
       "subClassOf": [
         "schema:FindAction"
@@ -1084,6 +1084,17 @@
       "label": "CivicStructure",
       "subClassOf": [
         "schema:Place"
+      ]
+    },
+    {
+      "@id": "schema:ClaimReview",
+      "@type": "rdfs:Class",
+      "source": "https://github.com/schemaorg/schemaorg/issues/1061",
+      "schema:category": "issue-1061",
+      "comment": "A fact-checking review of claims made (or reported) in some creative work (referenced via itemReviewed).",
+      "label": "ClaimReview",
+      "subClassOf": [
+        "schema:Review"
       ]
     },
     {
@@ -1339,6 +1350,24 @@
       "label": "Country",
       "subClassOf": [
         "schema:AdministrativeArea"
+      ]
+    },
+    {
+      "@id": "schema:Course",
+      "@type": "rdfs:Class",
+      "comment": "A description of an educational course which may be offered as distinct instances at which take place at different times or take place at different locations, or be offered through different media or modes of study. An educational course is a sequence of one or more educational events and/or creative works which aims to build knowledge, competence or ability of learners.",
+      "label": "Course",
+      "subClassOf": [
+        "schema:CreativeWork"
+      ]
+    },
+    {
+      "@id": "schema:CourseInstance",
+      "@type": "rdfs:Class",
+      "comment": "An instance of a [[Course]] which is distinct from other instances because it is offered at a different time or location or through different media or modes of study or to a specific section of students.",
+      "label": "CourseInstance",
+      "subClassOf": [
+        "schema:Event"
       ]
     },
     {
@@ -2187,7 +2216,7 @@
     {
       "@id": "schema:FindAction",
       "@type": "rdfs:Class",
-      "comment": "TThe act of finding an object.\\n\\nRelated actions:\\n\\n* [[SearchAction]]: FindAction is generally lead by a SearchAction, but not necessarily.",
+      "comment": "The act of finding an object.\\n\\nRelated actions:\\n\\n* [[SearchAction]]: FindAction is generally lead by a SearchAction, but not necessarily.",
       "label": "FindAction",
       "subClassOf": [
         "schema:Action"
@@ -3277,6 +3306,33 @@
       "label": "MensClothingStore",
       "subClassOf": [
         "schema:Store"
+      ]
+    },
+    {
+      "@id": "schema:Menu",
+      "@type": "rdfs:Class",
+      "comment": "A structured representation of food or drink items available from a FoodEstablishment.",
+      "label": "Menu",
+      "subClassOf": [
+        "schema:CreativeWork"
+      ]
+    },
+    {
+      "@id": "schema:MenuItem",
+      "@type": "rdfs:Class",
+      "comment": "A food or drink item listed in a menu or menu section.",
+      "label": "MenuItem",
+      "subClassOf": [
+        "schema:Intangible"
+      ]
+    },
+    {
+      "@id": "schema:MenuSection",
+      "@type": "rdfs:Class",
+      "comment": "A sub-grouping of food or drink items in a menu. E.g. courses (such as 'Dinner', 'Breakfast', etc.), specific type of dishes (such as 'Meat', 'Vegan', 'Drinks', etc.), or some other classification made by the menu provider.",
+      "label": "MenuSection",
+      "subClassOf": [
+        "schema:CreativeWork"
       ]
     },
     {
@@ -6313,7 +6369,8 @@
       "@type": "rdf:Property",
       "domain": [
         "schema:CreativeWork",
-        "schema:CommunicateAction"
+        "schema:CommunicateAction",
+        "schema:Event"
       ],
       "range": [
         "schema:Thing"
@@ -6387,6 +6444,34 @@
       "label": "accessCode"
     },
     {
+      "@id": "schema:accessMode",
+      "@type": "rdf:Property",
+      "source": "https://github.com/schemaorg/schemaorg/issues/1100",
+      "schema:category": "issue-1110",
+      "domain": [
+        "schema:CreativeWork"
+      ],
+      "range": [
+        "schema:Text"
+      ],
+      "comment": "The human sensory perceptual system or cognitive faculty through which a person may process or perceive information. Expected values include: auditory, tactile, textual, visual, colorDependent, chartOnVisual, chemOnVisual, diagramOnVisual, mathOnVisual, musicOnVisual, textOnVisual.\n      ",
+      "label": "accessMode"
+    },
+    {
+      "@id": "schema:accessModeSufficient",
+      "@type": "rdf:Property",
+      "source": "https://github.com/schemaorg/schemaorg/issues/1100",
+      "schema:category": "issue-1110",
+      "domain": [
+        "schema:CreativeWork"
+      ],
+      "range": [
+        "schema:Text"
+      ],
+      "comment": "A list of single or combined accessModes that are sufficient to understand all the intellectual content of a resource. Expected values include:  auditory, tactile, textual, visual.\n      ",
+      "label": "accessModeSufficient"
+    },
+    {
       "@id": "schema:accessibilityAPI",
       "@type": "rdf:Property",
       "domain": [
@@ -6435,6 +6520,20 @@
       "label": "accessibilityHazard"
     },
     {
+      "@id": "schema:accessibilitySummary",
+      "@type": "rdf:Property",
+      "source": "https://github.com/schemaorg/schemaorg/issues/1100",
+      "schema:category": "issue-1110",
+      "domain": [
+        "schema:CreativeWork"
+      ],
+      "range": [
+        "schema:Text"
+      ],
+      "comment": "A human-readable summary of specific accessibility features or deficiencies, consistent with the other accessibility metadata but expressing subtleties such as \"short descriptions are present but long descriptions will be needed for non-visual users\" or \"short descriptions are present and no long descriptions are needed.\"",
+      "label": "accessibilitySummary"
+    },
+    {
       "@id": "schema:accountId",
       "@type": "rdf:Property",
       "domain": [
@@ -6444,7 +6543,8 @@
         "schema:Text"
       ],
       "comment": "The identifier for the account the payment will be applied to.",
-      "label": "accountId"
+      "label": "accountId",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:accountablePerson",
@@ -6835,7 +6935,7 @@
       "range": [
         "schema:Text"
       ],
-      "comment": "A category of alignment between the learning resource and the framework node. Recommended values include: 'assesses', 'teaches', 'requires', 'textComplexity', 'readingLevel', 'educationalSubject', and 'educationLevel'.",
+      "comment": "A category of alignment between the learning resource and the framework node. Recommended values include: 'assesses', 'teaches', 'requires', 'textComplexity', 'readingLevel', 'educationalSubject', and 'educationalLevel'.",
       "label": "alignmentType"
     },
     {
@@ -7186,7 +7286,8 @@
         "schema:URL"
       ],
       "comment": "The material used. (e.g. Oil, Watercolour, Acrylic, Linoprint, Marble, Cyanotype, Digital, Lithograph, DryPoint, Intaglio, Pastel, Woodcut, Pencil, Mixed Media, etc.)",
-      "label": "artMedium"
+      "label": "artMedium",
+      "subPropertyOf": "schema:material"
     },
     {
       "@id": "schema:artform",
@@ -7335,6 +7436,7 @@
       "@type": "rdf:Property",
       "domain": [
         "schema:CreativeWork",
+        "schema:Event",
         "schema:Product",
         "schema:Service",
         "schema:PlayAction",
@@ -7966,7 +8068,8 @@
       "domain": [
         "schema:Reservation",
         "schema:Order",
-        "schema:Invoice"
+        "schema:Invoice",
+        "schema:Service"
       ],
       "range": [
         "schema:Person",
@@ -8336,6 +8439,20 @@
       "label": "citation"
     },
     {
+      "@id": "schema:claimReviewed",
+      "@type": "rdf:Property",
+      "source": "https://github.com/schemaorg/schemaorg/issues/1061",
+      "schema:category": "issue-1061",
+      "domain": [
+        "schema:ClaimReview"
+      ],
+      "range": [
+        "schema:Text"
+      ],
+      "comment": "A short summary of the specific claims reviewed in a ClaimReview.",
+      "label": "claimReviewed"
+    },
+    {
       "@id": "schema:clipNumber",
       "@type": "rdf:Property",
       "domain": [
@@ -8542,7 +8659,8 @@
         "schema:Text"
       ],
       "comment": "A number that confirms the given order or payment has been received.",
-      "label": "confirmationNumber"
+      "label": "confirmationNumber",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:contactOption",
@@ -8834,6 +8952,45 @@
       "comment": "A sub property of location. The course where this action was taken.",
       "label": "course",
       "subPropertyOf": "schema:location"
+    },
+    {
+      "@id": "schema:courseCode",
+      "@type": "rdf:Property",
+      "domain": [
+        "schema:Course"
+      ],
+      "range": [
+        "schema:Text"
+      ],
+      "comment": "The identifier for the [[Course]] used by the course [[provider]] (e.g. CS101 or 6.001).",
+      "label": "courseCode"
+    },
+    {
+      "@id": "schema:courseMode",
+      "@type": "rdf:Property",
+      "domain": [
+        "schema:CourseInstance"
+      ],
+      "range": [
+        "schema:Text",
+        "schema:URL"
+      ],
+      "comment": "The medium or means of delivery of the course instance or the mode of study, either as a text label (e.g. \"online\", \"onsite\" or \"blended\"; \"synchronous\" or \"asynchronous\"; \"full-time\" or \"part-time\") or as a URL reference to a term from a controlled vocabulary (e.g. https://ceds.ed.gov/element/001311#Asynchronous ).",
+      "label": "courseMode"
+    },
+    {
+      "@id": "schema:coursePrerequisites",
+      "@type": "rdf:Property",
+      "domain": [
+        "schema:Course"
+      ],
+      "range": [
+        "schema:Text",
+        "schema:Course",
+        "schema:AlignmentObject"
+      ],
+      "comment": "Requirements for taking the Course. May be completion of another [[Course]] or a textual description like \"permission of instructor\". Requirements may be a pre-requisite competency, referenced using [[AlignmentObject]].",
+      "label": "coursePrerequisites"
     },
     {
       "@id": "schema:coverageEndTime",
@@ -9604,7 +9761,8 @@
         "schema:Text"
       ],
       "comment": "The Dun & Bradstreet DUNS number for identifying an organization or business person.",
-      "label": "duns"
+      "label": "duns",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:duration",
@@ -10361,7 +10519,8 @@
         "schema:Text"
       ],
       "comment": "The unique identifier for a flight including the airline IATA code. For example, if describing United flight 110, where the IATA code for United is 'UA', the flightNumber is 'UA110'.",
-      "label": "flightNumber"
+      "label": "flightNumber",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:floorSize",
@@ -10492,7 +10651,7 @@
       "schema:supersededBy": {
         "@id": "schema:isAccessibleForFree"
       },
-      "comment": "A flag to signal that the publication is accessible for free.",
+      "comment": "A flag to signal that the publication or event is accessible for free.",
       "label": "free"
     },
     {
@@ -10672,13 +10831,14 @@
       "@type": "rdf:Property",
       "domain": [
         "schema:CreativeWork",
+        "schema:BroadcastChannel",
         "schema:MusicGroup"
       ],
       "range": [
         "schema:Text",
         "schema:URL"
       ],
-      "comment": "Genre of the creative work or group.",
+      "comment": "Genre of the creative work, broadcast channel or group.",
       "label": "genre"
     },
     {
@@ -10756,7 +10916,8 @@
         "schema:Text"
       ],
       "comment": "The [Global Location Number](http://www.gs1.org/gln) (GLN, sometimes also referred to as International Location Number or ILN) of the respective organization, person, or place. The GLN is a 13-digit number used to identify parties and physical locations.",
-      "label": "globalLocationNumber"
+      "label": "globalLocationNumber",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:grantee",
@@ -10809,7 +10970,8 @@
         "schema:Text"
       ],
       "comment": "The [GTIN-12](http://apps.gs1.org/GDD/glossary/Pages/GTIN-12.aspx) code of the product, or the product to which the offer refers. The GTIN-12 is the 12-digit GS1 Identification Key composed of a U.P.C. Company Prefix, Item Reference, and Check Digit used to identify trade items. See [GS1 GTIN Summary](http://www.gs1.org/barcodes/technical/idkeys/gtin) for more details.",
-      "label": "gtin12"
+      "label": "gtin12",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:gtin13",
@@ -10823,7 +10985,8 @@
         "schema:Text"
       ],
       "comment": "The [GTIN-13](http://apps.gs1.org/GDD/glossary/Pages/GTIN-13.aspx) code of the product, or the product to which the offer refers. This is equivalent to 13-digit ISBN codes and EAN UCC-13. Former 12-digit UPC codes can be converted into a GTIN-13 code by simply adding a preceeding zero. See [GS1 GTIN Summary](http://www.gs1.org/barcodes/technical/idkeys/gtin) for more details.",
-      "label": "gtin13"
+      "label": "gtin13",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:gtin14",
@@ -10837,7 +11000,8 @@
         "schema:Text"
       ],
       "comment": "The [GTIN-14](http://apps.gs1.org/GDD/glossary/Pages/GTIN-14.aspx) code of the product, or the product to which the offer refers. See [GS1 GTIN Summary](http://www.gs1.org/barcodes/technical/idkeys/gtin) for more details.",
-      "label": "gtin14"
+      "label": "gtin14",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:gtin8",
@@ -10851,7 +11015,20 @@
         "schema:Text"
       ],
       "comment": "The [GTIN-8](http://apps.gs1.org/GDD/glossary/Pages/GTIN-8.aspx) code of the product, or the product to which the offer refers. This code is also known as EAN/UCC-8 or 8-digit EAN. See [GS1 GTIN Summary](http://www.gs1.org/barcodes/technical/idkeys/gtin) for more details.",
-      "label": "gtin8"
+      "label": "gtin8",
+      "subPropertyOf": "schema:identifier"
+    },
+    {
+      "@id": "schema:hasCourseInstance",
+      "@type": "rdf:Property",
+      "domain": [
+        "schema:Course"
+      ],
+      "range": [
+        "schema:CourseInstance"
+      ],
+      "comment": "An offering of the course at a specific time and place or through specific media or mode of study or to a specific section of students.",
+      "label": "hasCourseInstance"
     },
     {
       "@id": "schema:hasDeliveryMethod",
@@ -10890,6 +11067,46 @@
       ],
       "comment": "A URL to a map of the place.",
       "label": "hasMap"
+    },
+    {
+      "@id": "schema:hasMenu",
+      "@type": "rdf:Property",
+      "domain": [
+        "schema:FoodEstablishment"
+      ],
+      "range": [
+        "schema:Menu",
+        "schema:Text",
+        "schema:URL"
+      ],
+      "comment": "Either the actual menu as a structured representation, as text, or a URL of the menu.",
+      "label": "hasMenu"
+    },
+    {
+      "@id": "schema:hasMenuItem",
+      "@type": "rdf:Property",
+      "domain": [
+        "schema:Menu",
+        "schema:MenuSection"
+      ],
+      "range": [
+        "schema:MenuItem"
+      ],
+      "comment": "A food or drink item contained in a menu or menu section.",
+      "label": "hasMenuItem"
+    },
+    {
+      "@id": "schema:hasMenuSection",
+      "@type": "rdf:Property",
+      "domain": [
+        "schema:Menu",
+        "schema:MenuSection"
+      ],
+      "range": [
+        "schema:MenuSection"
+      ],
+      "comment": "A subgrouping of the menu (by dishes, course, serving time period, etc.).",
+      "label": "hasMenuSection"
     },
     {
       "@id": "schema:hasOfferCatalog",
@@ -11101,6 +11318,21 @@
       ],
       "comment": "ICAO identifier for an airport.",
       "label": "icaoCode"
+    },
+    {
+      "@id": "schema:identifier",
+      "@type": "rdf:Property",
+      "domain": [
+        "schema:Thing"
+      ],
+      "range": [
+        "schema:URL",
+        "schema:Text",
+        "schema:PropertyValue"
+      ],
+      "comment": "The identifier property represents any kind of identifier for any kind of [[Thing]], such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See [background notes](/docs/datamodel.html#identifierBg) for more details.\n        ",
+      "label": "identifier",
+      "equivalentProperty": "dc:identifier"
     },
     {
       "@id": "schema:illustrator",
@@ -11316,6 +11548,18 @@
       ],
       "comment": "URL at which the app may be installed, if different from the URL of the item.",
       "label": "installUrl"
+    },
+    {
+      "@id": "schema:instructor",
+      "@type": "rdf:Property",
+      "domain": [
+        "schema:CourseInstance"
+      ],
+      "range": [
+        "schema:Person"
+      ],
+      "comment": "A person assigned to instruct or provide instructional assistance for the [[CourseInstance]].",
+      "label": "instructor"
     },
     {
       "@id": "schema:instrument",
@@ -11586,6 +11830,7 @@
       ],
       "comment": "The ISBN of the book.",
       "label": "isbn",
+      "subPropertyOf": "schema:identifier",
       "equivalentProperty": "bibo:isbn"
     },
     {
@@ -11627,6 +11872,7 @@
       ],
       "comment": "The International Standard Serial Number (ISSN) that identifies this periodical. You can repeat this property to (for example) identify different formats of this periodical.",
       "label": "issn",
+      "subPropertyOf": "schema:identifier",
       "equivalentProperty": "bibo:issn"
     },
     {
@@ -11932,7 +12178,10 @@
     {
       "@id": "schema:leiCode",
       "@type": "rdf:Property",
-      "source": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#FIBO",
+      "source": [
+        "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#FIBO",
+        "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#GLEIF"
+      ],
       "domain": [
         "schema:Organization"
       ],
@@ -11940,7 +12189,8 @@
         "schema:Text"
       ],
       "comment": "An organization identifier that uniquely identifies a legal entity as defined in ISO 17442.",
-      "label": "leiCode"
+      "label": "leiCode",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:lender",
@@ -11949,7 +12199,8 @@
         "schema:BorrowAction"
       ],
       "range": [
-        "schema:Person"
+        "schema:Person",
+        "schema:Organization"
       ],
       "comment": "A sub property of participant. The person that lends the object being borrowed.",
       "label": "lender",
@@ -12283,16 +12534,15 @@
       "@id": "schema:material",
       "@type": "rdf:Property",
       "domain": [
-        "schema:VisualArtwork"
+        "schema:CreativeWork",
+        "schema:Product"
       ],
       "range": [
         "schema:Text",
-        "schema:URL"
+        "schema:URL",
+        "schema:Product"
       ],
-      "schema:supersededBy": {
-        "@id": "schema:artMedium"
-      },
-      "comment": "e.g. Oil, Watercolour, Acrylic, Linoprint, Marble, Cyanotype, Digital, Lithograph, DryPoint, Intaglio, Pastel, Woodcut, Pencil, Mixed Media, etc.",
+      "comment": "A material that something is made from, e.g. leather, wool, cotton, paper.",
       "label": "material"
     },
     {
@@ -12321,6 +12571,19 @@
       ],
       "comment": "The upper value of some characteristic or property.",
       "label": "maxValue"
+    },
+    {
+      "@id": "schema:maximumAttendeeCapacity",
+      "@type": "rdf:Property",
+      "domain": [
+        "schema:Place",
+        "schema:Event"
+      ],
+      "range": [
+        "schema:Integer"
+      ],
+      "comment": "The total number of individuals that may attend an event or venue.",
+      "label": "maximumAttendeeCapacity"
     },
     {
       "@id": "schema:mealService",
@@ -12429,10 +12692,14 @@
         "schema:FoodEstablishment"
       ],
       "range": [
+        "schema:Menu",
         "schema:Text",
         "schema:URL"
       ],
-      "comment": "Either the actual menu or a URL of the menu.",
+      "schema:supersededBy": {
+        "@id": "schema:hasMenu"
+      },
+      "comment": "Either the actual menu as a structured representation, as text, or a URL of the menu.",
       "label": "menu"
     },
     {
@@ -12979,12 +13246,13 @@
       "@id": "schema:nutrition",
       "@type": "rdf:Property",
       "domain": [
+        "schema:MenuItem",
         "schema:Recipe"
       ],
       "range": [
         "schema:NutritionInformation"
       ],
-      "comment": "Nutrition information about the recipe.",
+      "comment": "Nutrition information about the recipe or menu item.",
       "label": "nutrition"
     },
     {
@@ -12996,7 +13264,7 @@
       "range": [
         "schema:Thing"
       ],
-      "comment": "The object upon the action is carried out, whose state is kept intact or changed. Also known as the semantic roles patient, affected or undergoer (which change their state) or theme (which doesn't). e.g. John read *a book*.",
+      "comment": "The object upon which the action is carried out, whose state is kept intact or changed. Also known as the semantic roles patient, affected or undergoer (which change their state) or theme (which doesn't). e.g. John read *a book*.",
       "label": "object"
     },
     {
@@ -13061,6 +13329,7 @@
       "domain": [
         "schema:CreativeWork",
         "schema:Event",
+        "schema:MenuItem",
         "schema:Product",
         "schema:Service",
         "schema:AggregateOffer"
@@ -13209,7 +13478,8 @@
         "schema:Text"
       ],
       "comment": "The identifier of the transaction.",
-      "label": "orderNumber"
+      "label": "orderNumber",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:orderQuantity",
@@ -13398,7 +13668,7 @@
       "range": [
         "schema:Organization"
       ],
-      "comment": "The larger organization that this local business is a branch of, if any.",
+      "comment": "The larger organization that this organization is a [[subOrganization]] of, if any.",
       "label": "parentOrganization"
     },
     {
@@ -14181,7 +14451,8 @@
         "schema:Text"
       ],
       "comment": "The product identifier, such as ISBN. For example: ``` meta itemprop=\"productID\" content=\"isbn:123-456-789\" ```.",
-      "label": "productID"
+      "label": "productID",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:productSupported",
@@ -14826,6 +15097,18 @@
       "label": "releasedEvent"
     },
     {
+      "@id": "schema:remainingAttendeeCapacity",
+      "@type": "rdf:Property",
+      "domain": [
+        "schema:Event"
+      ],
+      "range": [
+        "schema:Integer"
+      ],
+      "comment": "The number of attendee places for an event that remain unallocated.",
+      "label": "remainingAttendeeCapacity"
+    },
+    {
       "@id": "schema:replacee",
       "@type": "rdf:Property",
       "domain": [
@@ -15225,7 +15508,7 @@
       "range": [
         "schema:URL"
       ],
-      "comment": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Freebase page, or official website.",
+      "comment": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
       "label": "sameAs"
     },
     {
@@ -15486,7 +15769,8 @@
         "schema:Text"
       ],
       "comment": "The serial number or any alphanumeric identifier of a particular product. When attached to an offer, it is a shortcut for the serial number of the product included in the offer.",
-      "label": "serialNumber"
+      "label": "serialNumber",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:serverStatus",
@@ -15744,7 +16028,8 @@
         "schema:Text"
       ],
       "comment": "The Stock Keeping Unit (SKU), i.e. a merchant-specific identifier for a product or service, or the product to which the offer refers.",
-      "label": "sku"
+      "label": "sku",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:smokingAllowed",
@@ -16220,12 +16505,13 @@
       "@id": "schema:suitableForDiet",
       "@type": "rdf:Property",
       "domain": [
+        "schema:MenuItem",
         "schema:Recipe"
       ],
       "range": [
         "schema:RestrictedDiet"
       ],
-      "comment": "Indicates a dietary restriction or guideline for which this recipe is suitable, e.g. diabetic, halal etc.",
+      "comment": "Indicates a dietary restriction or guideline for which this recipe or menu item is suitable, e.g. diabetic, halal etc.",
       "label": "suitableForDiet"
     },
     {
@@ -16268,8 +16554,9 @@
       "schema:supersededBy": {
         "@id": "schema:artworkSurface"
       },
-      "comment": "e.g. Canvas, Paper, Wood, Board, etc.",
-      "label": "surface"
+      "comment": "A material used as a surface in some artwork, e.g. Canvas, Paper, Wood, Board, etc.",
+      "label": "surface",
+      "subPropertyOf": "schema:material"
     },
     {
       "@id": "schema:target",
@@ -16367,7 +16654,8 @@
         "schema:Text"
       ],
       "comment": "The Tax / Fiscal ID of the organization or person, e.g. the TIN in the US or the CIF/NIF in Spain.",
-      "label": "taxID"
+      "label": "taxID",
+      "subPropertyOf": "schema:identifier"
     },
     {
       "@id": "schema:telephone",
@@ -17529,6 +17817,12 @@
       "@type": "schema:Organization",
       "comment": "This element is based on the work of the Financial Industry Business Ontology project (see [http://www.fibo.org/schema](http://www.fibo.org/schema) for details), in support of the W3C Financial Industry Business Ontology Community Group ([http://www.fibo.org/community](http://www.fibo.org/community)). Many class and property definitions are inspired by or based on [http://www.fibo.org](http://www.fibo.org).",
       "label": "FIBO"
+    },
+    {
+      "@id": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#GLEIF",
+      "@type": "schema:Organization",
+      "comment": "The implementation and use of Legal Entity Identifier (LEI) is supported by Global Legal Entity Identifier Foundation [https://www.gleif.org](https://www.gleif.org).",
+      "label": "GLEIF"
     },
     {
       "@id": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#MBZ",

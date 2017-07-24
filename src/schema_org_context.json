@@ -49,6 +49,9 @@
     "xhv": "http://www.w3.org/1999/xhtml/vocab#",
     "xml": "http://www.w3.org/XML/1998/namespace",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "AMRadioChannel": {
+      "@id": "schema:AMRadioChannel"
+    },
     "APIReference": {
       "@id": "schema:APIReference"
     },
@@ -349,6 +352,9 @@
     "BroadcastService": {
       "@id": "schema:BroadcastService"
     },
+    "BrokerageAccount": {
+      "@id": "schema:BrokerageAccount"
+    },
     "BuddhistTemple": {
       "@id": "schema:BuddhistTemple"
     },
@@ -426,6 +432,12 @@
     },
     "CassetteFormat": {
       "@id": "schema:CassetteFormat"
+    },
+    "CategoryCode": {
+      "@id": "schema:CategoryCode"
+    },
+    "CategoryCodeSet": {
+      "@id": "schema:CategoryCodeSet"
     },
     "CatholicChurch": {
       "@id": "schema:CatholicChurch"
@@ -541,6 +553,9 @@
     "CompilationAlbum": {
       "@id": "schema:CompilationAlbum"
     },
+    "CompleteDataFeed": {
+      "@id": "schema:CompleteDataFeed"
+    },
     "Completed": {
       "@id": "schema:Completed"
     },
@@ -558,6 +573,9 @@
     },
     "ConfirmAction": {
       "@id": "schema:ConfirmAction"
+    },
+    "Consortium": {
+      "@id": "schema:Consortium"
     },
     "ConsumeAction": {
       "@id": "schema:ConsumeAction"
@@ -889,6 +907,9 @@
     "EndorseAction": {
       "@id": "schema:EndorseAction"
     },
+    "EndorsementRating": {
+      "@id": "schema:EndorsementRating"
+    },
     "Energy": {
       "@id": "schema:Energy"
     },
@@ -906,12 +927,6 @@
     },
     "Enumeration": {
       "@id": "schema:Enumeration"
-    },
-    "EnumerationValue": {
-      "@id": "schema:EnumerationValue"
-    },
-    "EnumerationValueSet": {
-      "@id": "schema:EnumerationValueSet"
     },
     "Episode": {
       "@id": "schema:Episode"
@@ -952,6 +967,9 @@
     "EvidenceLevelC": {
       "@id": "schema:EvidenceLevelC"
     },
+    "ExchangeRateSpecification": {
+      "@id": "schema:ExchangeRateSpecification"
+    },
     "ExerciseAction": {
       "@id": "schema:ExerciseAction"
     },
@@ -984,6 +1002,9 @@
     },
     "FDAnotEvaluated": {
       "@id": "schema:FDAnotEvaluated"
+    },
+    "FMRadioChannel": {
+      "@id": "schema:FMRadioChannel"
     },
     "FailedActionStatus": {
       "@id": "schema:FailedActionStatus"
@@ -1045,6 +1066,9 @@
     "FourWheelDriveConfiguration": {
       "@id": "schema:FourWheelDriveConfiguration"
     },
+    "Friday": {
+      "@id": "schema:Friday"
+    },
     "FrontWheelDriveConfiguration": {
       "@id": "schema:FrontWheelDriveConfiguration"
     },
@@ -1098,6 +1122,9 @@
     },
     "GeoShape": {
       "@id": "schema:GeoShape"
+    },
+    "GeospatialGeometry": {
+      "@id": "schema:GeospatialGeometry"
     },
     "Geriatric": {
       "@id": "schema:Geriatric"
@@ -1282,6 +1309,9 @@
     "InternetCafe": {
       "@id": "schema:InternetCafe"
     },
+    "InvestmentFund": {
+      "@id": "schema:InvestmentFund"
+    },
     "InvestmentOrDeposit": {
       "@id": "schema:InvestmentOrDeposit"
     },
@@ -1365,6 +1395,9 @@
     },
     "Library": {
       "@id": "schema:Library"
+    },
+    "LibrarySystem": {
+      "@id": "schema:LibrarySystem"
     },
     "LifestyleModification": {
       "@id": "schema:LifestyleModification"
@@ -1603,6 +1636,15 @@
     "MensClothingStore": {
       "@id": "schema:MensClothingStore"
     },
+    "Menu": {
+      "@id": "schema:Menu"
+    },
+    "MenuItem": {
+      "@id": "schema:MenuItem"
+    },
+    "MenuSection": {
+      "@id": "schema:MenuSection"
+    },
     "Message": {
       "@id": "schema:Message"
     },
@@ -1626,6 +1668,12 @@
     },
     "MonetaryAmount": {
       "@id": "schema:MonetaryAmount"
+    },
+    "MoneyTransfer": {
+      "@id": "schema:MoneyTransfer"
+    },
+    "MortgageLoan": {
+      "@id": "schema:MortgageLoan"
     },
     "Mosque": {
       "@id": "schema:Mosque"
@@ -2293,6 +2341,9 @@
     "RentalVehicleUsage": {
       "@id": "schema:RentalVehicleUsage"
     },
+    "RepaymentSpecification": {
+      "@id": "schema:RepaymentSpecification"
+    },
     "ReplaceAction": {
       "@id": "schema:ReplaceAction"
     },
@@ -2404,6 +2455,9 @@
     "SaleEvent": {
       "@id": "schema:SaleEvent"
     },
+    "Saturday": {
+      "@id": "schema:Saturday"
+    },
     "ScheduleAction": {
       "@id": "schema:ScheduleAction"
     },
@@ -2509,6 +2563,9 @@
     "SoundtrackAlbum": {
       "@id": "schema:SoundtrackAlbum"
     },
+    "SpeakableSpecification": {
+      "@id": "schema:SpeakableSpecification"
+    },
     "Specialty": {
       "@id": "schema:Specialty"
     },
@@ -2559,6 +2616,9 @@
     },
     "StudioAlbum": {
       "@id": "schema:StudioAlbum"
+    },
+    "StupidType": {
+      "@id": "schema:StupidType"
     },
     "SubscribeAction": {
       "@id": "schema:SubscribeAction"
@@ -2740,6 +2800,9 @@
     "TripleBlindedTrial": {
       "@id": "schema:TripleBlindedTrial"
     },
+    "Tuesday": {
+      "@id": "schema:Tuesday"
+    },
     "TypeAndQuantityNode": {
       "@id": "schema:TypeAndQuantityNode"
     },
@@ -2887,6 +2950,9 @@
     "WearAction": {
       "@id": "schema:WearAction"
     },
+    "WebAPI": {
+      "@id": "schema:WebAPI"
+    },
     "WebApplication": {
       "@id": "schema:WebApplication"
     },
@@ -2898,6 +2964,9 @@
     },
     "WebSite": {
       "@id": "schema:WebSite"
+    },
+    "Wednesday": {
+      "@id": "schema:Wednesday"
     },
     "WesternConventional": {
       "@id": "schema:WesternConventional"
@@ -2983,6 +3052,12 @@
     },
     "accountId": {
       "@id": "schema:accountId"
+    },
+    "accountMinimumInflow": {
+      "@id": "schema:accountMinimumInflow"
+    },
+    "accountOverdraftLimit": {
+      "@id": "schema:accountOverdraftLimit"
     },
     "accountablePerson": {
       "@id": "schema:accountablePerson"
@@ -3311,11 +3386,18 @@
     "background": {
       "@id": "schema:background"
     },
+    "bankAccountType": {
+      "@id": "schema:bankAccountType",
+      "@type": "@id"
+    },
     "baseSalary": {
       "@id": "schema:baseSalary"
     },
     "bed": {
       "@id": "schema:bed"
+    },
+    "beneficiaryBank": {
+      "@id": "schema:beneficiaryBank"
     },
     "benefits": {
       "@id": "schema:benefits"
@@ -3429,9 +3511,6 @@
     "broadcastServiceTier": {
       "@id": "schema:broadcastServiceTier"
     },
-    "broadcastSignalModulation": {
-      "@id": "schema:broadcastSignalModulation"
-    },
     "broadcastTimezone": {
       "@id": "schema:broadcastTimezone"
     },
@@ -3479,6 +3558,9 @@
     },
     "carrierRequirements": {
       "@id": "schema:carrierRequirements"
+    },
+    "cashBack": {
+      "@id": "schema:cashBack"
     },
     "catalog": {
       "@id": "schema:catalog"
@@ -3623,6 +3705,9 @@
     "contactType": {
       "@id": "schema:contactType"
     },
+    "contactlessPayment": {
+      "@id": "schema:contactlessPayment"
+    },
     "containedIn": {
       "@id": "schema:containedIn"
     },
@@ -3703,15 +3788,9 @@
     "courseCode": {
       "@id": "schema:courseCode"
     },
-    "courseCredits": {
-      "@id": "schema:courseCredits"
-    },
-    "courseCreditsUnit": {
-      "@id": "schema:courseCreditsUnit",
-      "@type": "@id"
-    },
     "courseMode": {
-      "@id": "schema:courseMode"
+      "@id": "schema:courseMode",
+      "@type": "@id"
     },
     "coursePrerequisites": {
       "@id": "schema:coursePrerequisites"
@@ -3730,11 +3809,17 @@
     "creditedTo": {
       "@id": "schema:creditedTo"
     },
+    "cssSelector": {
+      "@id": "schema:cssSelector"
+    },
     "currenciesAccepted": {
       "@id": "schema:currenciesAccepted"
     },
     "currency": {
       "@id": "schema:currency"
+    },
+    "currentExchangeRate": {
+      "@id": "schema:currentExchangeRate"
     },
     "customer": {
       "@id": "schema:customer"
@@ -3907,8 +3992,15 @@
     "distribution": {
       "@id": "schema:distribution"
     },
+    "documentation": {
+      "@id": "schema:documentation",
+      "@type": "@id"
+    },
     "domainIncludes": {
       "@id": "schema:domainIncludes"
+    },
+    "domiciledMortgage": {
+      "@id": "schema:domiciledMortgage"
     },
     "doorTime": {
       "@id": "schema:doorTime",
@@ -3925,6 +4017,9 @@
     },
     "doseValue": {
       "@id": "schema:doseValue"
+    },
+    "downPayment": {
+      "@id": "schema:downPayment"
     },
     "downloadUrl": {
       "@id": "schema:downloadUrl",
@@ -3967,6 +4062,9 @@
     "durationOfWarranty": {
       "@id": "schema:durationOfWarranty"
     },
+    "earlyPrepaymentPenalty": {
+      "@id": "schema:earlyPrepaymentPenalty"
+    },
     "editor": {
       "@id": "schema:editor"
     },
@@ -3975,6 +4073,10 @@
     },
     "educationalAlignment": {
       "@id": "schema:educationalAlignment"
+    },
+    "educationalCredentialAwarded": {
+      "@id": "schema:educationalCredentialAwarded",
+      "@type": "@id"
     },
     "educationalFramework": {
       "@id": "schema:educationalFramework"
@@ -4064,9 +4166,6 @@
     "entertainmentBusiness": {
       "@id": "schema:entertainmentBusiness"
     },
-    "enumerationValueCode": {
-      "@id": "schema:enumerationValueCode"
-    },
     "epidemiology": {
       "@id": "schema:epidemiology"
     },
@@ -4108,6 +4207,12 @@
     },
     "exampleOfWork": {
       "@id": "schema:exampleOfWork"
+    },
+    "exchangeRate": {
+      "@id": "schema:exchangeRate"
+    },
+    "exchangeRateSpread": {
+      "@id": "schema:exchangeRateSpread"
     },
     "executableLibraryName": {
       "@id": "schema:executableLibraryName"
@@ -4186,6 +4291,9 @@
     },
     "flightNumber": {
       "@id": "schema:flightNumber"
+    },
+    "floorLimit": {
+      "@id": "schema:floorLimit"
     },
     "floorSize": {
       "@id": "schema:floorSize"
@@ -4291,17 +4399,47 @@
     "geographicArea": {
       "@id": "schema:geographicArea"
     },
+    "geospatiallyContains": {
+      "@id": "schema:geospatiallyContains"
+    },
+    "geospatiallyCoveredBy": {
+      "@id": "schema:geospatiallyCoveredBy"
+    },
+    "geospatiallyCovers": {
+      "@id": "schema:geospatiallyCovers"
+    },
+    "geospatiallyCrosses": {
+      "@id": "schema:geospatiallyCrosses"
+    },
+    "geospatiallyDisjoint": {
+      "@id": "schema:geospatiallyDisjoint"
+    },
+    "geospatiallyEquals": {
+      "@id": "schema:geospatiallyEquals"
+    },
+    "geospatiallyIntersects": {
+      "@id": "schema:geospatiallyIntersects"
+    },
+    "geospatiallyOverlaps": {
+      "@id": "schema:geospatiallyOverlaps"
+    },
+    "geospatiallyTouches": {
+      "@id": "schema:geospatiallyTouches"
+    },
+    "geospatiallyWithin": {
+      "@id": "schema:geospatiallyWithin"
+    },
     "givenName": {
       "@id": "schema:givenName"
     },
     "globalLocationNumber": {
       "@id": "schema:globalLocationNumber"
     },
+    "gracePeriod": {
+      "@id": "schema:gracePeriod"
+    },
     "grantee": {
       "@id": "schema:grantee"
-    },
-    "grantsCredential": {
-      "@id": "schema:grantsCredential"
     },
     "greater": {
       "@id": "schema:greater"
@@ -4331,6 +4469,12 @@
     "guidelineSubject": {
       "@id": "schema:guidelineSubject"
     },
+    "hasBroadcastChannel": {
+      "@id": "schema:hasBroadcastChannel"
+    },
+    "hasCategoryCode": {
+      "@id": "schema:hasCategoryCode"
+    },
     "hasCourseInstance": {
       "@id": "schema:hasCourseInstance"
     },
@@ -4340,12 +4484,19 @@
     "hasDigitalDocumentPermission": {
       "@id": "schema:hasDigitalDocumentPermission"
     },
-    "hasEnumerationValue": {
-      "@id": "schema:hasEnumerationValue"
-    },
     "hasMap": {
       "@id": "schema:hasMap",
       "@type": "@id"
+    },
+    "hasMenu": {
+      "@id": "schema:hasMenu",
+      "@type": "@id"
+    },
+    "hasMenuItem": {
+      "@id": "schema:hasMenuItem"
+    },
+    "hasMenuSection": {
+      "@id": "schema:hasMenuSection"
     },
     "hasOfferCatalog": {
       "@id": "schema:hasOfferCatalog"
@@ -4441,6 +4592,10 @@
     "icaoCode": {
       "@id": "schema:icaoCode"
     },
+    "identifier": {
+      "@id": "schema:identifier",
+      "@type": "@id"
+    },
     "identifyingExam": {
       "@id": "schema:identifyingExam"
     },
@@ -4462,6 +4617,10 @@
     },
     "inBroadcastLineup": {
       "@id": "schema:inBroadcastLineup"
+    },
+    "inCodeSet": {
+      "@id": "schema:inCodeSet",
+      "@type": "@id"
     },
     "inLanguage": {
       "@id": "schema:inLanguage"
@@ -4729,8 +4888,24 @@
     "liveBlogUpdate": {
       "@id": "schema:liveBlogUpdate"
     },
+    "loanMortgageMandateAmount": {
+      "@id": "schema:loanMortgageMandateAmount"
+    },
+    "loanPaymentAmount": {
+      "@id": "schema:loanPaymentAmount"
+    },
+    "loanPaymentFrequency": {
+      "@id": "schema:loanPaymentFrequency"
+    },
+    "loanRepaymentForm": {
+      "@id": "schema:loanRepaymentForm"
+    },
     "loanTerm": {
       "@id": "schema:loanTerm"
+    },
+    "loanType": {
+      "@id": "schema:loanType",
+      "@type": "@id"
     },
     "location": {
       "@id": "schema:location"
@@ -4800,11 +4975,18 @@
     "maxValue": {
       "@id": "schema:maxValue"
     },
+    "maximumAttendeeCapacity": {
+      "@id": "schema:maximumAttendeeCapacity"
+    },
     "maximumIntake": {
       "@id": "schema:maximumIntake"
     },
     "mealService": {
       "@id": "schema:mealService"
+    },
+    "measurementTechnique": {
+      "@id": "schema:measurementTechnique",
+      "@type": "@id"
     },
     "mechanismOfAction": {
       "@id": "schema:mechanismOfAction"
@@ -4842,6 +5024,9 @@
       "@id": "schema:menu",
       "@type": "@id"
     },
+    "menuAddOn": {
+      "@id": "schema:menuAddOn"
+    },
     "merchant": {
       "@id": "schema:merchant"
     },
@@ -4870,6 +5055,9 @@
     "modifiedTime": {
       "@id": "schema:modifiedTime",
       "@type": "DateTime"
+    },
+    "monthlyMinimumRepaymentAmount": {
+      "@id": "schema:monthlyMinimumRepaymentAmount"
     },
     "mpn": {
       "@id": "schema:mpn"
@@ -4967,6 +5155,9 @@
     },
     "numberOfItems": {
       "@id": "schema:numberOfItems"
+    },
+    "numberOfLoanPayments": {
+      "@id": "schema:numberOfLoanPayments"
     },
     "numberOfPages": {
       "@id": "schema:numberOfPages"
@@ -5108,9 +5299,6 @@
     },
     "parents": {
       "@id": "schema:parents"
-    },
-    "partOfEnumerationValueSet": {
-      "@id": "schema:partOfEnumerationValueSet"
     },
     "partOfEpisode": {
       "@id": "schema:partOfEpisode"
@@ -5281,10 +5469,6 @@
     },
     "prescriptionStatus": {
       "@id": "schema:prescriptionStatus"
-    },
-    "previewUrl": {
-      "@id": "schema:previewUrl",
-      "@type": "@id"
     },
     "previousItem": {
       "@id": "schema:previousItem"
@@ -5505,6 +5689,9 @@
     "recordingOf": {
       "@id": "schema:recordingOf"
     },
+    "recourseLoan": {
+      "@id": "schema:recourseLoan"
+    },
     "referenceQuantity": {
       "@id": "schema:referenceQuantity"
     },
@@ -5555,6 +5742,12 @@
     },
     "relevantSpecialty": {
       "@id": "schema:relevantSpecialty"
+    },
+    "remainingAttendeeCapacity": {
+      "@id": "schema:remainingAttendeeCapacity"
+    },
+    "renegotiableLoan": {
+      "@id": "schema:renegotiableLoan"
     },
     "repetitions": {
       "@id": "schema:repetitions"
@@ -5856,6 +6049,10 @@
     "spatialCoverage": {
       "@id": "schema:spatialCoverage"
     },
+    "speakable": {
+      "@id": "schema:speakable",
+      "@type": "@id"
+    },
     "specialCommitments": {
       "@id": "schema:specialCommitments"
     },
@@ -5943,6 +6140,9 @@
     },
     "studySubject": {
       "@id": "schema:studySubject"
+    },
+    "stupidProperty": {
+      "@id": "schema:stupidProperty"
     },
     "subEvent": {
       "@id": "schema:subEvent"
@@ -6045,6 +6245,10 @@
     },
     "temporalCoverage": {
       "@id": "schema:temporalCoverage",
+      "@type": "@id"
+    },
+    "termsOfService": {
+      "@id": "schema:termsOfService",
       "@type": "@id"
     },
     "text": {
@@ -6237,6 +6441,9 @@
     "valueRequired": {
       "@id": "schema:valueRequired"
     },
+    "variableMeasured": {
+      "@id": "schema:variableMeasured"
+    },
     "variablesMeasured": {
       "@id": "schema:variablesMeasured"
     },
@@ -6360,6 +6567,9 @@
     },
     "worstRating": {
       "@id": "schema:worstRating"
+    },
+    "xpath": {
+      "@id": "schema:xpath"
     },
     "yearlyRevenue": {
       "@id": "schema:yearlyRevenue"
