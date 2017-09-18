@@ -1,4 +1,5 @@
 import urlTemplate from 'url-template';
+import ds3Mime from '@scienceai/ds3-mime';
 
 export function getParts(root, nodeMap) {
   if (nodeMap) {
@@ -74,6 +75,7 @@ export function getCreativeWorkTypeFromMime(mimeType = '') {
   ]);
 
   const scholarlyArticle = new Set([
+    ds3Mime,
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'application/vnd.oasis.opendocument.text',
