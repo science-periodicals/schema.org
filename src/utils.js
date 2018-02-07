@@ -202,6 +202,13 @@ export function getAgentId(agent) {
   }
 }
 
+/**
+ * Given a schema.org Action, return the object upon which the
+ * action is carried out.
+ *
+ * @param {Object} action - A schema.org Action.
+ * @return {Object} - The object upon which the action is carried out.
+ */
 export function getObject(action) {
   if (!action) return;
   if (action.object) {
@@ -209,6 +216,13 @@ export function getObject(action) {
   }
 }
 
+/**
+ * Given a schema.org Action, return the ID of the object upon which the
+ * action is carried out.
+ *
+ * @param {Object} action - A schema.org Action.
+ * @return {Number} - The ID of the object upon which the action is carried out.
+ */
 export function getObjectId(action) {
   const object = getObject(action);
   if (object) {
