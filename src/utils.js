@@ -60,6 +60,7 @@ export function getRootPartId(object) {
 }
 
 export function getCreativeWorkTypeFromMime(mimeType = '') {
+  // TODO delete it is now part of @scienceai/librarian
   const dataset = new Set([
     'application/vnd.ms-excel',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -139,6 +140,7 @@ export function getCreativeWorkTypeFromMime(mimeType = '') {
 }
 
 export function getEncodingTypeFromMime(mimeType = '') {
+  // TODO delete it is now part of @scienceai/librarian
   const rType = getCreativeWorkTypeFromMime(mimeType);
   switch (rType) {
     case 'Image':
