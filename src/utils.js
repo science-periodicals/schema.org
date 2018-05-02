@@ -173,6 +173,7 @@ export function getAgent(agent) {
         agent.author ||
         agent.contributor ||
         agent.producer ||
+        agent.reviewer ||
         agent.editor ||
         agent.sender ||
         agent.accountablePerson ||
@@ -223,7 +224,7 @@ export function getObject(action) {
  * action is carried out.
  *
  * @param {Object} action - A schema.org Action.
- * @return {Number} - The ID of the object upon which the action is carried out.
+ * @return {String} - The ID of the object upon which the action is carried out.
  */
 export function getObjectId(action) {
   const object = getObject(action);
