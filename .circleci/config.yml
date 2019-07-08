@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/schema.org
+    docker:
+      - image: circleci/node:dubnium
+    steps:
+      - checkout
+      - run: echo '//registry.npmjs.org/:_authToken='$NPM_PRIVATE_AUTH_TOKEN > $HOME/.npmrc
+      - restore_cache:
+          keys:
+            - v1-node_modules-{{ checksum "package-lock.json" }}
+            - v1-node_modules-
+      - run:
+          command: npm install
+          no_output_timeout: 5m
+      - save_cache:
+          key: v1-node_modules-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run: npm test

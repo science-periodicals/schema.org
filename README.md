@@ -1,7 +1,7 @@
 [schema.org](http://schema.org)
 ===============================
 
-[![CircleCI](https://circleci.com/gh/scienceai/schema.org.svg?style=svg)](https://circleci.com/gh/scienceai/schema.org)
+[![CircleCI](https://circleci.com/gh/science-periodicals/schema.org.svg?style=svg)](https://circleci.com/gh/science-periodicals/schema.org)
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
@@ -21,7 +21,7 @@ import context from 'schema.org/context';
 [RDFS](https://www.w3.org/TR/rdf-schema/) definition of schema.org
 extension.
 
-```
+```js
 import SchemaOrg from 'schema.org';
 var schemaOrg = new SchemaOrg();
 ```
@@ -30,7 +30,7 @@ var schemaOrg = new SchemaOrg();
 
 returns the RDFS node corresponding to the term;
 
-```
+```js
 schemaOrg.get(MedicalScholarlyArticle)
 { '@id': 'schema:MedicalScholarlyArticle',
   '@type': 'rdfs:Class',
@@ -45,7 +45,7 @@ returns a set containing the sub classes of the `type`. if `recursive`
 is `false` (default value is `true`) only the direct descendant are
 returned.
 
-```
+```js
 schemaOrg.getSubClasses('Article', false)
 Set {
   'NewsArticle',
@@ -59,7 +59,7 @@ Set {
 
 returns a set representing the trail of parent classes.
 
-```
+```js
 schemaOrg.getParents('MedicalScholarlyArticle')
 Set { 'ScholarlyArticle', 'Article', 'CreativeWork', 'Thing' }
 ```
@@ -68,7 +68,7 @@ Set { 'ScholarlyArticle', 'Article', 'CreativeWork', 'Thing' }
 
 returns `true` if `value` (or list of thereof) is a `type`
 
-```
+```js
 schemaOrg.is('MedicalScholarlyArticle', 'Article') === true
 ```
 
@@ -79,21 +79,13 @@ type can be safely inferred (multiple options). If `minType` is
 specified the returning type must be at least as specific or more
 specific than `minType`.
 
-```
+```js
 schemaOrg.getType({
   "name": "a name",
   "videoQuality": "video quality",
   "transcript": "a transcript"
 }) ===  'VideoObject'
 ```
-
-
-## Utils
-
-```
-import * as utils from 'schema.org/utils';
-```
-
 
 
 Tests
