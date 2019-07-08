@@ -12,12 +12,15 @@
     "postpublish": "rm ./index.js ./utils.js ./context.js ./schema_org.json ./schema_org_context.json",
     "postversion": "git push && git push --tags"
   },
+  "prettier": {
+    "singleQuote": true
+  },
   "eslintConfig": {
-    "extends": "scienceai"
+    "extends": "@scipe"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/scienceai/schema.org.git"
+    "url": "git://github.com/science-periodicals/schema.org.git"
   },
   "keywords": [
     "linked-data",
@@ -28,17 +31,17 @@
   "author": "Sebastien Ballesteros",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/scienceai/schema.org/issues"
+    "url": "https://github.com/science-periodicals/schema.org/issues"
   },
-  "homepage": "https://github.com/scienceai/schema.org",
+  "homepage": "https://github.com/science-periodicals/schema.org",
   "devDependencies": {
+    "@scipe/eslint-config": "^1.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.26.0",
     "clone": "^2.1.1",
-    "eslint-config-scienceai": "^4.2.0",
     "jsonld": "^0.4.12",
     "jsonld-rdfa-parser": "^1.6.0",
     "mocha": "^5.1.1",
