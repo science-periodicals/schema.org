@@ -49,7 +49,7 @@
     "request": "^2.85.0"
   },
   "dependencies": {
-    "@scienceai/ds3-mime": "^1.0.0",
+    "@scipe/ds3-mime": "^1.0.0",
     "is-url": "^1.2.4",
     "url-template": "2.0.8"
   }

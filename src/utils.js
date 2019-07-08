@@ -1,5 +1,5 @@
 import urlTemplate from 'url-template';
-import ds3Mime from '@scienceai/ds3-mime';
+import ds3Mime from '@scipe/ds3-mime';
 
 export function getParts(root, nodeMap) {
   if (nodeMap) {
